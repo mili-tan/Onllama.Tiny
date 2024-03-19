@@ -25,6 +25,12 @@ namespace Onllama.Tiny
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            var ollamaPath = Environment.GetEnvironmentVariable("PATH").Split(';')
+                .Select(x => Path.Combine(x, "ollama.exe"))
+                .Where(x => File.Exists(x))
+                .FirstOrDefault();
+
+
             try
             {
                 progress1.Hide();
@@ -34,10 +40,16 @@ namespace Onllama.Tiny
             {
                 Console.WriteLine(exception);
             }
-
-            if (!PortIsUse(11434))
+            if (string.IsNullOrWhiteSpace(ollamaPath))
             {
-                Notification.error(this, "Ollama 核心未在运行。", "请检查 Ollama 服务状态，并稍候重试。");
+                Notification.warn(this, "Ollama 核心未安装", "请先安装 Ollama 服务，并稍候重试。");
+                Process.Start(new ProcessStartInfo($"https://ollama.com/download/windows") { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest") { UseShellExecute = true });
+                panel1.Enabled = false;
+            }
+            else if (!PortIsUse(11434))
+            {
+                Notification.warn(this, "Ollama 核心未在运行", "请检查 Ollama 服务状态，并稍候重试。");
                 panel1.Enabled = false;
             }
             else
