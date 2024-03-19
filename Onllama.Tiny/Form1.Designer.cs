@@ -42,7 +42,7 @@
             table1.Dock = DockStyle.Fill;
             table1.Location = new Point(0, 0);
             table1.Name = "table1";
-            table1.Size = new Size(622, 382);
+            table1.Size = new Size(684, 381);
             table1.TabIndex = 0;
             table1.Text = "table1";
             table1.CellButtonClick += table1_CellButtonClick;
@@ -52,10 +52,10 @@
             panel1.Controls.Add(button1);
             panel1.Controls.Add(select1);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 337);
+            panel1.Location = new Point(0, 336);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(622, 45);
+            panel1.Size = new Size(684, 45);
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
             // 
@@ -64,7 +64,7 @@
             button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             button1.BorderWidth = 1F;
             button1.Ghost = true;
-            button1.Location = new Point(535, 8);
+            button1.Location = new Point(597, 8);
             button1.Name = "button1";
             button1.Size = new Size(75, 30);
             button1.TabIndex = 1;
@@ -79,7 +79,7 @@
             select1.Name = "select1";
             select1.SelectedIndex = 0;
             select1.SelectedValue = "qwen:4b";
-            select1.Size = new Size(521, 30);
+            select1.Size = new Size(583, 30);
             select1.TabIndex = 0;
             select1.Text = "qwen:4b";
             // 
@@ -89,7 +89,7 @@
             progress1.Location = new Point(0, 0);
             progress1.Name = "progress1";
             progress1.Radius = 0;
-            progress1.Size = new Size(622, 2);
+            progress1.Size = new Size(684, 2);
             progress1.TabIndex = 2;
             progress1.Text = "";
             // 
@@ -98,7 +98,7 @@
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(622, 382);
+            ClientSize = new Size(684, 381);
             Controls.Add(progress1);
             Controls.Add(panel1);
             Controls.Add(table1);

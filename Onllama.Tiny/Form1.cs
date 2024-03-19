@@ -32,13 +32,14 @@ namespace Onllama.Tiny
 
             try
             {
-                progress1.Hide();
                 Environment.SetEnvironmentVariable("OLLAMA_ORIGINS", "*", EnvironmentVariableTarget.User);
+                progress1.Hide();
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
             }
+
             if (string.IsNullOrWhiteSpace(ollamaPath))
             {
                 Notification.warn(this, "Ollama 核心未安装", "请先安装 Ollama 服务，并稍候重试。");
@@ -62,7 +63,7 @@ namespace Onllama.Tiny
             }
         }
 
-        public class ModelsClass : AntdUI.NotifyProperty
+        public class ModelsClass : NotifyProperty
         {
             string _name;
             public string name
@@ -129,7 +130,6 @@ namespace Onllama.Tiny
                     OnPropertyChanged("btns");
                 }
             }
-
         }
 
         private void table1_CellButtonClick(object sender, CellLink btn, MouseEventArgs args, object record,
@@ -154,6 +154,10 @@ namespace Onllama.Tiny
                             return true;
                         }
                     });
+                }
+                else if (btn.Id == "web-chat")
+                {
+                    Process.Start(new ProcessStartInfo($"https://ollama-gui.vercel.app") { UseShellExecute = true });
                 }
                 else if (btn.Id == "chat")
                 {
@@ -223,6 +227,8 @@ namespace Onllama.Tiny
                     quantization = q.ToArray(),
                     btns = new AntdUI.CellLink[]
                     {
+                        new AntdUI.CellButton("web-chat", "WebUI", AntdUI.TTypeMini.Default)
+                            {Ghost = true, BorderWidth = 1},
                         new AntdUI.CellButton("chat", "NextChat", AntdUI.TTypeMini.Default)
                             {Ghost = true, BorderWidth = 1},
                         new AntdUI.CellButton("delete", "删除", AntdUI.TTypeMini.Error)
