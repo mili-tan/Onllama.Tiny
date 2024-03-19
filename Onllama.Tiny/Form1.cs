@@ -25,11 +25,10 @@ namespace Onllama.Tiny
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            var ollamaPath = Environment.GetEnvironmentVariable("PATH").Split(';')
-                .Select(x => Path.Combine(x, "ollama.exe"))
-                .Where(x => File.Exists(x))
-                .FirstOrDefault();
-
+            var ollamaPath = (Environment.GetEnvironmentVariable("PATH")
+                    ?.Split(';')
+                    .Select(x => Path.Combine(x, "ollama app.exe"))!)
+                .FirstOrDefault(File.Exists);
 
             try
             {
