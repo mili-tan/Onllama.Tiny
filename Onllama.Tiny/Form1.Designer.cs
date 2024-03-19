@@ -61,6 +61,7 @@
             // 
             // button1
             // 
+            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             button1.BorderWidth = 1F;
             button1.Ghost = true;
             button1.Location = new Point(535, 8);
@@ -72,6 +73,7 @@
             // 
             // select1
             // 
+            select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             select1.Items.AddRange(new object[] { "qwen:4b", "qwen:7b", "qwen:14b", "yi:6b", "yi:34b", "gemma:7b", "deepseek-llm:7b", "llama2-chinese:7b", "llama2-chinese:13b", "orionstar/orion14b-q4:latest", "roger/minicpm:latest", "onekuma/sakura-13b-lnovel-v0.9b-q2_k" });
             select1.Location = new Point(8, 8);
             select1.Name = "select1";
@@ -103,7 +105,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
-            Text = "Models";
+            Text = "Onllama - Models";
             Load += Form1_Load;
             panel1.ResumeLayout(false);
             ResumeLayout(false);
