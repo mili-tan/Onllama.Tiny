@@ -88,8 +88,8 @@
             progress1.Dock = DockStyle.Top;
             progress1.Location = new Point(0, 0);
             progress1.Name = "progress1";
-            progress1.Radius = 1;
-            progress1.Size = new Size(622, 5);
+            progress1.Radius = 0;
+            progress1.Size = new Size(622, 2);
             progress1.TabIndex = 2;
             progress1.Text = "";
             // 
@@ -105,6 +105,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(2, 3, 2, 3);
             Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Onllama - Models";
             Load += Form1_Load;
             panel1.ResumeLayout(false);
