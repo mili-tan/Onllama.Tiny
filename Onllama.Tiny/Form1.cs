@@ -49,8 +49,9 @@ namespace Onllama.Tiny
             }
             if (!PortIsUse(11434))
             {
-                Notification.info(this, "Ollama 核心未在运行", "正在启动 Ollama 服务，请稍等…");
-                Process.Start(ollamaPath,"serve");
+                AntdUI.Message.info(this, "正在启动 Ollama 服务…");
+                //Notification.info(this, "Ollama 核心未在运行", "正在启动 Ollama 服务，请稍等…");
+                Process.Start(ollamaPath, "serve");
             }
 
             try
@@ -88,10 +89,12 @@ namespace Onllama.Tiny
                 }
                 else if (btn.Id == "web-chat")
                 {
+                    AntdUI.Message.success(this, "已带您前往 Ollama GUI");
                     Process.Start(new ProcessStartInfo($"https://ollama-gui.vercel.app") { UseShellExecute = true });
                 }
                 else if (btn.Id == "chat")
                 {
+                    AntdUI.Message.success(this, "已带您前往 NextChat");
                     Process.Start(new ProcessStartInfo($"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}") { UseShellExecute = true });
                 }
             }
@@ -115,8 +118,8 @@ namespace Onllama.Tiny
                     {
                         Invoke(() =>
                         {
-                            progress1.Value = (float) x.Completed / x.Total;
-                            Text = "Onllama - " + x.Status + ":" + x.Digest;
+                            progress1.Value = (float)x.Completed / x.Total;
+                            Text = "Onllama - " + x.Status;
                             if (string.IsNullOrEmpty(x.Status))
                             {
                                 Notification.info(this, "已完成", "模型下载任务无响应，请检查与 ollama.com 的连接。");
@@ -143,28 +146,37 @@ namespace Onllama.Tiny
             var models = Task.Run(async () => await OllamaApi.ListLocalModels()).Result;
             foreach (var item in models)
             {
-                var q = new List<CellTag>()
+                var quartList = new List<CellTag>()
                 {
                     new(item.Details.Format.ToUpper(),TTypeMini.Default),
                     new(item.Details.ParameterSize.ToUpper(),TTypeMini.Success),
                     new(item.Details.QuantizationLevel.ToUpper(),TTypeMini.Warn)
                 };
+                var btnList = new List<CellButton>
+                {
+                    new("delete", "删除", TTypeMini.Error)
+                        {Ghost = true, BorderWidth = 1}
+                };
+                if (item.Details.Family != "bert")
+                {
+                    btnList.AddRange(new[]
+                    {
+                        new CellButton("web-chat", "WebUI", TTypeMini.Primary)
+                            {Ghost = true, BorderWidth = 1},
+                        new CellButton("chat", "NextChat", TTypeMini.Default)
+                            {Ghost = true, BorderWidth = 1}
+                    });
+                }
+                btnList.Reverse();
+                
                 modelsClasses.Add(new ModelsClass()
                 {
                     name = item.Name,
                     size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G",
                     modifiedAt = item.ModifiedAt,
                     families = item.Details.Families.Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray(),
-                    quantization = q.ToArray(),
-                    btns = new CellLink[]
-                    {
-                        new CellButton("web-chat", "WebUI", TTypeMini.Primary)
-                            {Ghost = true, BorderWidth = 1},
-                        new CellButton("chat", "NextChat", TTypeMini.Default)
-                            {Ghost = true, BorderWidth = 1},
-                        new CellButton("delete", "删除", TTypeMini.Error)
-                            {Ghost = true, BorderWidth = 1}
-                    }
+                    quantization = quartList.ToArray(),
+                    btns = btnList.ToArray()
                 });
             }
             table1.DataSource = modelsClasses;
@@ -249,6 +261,23 @@ namespace Onllama.Tiny
                     _btns = value;
                     OnPropertyChanged("btns");
                 }
+            }
+        }
+
+        private void dropdown1_SelectedValueChanged(object sender, object value)
+        {
+            if (value.ToString() == "导入模型")
+            {
+                MessageBox.Show("imp");
+            }
+            else if (value.ToString() == "Ollama 设置")
+            {
+                MessageBox.Show("set");
+            }
+            else if (value.ToString() == "刷新模型列表")
+            {
+                ListModels();
+                AntdUI.Message.success(this, "刷新模型列表完成");
             }
         }
     }
