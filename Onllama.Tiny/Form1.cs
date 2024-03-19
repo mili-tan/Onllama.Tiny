@@ -47,16 +47,20 @@ namespace Onllama.Tiny
                 Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest") { UseShellExecute = true });
                 panel1.Enabled = false;
             }
-            else if (!PortIsUse(11434))
+            if (!PortIsUse(11434))
             {
-                Notification.warn(this, "Ollama 核心未在运行", "请检查 Ollama 服务状态，并稍候重试。");
-                panel1.Enabled = false;
+                Notification.info(this, "Ollama 核心未在运行", "正在启动 Ollama 服务，请稍等…");
+                Process.Start(ollamaPath,"serve");
             }
-            else
+
+            try
             {
                 ListModels();
             }
-
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
 
         public class ModelsClass : AntdUI.NotifyProperty
