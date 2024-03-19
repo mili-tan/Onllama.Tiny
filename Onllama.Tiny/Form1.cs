@@ -6,21 +6,21 @@ using OllamaSharp;
 
 namespace Onllama.Tiny
 {
-    public partial class Form1 : AntdUI.BaseForm
+    public partial class Form1 : BaseForm
     {
-        public static OllamaApiClient OllamaApi = new OllamaApiClient("http://127.0.0.1:11434");
+        public static OllamaApiClient OllamaApi = new("http://127.0.0.1:11434");
 
         public Form1()
         {
             InitializeComponent();
-            table1.Columns = new AntdUI.Column[]
+            table1.Columns = new Column[]
             {
-                new AntdUI.Column("name", "模型名称"),
-                new AntdUI.Column("size", "模型大小"),
-                new AntdUI.Column("modifiedAt", "上次修改"),
-                new AntdUI.Column("families", "系列"),
-                new AntdUI.Column("quantization", "格式与规模"),
-                new AntdUI.Column("btns", "操作") {Fixed = true},
+                new("name", "模型名称"),
+                new("size", "模型大小"),
+                new("modifiedAt", "上次修改"),
+                new("families", "系列"),
+                new("quantization", "格式与规模"),
+                new("btns", "操作") {Fixed = true},
             };
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -60,75 +60,6 @@ namespace Onllama.Tiny
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
-            }
-        }
-
-        public class ModelsClass : NotifyProperty
-        {
-            string _name;
-            public string name
-            {
-                get => _name;
-                set
-                {
-                    _name = value;
-                    OnPropertyChanged("name");
-                }
-            }
-
-            string _size;
-            public string size
-            {
-                get => _size;
-                set
-                {
-                    _size = value;
-                    OnPropertyChanged("size");
-                }
-            }
-
-            DateTime _modifiedAt;
-            public DateTime modifiedAt
-            {
-                get => _modifiedAt;
-                set
-                {
-                    _modifiedAt = value;
-                    OnPropertyChanged("modifiedAt");
-                }
-            }
-
-            CellTag[]? _families;
-            public CellTag[]? families
-            {
-                get => _families;
-                set
-                {
-                    _families = value;
-                    OnPropertyChanged("families");
-                }
-            }
-
-            CellTag[]? _quantization;
-            public CellTag[]? quantization
-            {
-                get => _quantization;
-                set
-                {
-                    _quantization = value;
-                    OnPropertyChanged("quantization");
-                }
-            }
-
-            CellLink[]? _btns;
-            public CellLink[]? btns
-            {
-                get => _btns;
-                set
-                {
-                    _btns = value;
-                    OnPropertyChanged("btns");
-                }
             }
         }
 
@@ -225,13 +156,13 @@ namespace Onllama.Tiny
                     modifiedAt = item.ModifiedAt,
                     families = item.Details.Families.Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray(),
                     quantization = q.ToArray(),
-                    btns = new AntdUI.CellLink[]
+                    btns = new CellLink[]
                     {
-                        new AntdUI.CellButton("web-chat", "WebUI", AntdUI.TTypeMini.Default)
+                        new CellButton("web-chat", "WebUI", TTypeMini.Primary)
                             {Ghost = true, BorderWidth = 1},
-                        new AntdUI.CellButton("chat", "NextChat", AntdUI.TTypeMini.Default)
+                        new CellButton("chat", "NextChat", TTypeMini.Default)
                             {Ghost = true, BorderWidth = 1},
-                        new AntdUI.CellButton("delete", "删除", AntdUI.TTypeMini.Error)
+                        new CellButton("delete", "删除", TTypeMini.Error)
                             {Ghost = true, BorderWidth = 1}
                     }
                 });
@@ -250,6 +181,74 @@ namespace Onllama.Tiny
             {
                 MessageBox.Show(e.ToString());
                 return true;
+            }
+        }
+        public class ModelsClass : NotifyProperty
+        {
+            string _name;
+            public string name
+            {
+                get => _name;
+                set
+                {
+                    _name = value;
+                    OnPropertyChanged("name");
+                }
+            }
+
+            string _size;
+            public string size
+            {
+                get => _size;
+                set
+                {
+                    _size = value;
+                    OnPropertyChanged("size");
+                }
+            }
+
+            DateTime _modifiedAt;
+            public DateTime modifiedAt
+            {
+                get => _modifiedAt;
+                set
+                {
+                    _modifiedAt = value;
+                    OnPropertyChanged("modifiedAt");
+                }
+            }
+
+            CellTag[]? _families;
+            public CellTag[]? families
+            {
+                get => _families;
+                set
+                {
+                    _families = value;
+                    OnPropertyChanged("families");
+                }
+            }
+
+            CellTag[]? _quantization;
+            public CellTag[]? quantization
+            {
+                get => _quantization;
+                set
+                {
+                    _quantization = value;
+                    OnPropertyChanged("quantization");
+                }
+            }
+
+            CellLink[]? _btns;
+            public CellLink[]? btns
+            {
+                get => _btns;
+                set
+                {
+                    _btns = value;
+                    OnPropertyChanged("btns");
+                }
             }
         }
     }
