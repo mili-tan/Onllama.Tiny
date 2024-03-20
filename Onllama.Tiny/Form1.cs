@@ -22,6 +22,7 @@ namespace Onllama.Tiny
                 new("quantization", "格式与规模"),
                 new("btns", "操作") {Fixed = true},
             };
+            dropdown1.Items.Add(new SelectItem("Ollama") {Sub = new List<object> {"NextChat", "查看日志", "查找模型"}});
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -164,7 +165,7 @@ namespace Onllama.Tiny
                 {
                     btnList.AddRange(new[]
                     {
-                        new CellButton("web-chat", "WebUI", TTypeMini.Primary)
+                        new CellButton("web-chat", "WebUI", TTypeMini.Default)
                             {Ghost = true, BorderWidth = 1},
                     });
                 }
@@ -282,8 +283,15 @@ namespace Onllama.Tiny
             }
             else if (value.ToString() == "NextChat")
             {
-                AntdUI.Message.success(this, "已带您前往 NextChat");
                 Process.Start(new ProcessStartInfo($"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}") { UseShellExecute = true });
+            }
+            else if (value.ToString() == "查找模型")
+            {
+                Process.Start(new ProcessStartInfo($"https://ollama.com/library") { UseShellExecute = true });
+            }
+            else if (value.ToString() == "查看日志")
+            {
+                Process.Start(new ProcessStartInfo($"explorer.exe", "%LOCALAPPDATA%\\Ollama"));
             }
         }
     }
