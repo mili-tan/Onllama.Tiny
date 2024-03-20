@@ -56,14 +56,7 @@ namespace Onllama.Tiny
                 Process.Start(ollamaPath, "serve");
             }
 
-            try
-            {
-                ListModels();
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
+            ListModels();
         }
 
         private void table1_CellButtonClick(object sender, CellLink btn, MouseEventArgs args, object record,
@@ -191,6 +184,7 @@ namespace Onllama.Tiny
             }
             catch (Exception e)
             {
+                AntdUI.Message.error(this, "刷新模型列表失败：" + e.Message);
                 Console.WriteLine(e);
             }
         }
