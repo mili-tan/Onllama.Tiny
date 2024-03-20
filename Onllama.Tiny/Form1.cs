@@ -291,7 +291,8 @@ namespace Onllama.Tiny
             }
             else if (value.ToString() == "查看日志")
             {
-                Process.Start(new ProcessStartInfo($"explorer.exe", "%LOCALAPPDATA%\\Ollama"));
+                Process.Start(new ProcessStartInfo($"explorer.exe",
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Ollama\\"));
             }
         }
     }
