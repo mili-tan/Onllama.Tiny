@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Net.NetworkInformation;
-using System.Xml.Linq;
 using AntdUI;
 using OllamaSharp;
 
@@ -22,7 +21,7 @@ namespace Onllama.Tiny
                 new("quantization", "格式与规模"),
                 new("btns", "操作") {Fixed = true},
             };
-            dropdown1.Items.Add(new SelectItem("Ollama") {Sub = new List<object> {"NextChat", "查看日志", "查找模型"}});
+            dropdown1.Items.Add(new SelectItem("Ollama") {Sub = new List<object> {"NextChat", "查看日志", "查找模型", "检查更新" } });
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -274,7 +273,7 @@ namespace Onllama.Tiny
             }
             else if (value.ToString() == "Ollama 设置")
             {
-                MessageBox.Show("set");
+                new FormSettings().ShowDialog();
             }
             else if (value.ToString() == "刷新模型列表")
             {
@@ -293,6 +292,27 @@ namespace Onllama.Tiny
             {
                 Process.Start(new ProcessStartInfo($"explorer.exe",
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Ollama\\"));
+            }
+            else if (value.ToString() == "检查更新")
+            {
+                var process = Process.Start(new ProcessStartInfo("ollama.exe", "-v")
+                {
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardInput = true
+                });
+                process.WaitForExit();
+                var version = process.StandardOutput.ReadToEnd();
+                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "Ollama 核心版本",version, TType.Info)
+                {
+                    OnOk = _ =>
+                    {
+                        Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
+                            {UseShellExecute = true});
+                        return true;
+                    }
+                });
             }
         }
     }
