@@ -18,17 +18,14 @@ namespace Onllama.Tiny
             if (f.ShowDialog() == DialogResult.OK) input1.Text = f.FileName;
             inputName.Text = f.SafeFileNames.Last().Split('.', '-').First();
             foreach (var item in select1.Items)
-                if (input1.Text.Contains(item.ToString()))
+                if (input1.Text.Contains(item.ToString() ?? string.Empty))
                     select1.SelectedValue = item.ToString();
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            AntdUI.Modal.open(new AntdUI.Modal.Config(this, "您确定要导入模型吗？",
-                new[]
-                {
-                    new Modal.TextLine(inputName.Text, Style.Db.Primary)
-                }, TType.Success)
+            new Modal.Config(this, "您确定要导入模型吗？", new[] {new Modal.TextLine(inputName.Text, Style.Db.Primary)},
+                TType.Success)
             {
                 OkType = TTypeMini.Success,
                 OkText = "导入",
@@ -49,16 +46,27 @@ namespace Onllama.Tiny
                     Invoke(Close);
                     return true;
                 }
-            });
+            }.open();
         }
 
         private void select1_SelectedValueChanged(object sender, object value)
         {
-            inputMf.Text = "FROM " + input1.Text + Environment.NewLine;
-            if (value.ToString() == "qwen") inputMf.Text += Resources.qwenTmp;
-            if (value.ToString() == "yi") inputMf.Text += Resources.yiTmp;
-            if (value.ToString() == "gemma") inputMf.Text += Resources.gemmaTmp;
-            if (value.ToString() == "mistral") inputMf.Text += Resources.mistralTmp;
+            inputMf.Text = @"FROM " + input1.Text + Environment.NewLine;
+            switch (value.ToString())
+            {
+                case "qwen":
+                    inputMf.Text += Resources.qwenTmp;
+                    break;
+                case "yi":
+                    inputMf.Text += Resources.yiTmp;
+                    break;
+                case "gemma":
+                    inputMf.Text += Resources.gemmaTmp;
+                    break;
+                case "mistral":
+                    inputMf.Text += Resources.mistralTmp;
+                    break;
+            }
         }
 
         private void FormImport_Load(object sender, EventArgs e)

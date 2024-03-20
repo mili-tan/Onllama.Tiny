@@ -62,11 +62,11 @@ namespace Onllama.Tiny
         private void table1_CellButtonClick(object sender, CellLink btn, MouseEventArgs args, object record,
             int rowIndex, int columnIndex)
         {
-            if (record is ModelsClass data)
+            if (record is not ModelsClass data) return;
+            switch (btn.Id)
             {
-                if (btn.Id == "delete")
-                {
-                    AntdUI.Modal.open(new AntdUI.Modal.Config(this, "您确定要删除模型吗？",
+                case "delete":
+                    new Modal.Config(this, "您确定要删除模型吗？",
                         new[]
                         {
                             new Modal.TextLine(data.name, Style.Db.Primary),
@@ -81,30 +81,23 @@ namespace Onllama.Tiny
                             Invoke(ListModels);
                             return true;
                         }
-                    });
-                }
-                else if (btn.Id == "web-chat")
-                {
+                    }.open();
+                    break;
+                case "web-chat":
                     AntdUI.Message.success(this, "已带您前往 Ollama GUI");
                     Process.Start(new ProcessStartInfo($"https://ollama-gui.vercel.app") {UseShellExecute = true});
-                }
-                else if (btn.Id == "copy")
-                {
+                    break;
+                case "copy":
                     new FormCopy(data.name).ShowDialog();
                     ListModels();
-                }
+                    break;
             }
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (select1.Text.Contains(" ")) select1.Text = select1.Text.Split(' ').Last();
-            AntdUI.Modal.open(new AntdUI.Modal.Config(this, "您确定要下载模型吗？",
-                new[]
-                {
-                    new Modal.TextLine(select1.Text, Style.Db.Primary)
-                }, TType.Success)
+            new Modal.Config(this, "您确定要下载模型吗？", new[]{ new Modal.TextLine(select1.Text, Style.Db.Primary) }, TType.Success)
             {
                 OkType = TTypeMini.Success,
                 OkText = "下载",
@@ -134,7 +127,7 @@ namespace Onllama.Tiny
                     }));
                     return true;
                 }
-            });
+            }.open();
         }
 
         public void ListModels()
@@ -168,7 +161,6 @@ namespace Onllama.Tiny
                     }
 
                     btnList.Reverse();
-
                     modelsClasses.Add(new ModelsClass()
                     {
                         name = item.Name,
@@ -280,56 +272,54 @@ namespace Onllama.Tiny
 
         private void dropdown1_SelectedValueChanged(object sender, object value)
         {
-            if (value.ToString() == "导入模型")
+            switch (value.ToString())
             {
-                new FormImport().ShowDialog();
-                ListModels();
-            }
-            else if (value.ToString() == "Ollama 设置")
-            {
-                new FormSettings().ShowDialog();
-            }
-            else if (value.ToString() == "刷新模型列表")
-            {
-                ListModels();
-                AntdUI.Message.success(this, "刷新模型列表完成");
-            }
-            else if (value.ToString() == "NextChat")
-            {
-                Process.Start(
-                    new ProcessStartInfo(
-                            $"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}")
-                        {UseShellExecute = true});
-            }
-            else if (value.ToString() == "查找模型")
-            {
-                Process.Start(new ProcessStartInfo($"https://ollama.com/library") {UseShellExecute = true});
-            }
-            else if (value.ToString() == "查看日志")
-            {
-                Process.Start(new ProcessStartInfo($"explorer.exe",
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Ollama\\"));
-            }
-            else if (value.ToString() == "检查更新")
-            {
-                var process = Process.Start(new ProcessStartInfo("ollama.exe", "-v")
-                {
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    RedirectStandardInput = true
-                });
-                process.WaitForExit();
-                var version = process.StandardOutput.ReadToEnd();
-                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "Ollama 核心版本", version, TType.Info)
-                {
-                    OnOk = _ =>
-                    {
-                        Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
+                case "导入模型":
+                    new FormImport().ShowDialog();
+                    ListModels();
+                    break;
+                case "Ollama 设置":
+                    new FormSettings().ShowDialog();
+                    break;
+                case "刷新模型列表":
+                    ListModels();
+                    AntdUI.Message.success(this, "刷新模型列表完成");
+                    break;
+                case "NextChat":
+                    Process.Start(
+                        new ProcessStartInfo(
+                                $"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}")
                             {UseShellExecute = true});
-                        return true;
-                    }
-                });
+                    break;
+                case "查找模型":
+                    Process.Start(new ProcessStartInfo($"https://ollama.com/library") {UseShellExecute = true});
+                    break;
+                case "查看日志":
+                    Process.Start(new ProcessStartInfo($"explorer.exe",
+                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Ollama\\"));
+                    break;
+                case "检查更新":
+                {
+                    var process = Process.Start(new ProcessStartInfo("ollama.exe", "-v")
+                    {
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardInput = true
+                    });
+                    process?.WaitForExit();
+                    var version = process?.StandardOutput.ReadToEnd() ?? string.Empty;
+                    new Modal.Config(this, "Ollama 核心版本", version, TType.Info)
+                    {
+                        OnOk = _ =>
+                        {
+                            Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
+                                {UseShellExecute = true});
+                            return true;
+                        }
+                    }.open();
+                    break;
+                }
             }
         }
     }

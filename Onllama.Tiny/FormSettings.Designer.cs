@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             panel1 = new AntdUI.Panel();
             buttonSave = new AntdUI.Button();
             panel2 = new AntdUI.Panel();
@@ -149,6 +150,7 @@
             ClientSize = new Size(334, 231);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FormSettings";

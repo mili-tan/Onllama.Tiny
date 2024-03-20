@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Diagnostics;
 using AntdUI;
 
 namespace Onllama.Tiny
@@ -48,14 +39,14 @@ namespace Onllama.Tiny
                 //() => Kill("ollama app"),
                 //() => Kill("ollama")
             );
-            AntdUI.Modal.open(new AntdUI.Modal.Config(this, "设置已更改", "请手动重启 Ollama 核心以使配置生效。", TType.Info)
+            new Modal.Config(this, "设置已更改", "请手动重启 Ollama 核心以使配置生效。", TType.Info)
             {
                 OnOk = _ =>
                 {
                     Invoke(Close);
                     return true;
                 }
-            });
+            }.open();
         }
 
         private void Kill(string name)

@@ -31,6 +31,7 @@ namespace Onllama.Tiny
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCopy));
             panel1 = new AntdUI.Panel();
             input1 = new Input();
             button1 = new AntdUI.Button();
@@ -81,12 +82,14 @@ namespace Onllama.Tiny
             ClientSize = new Size(349, 41);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FormCopy";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "复制模型";
+            Load += FormCopy_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

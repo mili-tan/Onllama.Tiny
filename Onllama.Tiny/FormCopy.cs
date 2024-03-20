@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using OllamaSharp.Models;
+﻿using OllamaSharp.Models;
 
 namespace Onllama.Tiny
 {
@@ -18,8 +9,8 @@ namespace Onllama.Tiny
         {
             InitializeComponent();
             sourceName = model;
-            Text = "Onllama - 复制 " + model;
-            input1.Text = model + "-copy";
+            Text = "复制 " + model;
+            input1.Text = model + @"-copy";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,6 +26,11 @@ namespace Onllama.Tiny
                 Console.WriteLine(exception);
             }
             Close();
+        }
+
+        private void FormCopy_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

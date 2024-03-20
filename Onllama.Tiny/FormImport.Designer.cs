@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormImport));
             panel1 = new AntdUI.Panel();
+            inputName = new AntdUI.Input();
             inputMf = new AntdUI.Input();
             select1 = new AntdUI.Select();
             buttonSave = new AntdUI.Button();
@@ -37,7 +39,6 @@
             buttonOpen = new AntdUI.Button();
             divider2 = new AntdUI.Divider();
             divider1 = new AntdUI.Divider();
-            inputName = new AntdUI.Input();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -57,6 +58,16 @@
             panel1.Size = new Size(560, 387);
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
+            // 
+            // inputName
+            // 
+            inputName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            inputName.BackColor = Color.Transparent;
+            inputName.Location = new Point(11, 75);
+            inputName.Name = "inputName";
+            inputName.PlaceholderText = "qwen";
+            inputName.Size = new Size(538, 30);
+            inputName.TabIndex = 9;
             // 
             // inputMf
             // 
@@ -151,16 +162,6 @@
             divider1.TabIndex = 0;
             divider1.Text = "模型位置";
             // 
-            // inputName
-            // 
-            inputName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            inputName.BackColor = Color.Transparent;
-            inputName.Location = new Point(11, 75);
-            inputName.Name = "inputName";
-            inputName.PlaceholderText = "qwen";
-            inputName.Size = new Size(538, 30);
-            inputName.TabIndex = 9;
-            // 
             // FormImport
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -168,6 +169,7 @@
             ClientSize = new Size(584, 411);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FormImport";
