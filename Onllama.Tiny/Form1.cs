@@ -106,6 +106,7 @@ namespace Onllama.Tiny
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (select1.Text.Contains(" ")) select1.Text = select1.Text.Split(' ').Last();
             AntdUI.Modal.open(new AntdUI.Modal.Config(this, "您确定要下载模型吗？",
                 new[]
                 {
