@@ -18,7 +18,7 @@ namespace Onllama.Tiny
                 new("name", "模型名称"),
                 new("size", "模型大小"),
                 new("modifiedAt", "上次修改"),
-                new("families", "系列"),
+                new("families", "家族"),
                 new("quantization", "格式与规模"),
                 new("btns", "操作") {Fixed = true},
             };
@@ -47,10 +47,10 @@ namespace Onllama.Tiny
                 Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest") { UseShellExecute = true });
                 panel1.Enabled = false;
             }
-            if (!PortIsUse(11434))
+            else if (!PortIsUse(11434))
             {
-                AntdUI.Message.info(this, "正在启动 Ollama 服务…");
                 //Notification.info(this, "Ollama 核心未在运行", "正在启动 Ollama 服务，请稍等…");
+                AntdUI.Message.info(this, "正在启动 Ollama 服务…");
                 Process.Start(ollamaPath, "serve");
             }
 
@@ -83,6 +83,7 @@ namespace Onllama.Tiny
                         OnOk = _ =>
                         {
                             Task.Run(async () => await OllamaApi.DeleteModel(data.name)).Wait();
+                            Invoke(ListModels);
                             return true;
                         }
                     });
@@ -92,10 +93,10 @@ namespace Onllama.Tiny
                     AntdUI.Message.success(this, "已带您前往 Ollama GUI");
                     Process.Start(new ProcessStartInfo($"https://ollama-gui.vercel.app") { UseShellExecute = true });
                 }
-                else if (btn.Id == "chat")
+                else if (btn.Id == "copy")
                 {
-                    AntdUI.Message.success(this, "已带您前往 NextChat");
-                    Process.Start(new ProcessStartInfo($"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}") { UseShellExecute = true });
+                    new FormCopy(data.name).ShowDialog();
+                    ListModels();
                 }
             }
 
@@ -155,6 +156,8 @@ namespace Onllama.Tiny
                 var btnList = new List<CellButton>
                 {
                     new("delete", "删除", TTypeMini.Error)
+                        {Ghost = true, BorderWidth = 1},
+                    new("copy", "复制", TTypeMini.Success)
                         {Ghost = true, BorderWidth = 1}
                 };
                 if (item.Details.Family != "bert")
@@ -163,8 +166,6 @@ namespace Onllama.Tiny
                     {
                         new CellButton("web-chat", "WebUI", TTypeMini.Primary)
                             {Ghost = true, BorderWidth = 1},
-                        new CellButton("chat", "NextChat", TTypeMini.Default)
-                            {Ghost = true, BorderWidth = 1}
                     });
                 }
                 btnList.Reverse();
@@ -278,6 +279,11 @@ namespace Onllama.Tiny
             {
                 ListModels();
                 AntdUI.Message.success(this, "刷新模型列表完成");
+            }
+            else if (value.ToString() == "NextChat")
+            {
+                AntdUI.Message.success(this, "已带您前往 NextChat");
+                Process.Start(new ProcessStartInfo($"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}") { UseShellExecute = true });
             }
         }
     }
