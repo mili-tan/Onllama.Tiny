@@ -146,46 +146,53 @@ namespace Onllama.Tiny
 
         public void ListModels()
         {
-            var modelsClasses = new List<ModelsClass>();
-            var models = Task.Run(async () => await OllamaApi.ListLocalModels()).Result;
-            foreach (var item in models)
+            try
             {
-                var quartList = new List<CellTag>()
+                var modelsClasses = new List<ModelsClass>();
+                var models = Task.Run(async () => await OllamaApi.ListLocalModels()).Result;
+                foreach (var item in models)
                 {
-                    new(item.Details.Format.ToUpper(), TTypeMini.Default),
-                    new(item.Details.ParameterSize.ToUpper(), TTypeMini.Success),
-                    new(item.Details.QuantizationLevel.ToUpper(), TTypeMini.Warn)
-                };
-                var btnList = new List<CellButton>
-                {
-                    new("delete", "删除", TTypeMini.Error)
-                        {Ghost = true, BorderWidth = 1},
-                    new("copy", "复制", TTypeMini.Success)
-                        {Ghost = true, BorderWidth = 1}
-                };
-                if (item.Details.Family != "bert")
-                {
-                    btnList.AddRange(new[]
+                    var quartList = new List<CellTag>()
                     {
-                        new CellButton("web-chat", "WebUI", TTypeMini.Default)
+                        new(item.Details.Format.ToUpper(), TTypeMini.Default),
+                        new(item.Details.ParameterSize.ToUpper(), TTypeMini.Success),
+                        new(item.Details.QuantizationLevel.ToUpper(), TTypeMini.Warn)
+                    };
+                    var btnList = new List<CellButton>
+                    {
+                        new("delete", "删除", TTypeMini.Error)
                             {Ghost = true, BorderWidth = 1},
+                        new("copy", "复制", TTypeMini.Success)
+                            {Ghost = true, BorderWidth = 1}
+                    };
+                    if (item.Details.Family != "bert")
+                    {
+                        btnList.AddRange(new[]
+                        {
+                            new CellButton("web-chat", "WebUI", TTypeMini.Default)
+                                {Ghost = true, BorderWidth = 1},
+                        });
+                    }
+
+                    btnList.Reverse();
+
+                    modelsClasses.Add(new ModelsClass()
+                    {
+                        name = item.Name,
+                        size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G",
+                        modifiedAt = item.ModifiedAt,
+                        families = item.Details.Families.Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray(),
+                        quantization = quartList.ToArray(),
+                        btns = btnList.ToArray()
                     });
                 }
 
-                btnList.Reverse();
-
-                modelsClasses.Add(new ModelsClass()
-                {
-                    name = item.Name,
-                    size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G",
-                    modifiedAt = item.ModifiedAt,
-                    families = item.Details.Families.Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray(),
-                    quantization = quartList.ToArray(),
-                    btns = btnList.ToArray()
-                });
+                table1.DataSource = modelsClasses;
             }
-
-            table1.DataSource = modelsClasses;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public static bool PortIsUse(int port)
