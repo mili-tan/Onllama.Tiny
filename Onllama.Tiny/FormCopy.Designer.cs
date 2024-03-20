@@ -41,9 +41,10 @@ namespace Onllama.Tiny
             // 
             panel1.Controls.Add(input1);
             panel1.Controls.Add(button1);
-            panel1.Location = new Point(1, 1);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(350, 40);
+            panel1.Size = new Size(349, 41);
             panel1.TabIndex = 1;
             // 
             // input1
@@ -51,31 +52,33 @@ namespace Onllama.Tiny
             input1.Dock = DockStyle.Fill;
             input1.JoinRight = true;
             input1.Location = new Point(0, 0);
+            input1.Margin = new Padding(5);
             input1.Margins = 6;
             input1.Name = "input1";
             input1.PlaceholderText = "新模型名称";
-            input1.Size = new Size(301, 40);
+            input1.Size = new Size(300, 41);
             input1.TabIndex = 0;
             // 
             // button1
             // 
             button1.AutoSizeMode = TAutoSize.Width;
+            button1.BorderWidth = 1F;
             button1.Dock = DockStyle.Right;
+            button1.Ghost = true;
             button1.JoinLeft = true;
-            button1.Location = new Point(301, 0);
+            button1.Location = new Point(300, 0);
             button1.Margins = 6;
             button1.Name = "button1";
-            button1.Size = new Size(49, 40);
+            button1.Size = new Size(49, 41);
             button1.TabIndex = 1;
             button1.Text = "确定";
-            button1.Type = TTypeMini.Primary;
             button1.Click += button1_Click;
             // 
             // FormCopy
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(352, 45);
+            ClientSize = new Size(349, 41);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
