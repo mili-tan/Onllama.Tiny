@@ -280,12 +280,12 @@ namespace Onllama.Tiny
         {
             if (value.ToString() == "导入模型")
             {
-                MessageBox.Show("imp");
+                new FormImport().ShowDialog();
+                ListModels();
             }
             else if (value.ToString() == "Ollama 设置")
             {
                 new FormSettings().ShowDialog();
-                Notification.info(this, "设置已更改", "请手动重启 Ollama 核心以使配置生效。");
             }
             else if (value.ToString() == "刷新模型列表")
             {

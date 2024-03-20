@@ -48,10 +48,14 @@ namespace Onllama.Tiny
                 //() => Kill("ollama app"),
                 //() => Kill("ollama")
             );
-            //Process.Start(Application.ExecutablePath);
-            //MessageBox.Show("设置完成，程序将会重启…");
-            //Environment.Exit(0);
-            Close();
+            AntdUI.Modal.open(new AntdUI.Modal.Config(this, "设置已更改", "请手动重启 Ollama 核心以使配置生效。", TType.Info)
+            {
+                OnOk = _ =>
+                {
+                    Invoke(Close);
+                    return true;
+                }
+            });
         }
 
         private void Kill(string name)

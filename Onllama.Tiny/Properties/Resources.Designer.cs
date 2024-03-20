@@ -61,12 +61,44 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        ///   查找类似 TEMPLATE &quot;&quot;&quot;&lt;start_of_turn&gt;user
+        ///{{ if .System }}{{ .System }} {{ end }}{{ .Prompt }}&lt;end_of_turn&gt;
+        ///&lt;start_of_turn&gt;model
+        ///{{ .Response }}&lt;end_of_turn&gt;
+        ///&quot;&quot;&quot;
+        ///PARAMETER stop &quot;&lt;start_of_turn&gt;&quot;
+        ///PARAMETER stop &quot;&lt;end_of_turn&gt;&quot;
+        ///PARAMETER repeat_penalty 1 的本地化字符串。
         /// </summary>
-        internal static System.Drawing.Bitmap setting {
+        internal static string gemmaTmp {
             get {
-                object obj = ResourceManager.GetObject("setting", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("gemmaTmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 TEMPLATE &quot;&quot;&quot;[INST] {{ .System }} {{ .Prompt }} [/INST]&quot;&quot;&quot;
+        ///PARAMETER stop &quot;[INST]&quot;
+        ///PARAMETER stop &quot;[/INST]&quot; 的本地化字符串。
+        /// </summary>
+        internal static string mistralTmp {
+            get {
+                return ResourceManager.GetString("mistralTmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 TEMPLATE &quot;&quot;&quot;{{ if .System }}&lt;|im_start|&gt;system
+        ///{{ .System }}&lt;|im_end|&gt;{{ end }}&lt;|im_start|&gt;user
+        ///{{ .Prompt }}&lt;|im_end|&gt;
+        ///&lt;|im_start|&gt;assistant
+        ///&quot;&quot;&quot;
+        ///PARAMETER stop &quot;&lt;|im_start|&gt;&quot;
+        ///PARAMETER stop &quot;&lt;|im_end|&gt;&quot; 的本地化字符串。
+        /// </summary>
+        internal static string qwenTmp {
+            get {
+                return ResourceManager.GetString("qwenTmp", resourceCulture);
             }
         }
         
@@ -76,6 +108,22 @@ namespace Onllama.Tiny.Properties {
         internal static string settingSvg {
             get {
                 return ResourceManager.GetString("settingSvg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 TEMPLATE &quot;&quot;&quot;&lt;|im_start|&gt;system
+        ///{{ .System }}&lt;|im_end|&gt;
+        ///&lt;|im_start|&gt;user
+        ///{{ .Prompt }}&lt;|im_end|&gt;
+        ///&lt;|im_start|&gt;assistant
+        ///&quot;&quot;&quot;
+        ///PARAMETER stop &quot;&lt;|im_start|&gt;&quot;
+        ///PARAMETER stop &quot;&lt;|im_end|&gt;&quot; 的本地化字符串。
+        /// </summary>
+        internal static string yiTmp {
+            get {
+                return ResourceManager.GetString("yiTmp", resourceCulture);
             }
         }
     }
