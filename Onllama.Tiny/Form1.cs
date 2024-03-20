@@ -21,8 +21,9 @@ namespace Onllama.Tiny
                 new("quantization", "格式与规模"),
                 new("btns", "操作") {Fixed = true},
             };
-            dropdown1.Items.Add(new SelectItem("Ollama") {Sub = new List<object> {"NextChat", "查看日志", "查找模型", "检查更新" } });
+            dropdown1.Items.Add(new SelectItem("Ollama") {Sub = new List<object> {"NextChat", "查看日志", "查找模型", "检查更新"}});
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             var ollamaPath = (Environment.GetEnvironmentVariable("PATH")
@@ -43,8 +44,9 @@ namespace Onllama.Tiny
             if (string.IsNullOrWhiteSpace(ollamaPath))
             {
                 Notification.warn(this, "Ollama 核心未安装", "请先安装 Ollama 服务，并稍候重试。");
-                Process.Start(new ProcessStartInfo($"https://ollama.com/download/windows") { UseShellExecute = true });
-                Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest") { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo($"https://ollama.com/download/windows") {UseShellExecute = true});
+                Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
+                    {UseShellExecute = true});
                 panel1.Enabled = false;
             }
             else if (!PortIsUse(11434))
@@ -91,7 +93,7 @@ namespace Onllama.Tiny
                 else if (btn.Id == "web-chat")
                 {
                     AntdUI.Message.success(this, "已带您前往 Ollama GUI");
-                    Process.Start(new ProcessStartInfo($"https://ollama-gui.vercel.app") { UseShellExecute = true });
+                    Process.Start(new ProcessStartInfo($"https://ollama-gui.vercel.app") {UseShellExecute = true});
                 }
                 else if (btn.Id == "copy")
                 {
@@ -119,7 +121,7 @@ namespace Onllama.Tiny
                     {
                         Invoke(() =>
                         {
-                            progress1.Value = (float)x.Completed / x.Total;
+                            progress1.Value = (float) x.Completed / x.Total;
                             Text = "Onllama - " + x.Status;
                             if (string.IsNullOrEmpty(x.Status))
                             {
@@ -149,9 +151,9 @@ namespace Onllama.Tiny
             {
                 var quartList = new List<CellTag>()
                 {
-                    new(item.Details.Format.ToUpper(),TTypeMini.Default),
-                    new(item.Details.ParameterSize.ToUpper(),TTypeMini.Success),
-                    new(item.Details.QuantizationLevel.ToUpper(),TTypeMini.Warn)
+                    new(item.Details.Format.ToUpper(), TTypeMini.Default),
+                    new(item.Details.ParameterSize.ToUpper(), TTypeMini.Success),
+                    new(item.Details.QuantizationLevel.ToUpper(), TTypeMini.Warn)
                 };
                 var btnList = new List<CellButton>
                 {
@@ -168,8 +170,9 @@ namespace Onllama.Tiny
                             {Ghost = true, BorderWidth = 1},
                     });
                 }
+
                 btnList.Reverse();
-                
+
                 modelsClasses.Add(new ModelsClass()
                 {
                     name = item.Name,
@@ -180,6 +183,7 @@ namespace Onllama.Tiny
                     btns = btnList.ToArray()
                 });
             }
+
             table1.DataSource = modelsClasses;
         }
 
@@ -196,9 +200,11 @@ namespace Onllama.Tiny
                 return true;
             }
         }
+
         public class ModelsClass : NotifyProperty
         {
             string _name;
+
             public string name
             {
                 get => _name;
@@ -210,6 +216,7 @@ namespace Onllama.Tiny
             }
 
             string _size;
+
             public string size
             {
                 get => _size;
@@ -221,6 +228,7 @@ namespace Onllama.Tiny
             }
 
             DateTime _modifiedAt;
+
             public DateTime modifiedAt
             {
                 get => _modifiedAt;
@@ -232,6 +240,7 @@ namespace Onllama.Tiny
             }
 
             CellTag[]? _families;
+
             public CellTag[]? families
             {
                 get => _families;
@@ -243,6 +252,7 @@ namespace Onllama.Tiny
             }
 
             CellTag[]? _quantization;
+
             public CellTag[]? quantization
             {
                 get => _quantization;
@@ -254,6 +264,7 @@ namespace Onllama.Tiny
             }
 
             CellLink[]? _btns;
+
             public CellLink[]? btns
             {
                 get => _btns;
@@ -282,11 +293,14 @@ namespace Onllama.Tiny
             }
             else if (value.ToString() == "NextChat")
             {
-                Process.Start(new ProcessStartInfo($"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}") { UseShellExecute = true });
+                Process.Start(
+                    new ProcessStartInfo(
+                            $"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}")
+                        {UseShellExecute = true});
             }
             else if (value.ToString() == "查找模型")
             {
-                Process.Start(new ProcessStartInfo($"https://ollama.com/library") { UseShellExecute = true });
+                Process.Start(new ProcessStartInfo($"https://ollama.com/library") {UseShellExecute = true});
             }
             else if (value.ToString() == "查看日志")
             {
@@ -304,7 +318,7 @@ namespace Onllama.Tiny
                 });
                 process.WaitForExit();
                 var version = process.StandardOutput.ReadToEnd();
-                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "Ollama 核心版本",version, TType.Info)
+                AntdUI.Modal.open(new AntdUI.Modal.Config(this, "Ollama 核心版本", version, TType.Info)
                 {
                     OnOk = _ =>
                     {
