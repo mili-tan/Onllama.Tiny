@@ -166,7 +166,8 @@ namespace Onllama.Tiny
                         name = item.Name,
                         size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G",
                         modifiedAt = item.ModifiedAt,
-                        families = item.Details.Families.Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray(),
+                        families = item.Details.Families.Distinct()
+                            .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray(),
                         quantization = quartList.ToArray(),
                         btns = btnList.ToArray()
                     });
