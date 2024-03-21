@@ -42,10 +42,9 @@ namespace Onllama.Tiny
             // 
             panel1.Controls.Add(input1);
             panel1.Controls.Add(button1);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 0);
+            panel1.Location = new Point(0, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(349, 41);
+            panel1.Size = new Size(349, 35);
             panel1.TabIndex = 1;
             // 
             // input1
@@ -57,7 +56,7 @@ namespace Onllama.Tiny
             input1.Margins = 6;
             input1.Name = "input1";
             input1.PlaceholderText = "新模型名称";
-            input1.Size = new Size(300, 41);
+            input1.Size = new Size(300, 35);
             input1.TabIndex = 0;
             // 
             // button1
@@ -70,7 +69,7 @@ namespace Onllama.Tiny
             button1.Location = new Point(300, 0);
             button1.Margins = 6;
             button1.Name = "button1";
-            button1.Size = new Size(49, 41);
+            button1.Size = new Size(49, 35);
             button1.TabIndex = 1;
             button1.Text = "确定";
             button1.Click += button1_Click;

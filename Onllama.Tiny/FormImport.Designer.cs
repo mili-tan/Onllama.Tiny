@@ -65,7 +65,7 @@
             inputName.BackColor = Color.Transparent;
             inputName.Location = new Point(11, 75);
             inputName.Name = "inputName";
-            inputName.PlaceholderText = "qwen";
+            inputName.PlaceholderText = "模型名称";
             inputName.Size = new Size(538, 30);
             inputName.TabIndex = 9;
             // 

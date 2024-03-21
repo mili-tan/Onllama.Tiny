@@ -1,4 +1,5 @@
-﻿using AntdUI;
+﻿using System.Globalization;
+using AntdUI;
 using OllamaSharp.Models;
 using OllamaSharp.Streamer;
 using Onllama.Tiny.Properties;
@@ -35,10 +36,12 @@ namespace Onllama.Tiny
                 {
                     try
                     {
+                        var textInfo = new CultureInfo("en-US", false).TextInfo;
                         Task.Run(() => Form1.OllamaApi.CreateModel(
                             new CreateModelRequest
                                 {ModelFileContent = inputMf.Text, Name = inputName.Text, Stream = true},
-                            new ActionResponseStreamer<CreateStatus>(x => Invoke(() => Text = x.Status)))).Wait();
+                            new ActionResponseStreamer<CreateStatus>(x =>
+                                Invoke(() => Text = textInfo.ToTitleCase(x.Status))))).Wait();
                     }
                     catch (Exception exception)
                     {

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Net.NetworkInformation;
 using AntdUI;
 using OllamaSharp;
@@ -108,8 +109,9 @@ namespace Onllama.Tiny
                     {
                         Invoke(() =>
                         {
+                            var textInfo = new CultureInfo("en-US", false).TextInfo;
                             progress1.Value = (float) x.Completed / x.Total;
-                            Text = "Onllama - " + x.Status;
+                            Text = "Onllama - " + textInfo.ToTitleCase(x.Status) + " " + x.Percent + "%";
                             if (string.IsNullOrEmpty(x.Status))
                             {
                                 Notification.info(this, "已完成", "模型下载任务无响应，请检查与 ollama.com 的连接。");
