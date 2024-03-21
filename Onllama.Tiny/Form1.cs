@@ -138,7 +138,7 @@ namespace Onllama.Tiny
                 var models = Task.Run(async () => await OllamaApi.ListLocalModels()).Result;
                 foreach (var item in models)
                 {
-                    var quartList = new List<CellTag>()
+                    var quartList = new List<CellTag>
                     {
                         new(item.Details.Format.ToUpper(), TTypeMini.Default),
                         new(item.Details.ParameterSize.ToUpper(), TTypeMini.Success),
@@ -161,7 +161,7 @@ namespace Onllama.Tiny
                     }
 
                     btnList.Reverse();
-                    modelsClasses.Add(new ModelsClass()
+                    modelsClasses.Add(new ModelsClass
                     {
                         name = item.Name,
                         size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G",
