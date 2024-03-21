@@ -28,18 +28,33 @@ namespace Onllama.Tiny
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            Parallel.Invoke(() => Environment.SetEnvironmentVariable("OLLAMA_MODELS",
-                    !string.IsNullOrWhiteSpace(input1.Text) ? input1.Text : null, EnvironmentVariableTarget.User),
-                () => Environment.SetEnvironmentVariable("OLLAMA_HOST",
-                    checkboxAny.Checked ? "0.0.0.0" : null, EnvironmentVariableTarget.User),
-                () => Environment.SetEnvironmentVariable("CUDA_VISIBLE_DEVICES",
-                    checkboxNoGpu.Checked ? "-1" : null, EnvironmentVariableTarget.User),
-                () => Environment.SetEnvironmentVariable("HIP_VISIBLE_DEVICES",
-                    checkboxNoGpu.Checked ? "-1" : null, EnvironmentVariableTarget.User)
-                //() => Kill("ollama app"),
-                //() => Kill("ollama")
-            );
-            new Modal.Config(this, "设置已更改", "请手动重启 Ollama 核心以使配置生效。", TType.Info)
+            new Modal.Config(this, "您确定要保存配置吗？","这需要一些时间，请稍等…",
+                TType.Info)
+            {
+                OnOk = _ =>
+                {
+                    try
+                    {
+                        Parallel.Invoke(() => Environment.SetEnvironmentVariable("OLLAMA_MODELS",
+                                !string.IsNullOrWhiteSpace(input1.Text) ? input1.Text : null, EnvironmentVariableTarget.User),
+                            () => Environment.SetEnvironmentVariable("OLLAMA_HOST",
+                                checkboxAny.Checked ? "0.0.0.0" : null, EnvironmentVariableTarget.User),
+                            () => Environment.SetEnvironmentVariable("CUDA_VISIBLE_DEVICES",
+                                checkboxNoGpu.Checked ? "-1" : null, EnvironmentVariableTarget.User),
+                            () => Environment.SetEnvironmentVariable("HIP_VISIBLE_DEVICES",
+                                checkboxNoGpu.Checked ? "-1" : null, EnvironmentVariableTarget.User),
+                            () => Kill("ollama app"),
+                            () => Kill("ollama")
+                        );
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine(exception);
+                    }
+                    return true;
+                }
+            }.open();
+            new Modal.Config(this, "设置已更改", "Ollama 核心已退出，请手动重启 Ollama 核心以使配置生效。", TType.Success)
             {
                 OnOk = _ =>
                 {

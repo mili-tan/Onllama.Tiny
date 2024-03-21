@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Net.NetworkInformation;
 using AntdUI;
 using OllamaSharp;
+using static Onllama.Tiny.Form1;
 
 namespace Onllama.Tiny
 {
@@ -137,41 +138,51 @@ namespace Onllama.Tiny
             try
             {
                 var modelsClasses = new List<ModelsClass>();
-                var models = Task.Run(async () => await OllamaApi.ListLocalModels()).Result;
-                foreach (var item in models)
-                {
-                    var quartList = new List<CellTag>
+                var models = Task.Run(async () => await OllamaApi.ListLocalModels()).Result.ToArray();
+                if (models.Any())
+                    foreach (var item in models)
                     {
-                        new(item.Details.Format.ToUpper(), TTypeMini.Default),
-                        new(item.Details.ParameterSize.ToUpper(), TTypeMini.Success),
-                        new(item.Details.QuantizationLevel.ToUpper(), TTypeMini.Warn)
-                    };
-                    var btnList = new List<CellButton>
-                    {
-                        new("delete", "删除", TTypeMini.Error)
-                            {Ghost = true, BorderWidth = 1},
-                        new("copy", "复制", TTypeMini.Success)
-                            {Ghost = true, BorderWidth = 1}
-                    };
-                    if (item.Details.Family != "bert")
-                    {
-                        btnList.AddRange(new[]
+                        var quartList = new List<CellTag>
                         {
-                            new CellButton("web-chat", "WebUI", TTypeMini.Default)
+                            new(item.Details.Format.ToUpper(), TTypeMini.Default),
+                            new(item.Details.ParameterSize.ToUpper(), TTypeMini.Success),
+                            new(item.Details.QuantizationLevel.ToUpper(), TTypeMini.Warn)
+                        };
+                        var btnList = new List<CellButton>
+                        {
+                            new("delete", "删除", TTypeMini.Error)
                                 {Ghost = true, BorderWidth = 1},
+                            new("copy", "复制", TTypeMini.Success)
+                                {Ghost = true, BorderWidth = 1}
+                        };
+                        if (item.Details.Family != "bert")
+                        {
+                            btnList.AddRange(new[]
+                            {
+                                new CellButton("web-chat", "WebUI", TTypeMini.Default)
+                                    {Ghost = true, BorderWidth = 1},
+                            });
+                        }
+
+                        btnList.Reverse();
+                        modelsClasses.Add(new ModelsClass
+                        {
+                            name = item.Name,
+                            size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G",
+                            modifiedAt = item.ModifiedAt,
+                            families = item.Details.Families.Distinct()
+                                .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray(),
+                            quantization = quartList.ToArray(),
+                            btns = btnList.ToArray()
                         });
                     }
-
-                    btnList.Reverse();
+                else
+                {
                     modelsClasses.Add(new ModelsClass
                     {
-                        name = item.Name,
-                        size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G",
-                        modifiedAt = item.ModifiedAt,
-                        families = item.Details.Families.Distinct()
-                            .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray(),
-                        quantization = quartList.ToArray(),
-                        btns = btnList.ToArray()
+                        name = "❓ 未找到模型…",
+                        size = string.Empty,
+                        modifiedAt = null
                     });
                 }
 
@@ -180,6 +191,15 @@ namespace Onllama.Tiny
             catch (Exception e)
             {
                 AntdUI.Message.error(this, "刷新模型列表失败：" + e.Message);
+                table1.DataSource = new[]
+                {
+                    new ModelsClass
+                    {
+                        name = "❌ 加载模型列表失败",
+                        size = string.Empty,
+                        modifiedAt = null
+                    }
+                };
                 Console.WriteLine(e);
             }
         }
@@ -224,9 +244,9 @@ namespace Onllama.Tiny
                 }
             }
 
-            DateTime _modifiedAt;
+            DateTime? _modifiedAt;
 
-            public DateTime modifiedAt
+            public DateTime? modifiedAt
             {
                 get => _modifiedAt;
                 set
