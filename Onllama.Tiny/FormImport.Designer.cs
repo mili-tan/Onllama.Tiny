@@ -173,6 +173,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FormImport";
+            ShowIcon = false;
             Text = "导入";
             Load += FormImport_Load;
             panel1.ResumeLayout(false);

@@ -154,6 +154,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FormSettings";
+            ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "设置";
             Load += FormSettings_Load;

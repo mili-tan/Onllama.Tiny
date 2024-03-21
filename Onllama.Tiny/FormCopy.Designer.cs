@@ -85,6 +85,7 @@ namespace Onllama.Tiny
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FormCopy";
+            ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "复制模型";
