@@ -104,7 +104,7 @@
             progress1.Location = new Point(0, 0);
             progress1.Name = "progress1";
             progress1.Radius = 0;
-            progress1.Size = new Size(684, 2);
+            progress1.Size = new Size(684, 3);
             progress1.TabIndex = 2;
             progress1.Text = "";
             // 

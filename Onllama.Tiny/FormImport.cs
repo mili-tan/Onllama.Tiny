@@ -24,6 +24,8 @@ namespace Onllama.Tiny
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(input1.Text) || string.IsNullOrEmpty(inputName.Text) ||
+                string.IsNullOrEmpty(inputMf.Text)) return;
             new Modal.Config(this, "您确定要导入模型吗？", new[] {new Modal.TextLine(inputName.Text, Style.Db.Primary)},
                 TType.Success)
             {
