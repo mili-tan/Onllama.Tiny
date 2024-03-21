@@ -70,6 +70,7 @@
             dropdown1.Items.AddRange(new object[] { "导入模型", "Ollama 设置", "刷新模型列表" });
             dropdown1.Location = new Point(642, 8);
             dropdown1.Name = "dropdown1";
+            dropdown1.Placement = AntdUI.TAlignFrom.TR;
             dropdown1.Size = new Size(30, 30);
             dropdown1.TabIndex = 2;
             dropdown1.SelectedValueChanged += dropdown1_SelectedValueChanged;
