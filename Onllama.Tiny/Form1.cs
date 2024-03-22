@@ -14,6 +14,17 @@ namespace Onllama.Tiny
         public Form1()
         {
             InitializeComponent();
+
+            try
+            {
+                Task.Run(
+                    () => Environment.SetEnvironmentVariable("OLLAMA_ORIGINS", "*", EnvironmentVariableTarget.User));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
             table1.Columns = new Column[]
             {
                 new("name", "模型名称"),
@@ -39,20 +50,12 @@ namespace Onllama.Tiny
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            progress1.Hide();
+
             var ollamaPath = (Environment.GetEnvironmentVariable("PATH")
                     ?.Split(';')
                     .Select(x => Path.Combine(x, "ollama app.exe"))!)
                 .FirstOrDefault(File.Exists);
-
-            try
-            {
-                Environment.SetEnvironmentVariable("OLLAMA_ORIGINS", "*", EnvironmentVariableTarget.User);
-                progress1.Hide();
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
 
             if (string.IsNullOrWhiteSpace(ollamaPath))
             {
