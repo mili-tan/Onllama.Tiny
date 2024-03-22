@@ -9,7 +9,8 @@ namespace Onllama.Tiny
 {
     public partial class Form1 : BaseForm
     {
-        public static OllamaApiClient OllamaApi = new("http://127.0.0.1:11434");
+        public static Uri OllamaUri = new Uri("http://127.0.0.1:11434");
+        public static OllamaApiClient OllamaApi = new(OllamaUri);
 
         public Form1()
         {
@@ -23,7 +24,8 @@ namespace Onllama.Tiny
                 new("quantization", "格式与规模"),
                 new("btns", "操作") {Fixed = true},
             };
-            dropdown1.Items.Add(new SelectItem("Ollama") {Sub = new List<object> {"NextChat", "查看日志", "查找模型", "检查更新"}});
+            dropdown1.Items.Add(new SelectItem("Ollama")
+                {Sub = new List<object> {"NextChat", "OpenAI 兼容 API", "在线查找模型", "查看日志", "检查更新"}});
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -314,7 +316,7 @@ namespace Onllama.Tiny
                                 $"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}")
                             {UseShellExecute = true});
                     break;
-                case "查找模型":
+                case "在线查找模型":
                     Process.Start(new ProcessStartInfo($"https://ollama.com/library") {UseShellExecute = true});
                     break;
                 case "查看日志":
@@ -338,6 +340,26 @@ namespace Onllama.Tiny
                         {
                             Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
                                 {UseShellExecute = true});
+                            return true;
+                        }
+                    }.open();
+                    break;
+                }
+                case "OpenAI 兼容 API":
+                {
+                    new Modal.Config(this, "OpenAI 兼容 API",
+                        new[]
+                        {
+                            new Modal.TextLine("API: " + OllamaUri + "v1", Style.Db.Primary),
+                            new Modal.TextLine("Chat: " + OllamaUri + "v1/chat/completions"),
+                            new Modal.TextLine("Completions: " + OllamaUri + "v1/completions"),
+                            new Modal.TextLine("Embeddings: " + OllamaUri + "v1/embeddings")
+                        }, TType.Info)
+                    {
+                        OkText = "复制 URL",
+                        OnOk = _ =>
+                        {
+                            Invoke(() => Clipboard.SetText(OllamaUri + "v1"));
                             return true;
                         }
                     }.open();
