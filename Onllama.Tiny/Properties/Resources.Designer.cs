@@ -61,6 +61,20 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
+        ///   查找类似 TEMPLATE &quot;&quot;&quot;{{ .System }}
+        ///User: {{ .Prompt }}
+        ///
+        ///Assistant:
+        ///&quot;&quot;&quot;
+        ///PARAMETER num_ctx 4096 的本地化字符串。
+        /// </summary>
+        internal static string deekseekTmp {
+            get {
+                return ResourceManager.GetString("deekseekTmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 TEMPLATE &quot;&quot;&quot;&lt;start_of_turn&gt;user
         ///{{ if .System }}{{ .System }} {{ end }}{{ .Prompt }}&lt;end_of_turn&gt;
         ///&lt;start_of_turn&gt;model

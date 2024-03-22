@@ -11,7 +11,6 @@ namespace Onllama.Tiny
         public FormImport()
         {
             InitializeComponent();
-            select1.Items.Add(new SelectItem("none", "none"));
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
@@ -71,6 +70,9 @@ namespace Onllama.Tiny
                     break;
                 case "mistral":
                     inputMf.Text += Resources.mistralTmp;
+                    break;
+                case "deepseek":
+                    inputMf.Text += Resources.deekseekTmp;
                     break;
             }
         }

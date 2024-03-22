@@ -83,7 +83,7 @@
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             select1.BackColor = Color.Transparent;
-            select1.Items.AddRange(new object[] { "qwen", "yi", "gemma", "mistral" });
+            select1.Items.AddRange(new object[] { "qwen", "yi", "gemma", "mistral", "deepseek", "none" });
             select1.Location = new Point(11, 140);
             select1.Name = "select1";
             select1.Size = new Size(538, 30);
