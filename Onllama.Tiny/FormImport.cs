@@ -11,6 +11,7 @@ namespace Onllama.Tiny
         public FormImport()
         {
             InitializeComponent();
+            select1.Items.Add(new SelectItem("none", "none"));
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
