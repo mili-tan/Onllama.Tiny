@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Net.NetworkInformation;
 using AntdUI;
 using OllamaSharp;
-using static Onllama.Tiny.Form1;
 
 namespace Onllama.Tiny
 {
@@ -25,7 +24,7 @@ namespace Onllama.Tiny
                 new("btns", "操作") {Fixed = true},
             };
             dropdown1.Items.Add(new SelectItem("Ollama")
-                {Sub = new List<object> {"NextChat", "OpenAI 兼容 API", "在线查找模型", "查看日志", "检查更新"}});
+                {Sub = new List<object> {"NextChat", "OpenAI 兼容 API", "在线查找模型", "查看模型位置", "查看日志", "检查更新"}});
             select1.Items.Add(new SelectItem("社区")
             {
                 Sub = new List<object>
@@ -328,6 +327,12 @@ namespace Onllama.Tiny
                     break;
                 case "在线查找模型":
                     Process.Start(new ProcessStartInfo($"https://ollama.com/library") {UseShellExecute = true});
+                    break;
+                case "查看模型位置":
+                    Process.Start(new ProcessStartInfo($"explorer.exe",
+                        Environment.GetEnvironmentVariable("OLLAMA_MODELS", EnvironmentVariableTarget.User) ??
+                        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.ollama\\models"
+                    ));
                     break;
                 case "查看日志":
                     Process.Start(new ProcessStartInfo($"explorer.exe",
