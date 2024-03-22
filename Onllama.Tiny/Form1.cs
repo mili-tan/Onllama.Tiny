@@ -26,6 +26,16 @@ namespace Onllama.Tiny
             };
             dropdown1.Items.Add(new SelectItem("Ollama")
                 {Sub = new List<object> {"NextChat", "OpenAI 兼容 API", "在线查找模型", "查看日志", "检查更新"}});
+            select1.Items.Add(new SelectItem("社区")
+            {
+                Sub = new List<object>
+                    {"orionstar/orion14b-q4:latest", "roger/minicpm:latest", "onekuma/sakura-13b-lnovel-v0.9b-q2_k"}
+            });
+            select1.Items.Add(new SelectItem("Embed")
+            {
+                Sub = new List<object>
+                    {"znbang/bge:large-zh-v1.5-f16", "znbang/bge:large-en-v1.5-f16", "nomic-embed-text", "all-minilm"}
+            });
         }
 
         private void Form1_Load(object sender, EventArgs e)
