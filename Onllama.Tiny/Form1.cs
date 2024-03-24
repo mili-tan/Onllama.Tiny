@@ -169,7 +169,7 @@ namespace Onllama.Tiny
                             new("copy", "复制", TTypeMini.Success)
                                 {Ghost = true, BorderWidth = 1}
                         };
-                        if (item.Details.Family != "bert")
+                        if (!item.Details.Family.ToLower().EndsWith("bert"))
                         {
                             btnList.AddRange(new[]
                             {
