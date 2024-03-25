@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Net.NetworkInformation;
 using AntdUI;
+using Microsoft.VisualBasic.Devices;
 using OllamaSharp;
 
 namespace Onllama.Tiny
@@ -51,6 +52,12 @@ namespace Onllama.Tiny
         private void Form1_Load(object sender, EventArgs e)
         {
             progress1.Hide();
+            select1.SelectedIndex = (new ComputerInfo().TotalPhysicalMemory / 1024f / 1024f / 1024f) switch
+            {
+                >= 14 => 1,
+                >= 6 => 2,
+                _ => select1.SelectedIndex
+            };
 
             var ollamaPath = (Environment.GetEnvironmentVariable("PATH")
                     ?.Split(';')
