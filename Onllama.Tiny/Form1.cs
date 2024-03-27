@@ -166,9 +166,9 @@ namespace Onllama.Tiny
                         var quartList = item.Details != null
                             ? new List<CellTag>
                             {
-                                new(item.Details.Format?.ToUpper() ?? "Unknown", TTypeMini.Default),
-                                new(item.Details.ParameterSize?.ToUpper() ?? "Unknown", TTypeMini.Success),
-                                new(item.Details.QuantizationLevel?.ToUpper() ?? "Unknown", TTypeMini.Warn)
+                                new((item.Details.Format ?? "Unknown").ToUpper(), TTypeMini.Default),
+                                new((item.Details.ParameterSize ?? "Unknown").ToUpper(), TTypeMini.Success),
+                                new((item.Details.QuantizationLevel ?? "Unknown").ToUpper(), TTypeMini.Warn)
                             }
                             : new List<CellTag>();
 
@@ -180,7 +180,7 @@ namespace Onllama.Tiny
                                 {Ghost = true, BorderWidth = 1}
                         };
 
-                        if (item.Details != null && !(item.Details.Family ?? "").ToLower().EndsWith("bert"))
+                        if (item.Details != null && !(item.Details.Family ?? string.Empty).ToLower().EndsWith("bert"))
                         {
                             btnList.AddRange(new[]
                             {
@@ -192,10 +192,10 @@ namespace Onllama.Tiny
                         btnList.Reverse();
                         modelsClasses.Add(new ModelsClass
                         {
-                            name = item.Name,
-                            size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G",
-                            modifiedAt = item.ModifiedAt,
-                            families = item.Details is {Families: not null}
+                            name = item.Name ?? "Empty",
+                            size = (item.Size / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.00") + "G",
+                            modifiedAt = item.ModifiedAt ?? DateTime.MinValue,
+                            families = item.Details != null && item.Details.Families != null
                                 ? item.Details.Families.Distinct()
                                     .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray()
                                 : new CellTag[] { },
