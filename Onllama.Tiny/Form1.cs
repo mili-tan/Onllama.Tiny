@@ -163,12 +163,15 @@ namespace Onllama.Tiny
                 if (models.Any())
                     foreach (var item in models)
                     {
-                        var quartList = new List<CellTag>
-                        {
-                            new(item.Details.Format.ToUpper(), TTypeMini.Default),
-                            new(item.Details.ParameterSize.ToUpper(), TTypeMini.Success),
-                            new(item.Details.QuantizationLevel.ToUpper(), TTypeMini.Warn)
-                        };
+                        var quartList = item.Details != null
+                            ? new List<CellTag>
+                            {
+                                new(item.Details.Format?.ToUpper() ?? "Unknown", TTypeMini.Default),
+                                new(item.Details.ParameterSize?.ToUpper() ?? "Unknown", TTypeMini.Success),
+                                new(item.Details.QuantizationLevel?.ToUpper() ?? "Unknown", TTypeMini.Warn)
+                            }
+                            : new List<CellTag>();
+
                         var btnList = new List<CellButton>
                         {
                             new("delete", "删除", TTypeMini.Error)
@@ -176,7 +179,8 @@ namespace Onllama.Tiny
                             new("copy", "复制", TTypeMini.Success)
                                 {Ghost = true, BorderWidth = 1}
                         };
-                        if (!item.Details.Family.ToLower().EndsWith("bert"))
+
+                        if (item.Details != null && !(item.Details.Family ?? "").ToLower().EndsWith("bert"))
                         {
                             btnList.AddRange(new[]
                             {
@@ -191,8 +195,10 @@ namespace Onllama.Tiny
                             name = item.Name,
                             size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G",
                             modifiedAt = item.ModifiedAt,
-                            families = item.Details.Families.Distinct()
-                                .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray(),
+                            families = item.Details is {Families: not null}
+                                ? item.Details.Families.Distinct()
+                                    .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray()
+                                : new CellTag[] { },
                             quantization = quartList.ToArray(),
                             btns = btnList.ToArray()
                         });
