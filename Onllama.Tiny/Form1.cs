@@ -36,7 +36,7 @@ namespace Onllama.Tiny
                 new("btns", "操作") {Fixed = true},
             };
             dropdown1.Items.Add(new SelectItem("Ollama")
-                {Sub = new List<object> {"NextChat", "OpenAI 兼容 API", "在线查找模型", "查看模型位置", "查看日志", "检查更新"}});
+            { Sub = new List<object> { "NextChat", "OpenAI 兼容 API", "在线查找模型", "查看模型位置", "查看日志", "检查更新" } });
             select1.Items.Add(new SelectItem("社区")
             {
                 Sub = new List<object>
@@ -67,9 +67,9 @@ namespace Onllama.Tiny
             if (string.IsNullOrWhiteSpace(ollamaPath))
             {
                 Notification.warn(this, "Ollama 核心未安装", "请先安装 Ollama 服务，并稍候重试。");
-                Process.Start(new ProcessStartInfo($"https://ollama.com/download/windows") {UseShellExecute = true});
+                Process.Start(new ProcessStartInfo($"https://ollama.com/download/windows") { UseShellExecute = true });
                 Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
-                    {UseShellExecute = true});
+                { UseShellExecute = true });
                 panel1.Enabled = false;
             }
             else if (!PortIsUse(11434))
@@ -108,7 +108,7 @@ namespace Onllama.Tiny
                     break;
                 case "web-chat":
                     AntdUI.Message.success(this, "已带您前往 Ollama GUI");
-                    Process.Start(new ProcessStartInfo($"https://ollama-gui.vercel.app") {UseShellExecute = true});
+                    Process.Start(new ProcessStartInfo($"https://ollama-gui.vercel.app") { UseShellExecute = true });
                     break;
                 case "copy":
                     new FormCopy(data.name).ShowDialog();
@@ -120,7 +120,7 @@ namespace Onllama.Tiny
         private void button1_Click(object sender, EventArgs e)
         {
             if (select1.Text.Contains(" ")) select1.Text = select1.Text.Split(' ').Last();
-            new Modal.Config(this, "您确定要下载模型吗？", new[]{ new Modal.TextLine(select1.Text, Style.Db.Primary) }, TType.Success)
+            new Modal.Config(this, "您确定要下载模型吗？", new[] { new Modal.TextLine(select1.Text, Style.Db.Primary) }, TType.Success)
             {
                 OkType = TTypeMini.Success,
                 OkText = "下载",
@@ -132,7 +132,7 @@ namespace Onllama.Tiny
                         Invoke(() =>
                         {
                             var textInfo = new CultureInfo("en-US", false).TextInfo;
-                            progress1.Value = (float) x.Completed / x.Total;
+                            progress1.Value = (float)x.Completed / x.Total;
                             Text = "Onllama - " + textInfo.ToTitleCase(x.Status) + " " + x.Percent + "%";
                             if (string.IsNullOrEmpty(x.Status))
                             {
@@ -339,10 +339,10 @@ namespace Onllama.Tiny
                     Process.Start(
                         new ProcessStartInfo(
                                 $"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}")
-                            {UseShellExecute = true});
+                        { UseShellExecute = true });
                     break;
                 case "在线查找模型":
-                    Process.Start(new ProcessStartInfo($"https://ollama.com/library") {UseShellExecute = true});
+                    Process.Start(new ProcessStartInfo($"https://ollama.com/library") { UseShellExecute = true });
                     break;
                 case "查看模型位置":
                     Process.Start(new ProcessStartInfo($"explorer.exe",
@@ -355,48 +355,53 @@ namespace Onllama.Tiny
                         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Ollama\\"));
                     break;
                 case "检查更新":
-                {
-                    var process = Process.Start(new ProcessStartInfo("ollama.exe", "-v")
                     {
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardInput = true
-                    });
-                    process?.WaitForExit();
-                    var version = process?.StandardOutput.ReadToEnd() ?? string.Empty;
-                    new Modal.Config(this, "Ollama 核心版本", version, TType.Info)
-                    {
-                        OnOk = _ =>
+                        var process = Process.Start(new ProcessStartInfo("ollama.exe", "-v")
                         {
-                            Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
-                                {UseShellExecute = true});
-                            return true;
-                        }
-                    }.open();
-                    break;
-                }
+                            UseShellExecute = false,
+                            CreateNoWindow = true,
+                            RedirectStandardOutput = true,
+                            RedirectStandardInput = true
+                        });
+                        process?.WaitForExit();
+                        var version = process?.StandardOutput.ReadToEnd() ?? string.Empty;
+                        new Modal.Config(this, "Ollama 核心版本", version, TType.Info)
+                        {
+                            OnOk = _ =>
+                            {
+                                Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
+                                { UseShellExecute = true });
+                                return true;
+                            }
+                        }.open();
+                        break;
+                    }
                 case "OpenAI 兼容 API":
-                {
-                    new Modal.Config(this, "OpenAI 兼容 API",
-                        new[]
-                        {
+                    {
+                        new Modal.Config(this, "OpenAI 兼容 API",
+                            new[]
+                            {
                             new Modal.TextLine("API: " + OllamaUri + "v1", Style.Db.Primary),
                             new Modal.TextLine("Chat: " + OllamaUri + "v1/chat/completions"),
                             new Modal.TextLine("Completions: " + OllamaUri + "v1/completions"),
                             new Modal.TextLine("Embeddings: " + OllamaUri + "v1/embeddings")
-                        }, TType.Info)
-                    {
-                        OkText = "复制 URL",
-                        OnOk = _ =>
+                            }, TType.Info)
                         {
-                            Invoke(() => Clipboard.SetText(OllamaUri + "v1"));
-                            return true;
-                        }
-                    }.open();
-                    break;
-                }
+                            OkText = "复制 URL",
+                            OnOk = _ =>
+                            {
+                                Invoke(() => Clipboard.SetText(OllamaUri + "v1"));
+                                return true;
+                            }
+                        }.open();
+                        break;
+                    }
             }
+        }
+
+        private void flowLayoutPanel1_SizeChanged(object sender, EventArgs e)
+        {
+            select1.Width += (flowLayoutPanel1.Width - select1.Width - button1.Width - dropdown1.Width - 35);
         }
     }
 }
