@@ -176,7 +176,7 @@ namespace Onllama.Tiny
                         {
                             new("delete", "删除", TTypeMini.Error)
                                 {Ghost = true, BorderWidth = 1},
-                            new("copy", "复制", TTypeMini.Success)
+                            new("copy", "新命名", TTypeMini.Success)
                                 {Ghost = true, BorderWidth = 1}
                         };
 
