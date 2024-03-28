@@ -401,7 +401,7 @@ namespace Onllama.Tiny
 
         private void flowLayoutPanel1_SizeChanged(object sender, EventArgs e)
         {
-            select1.Width += (flowLayoutPanel1.Width - select1.Width - button1.Width - dropdown1.Width - 35);
+            select1.Width += (flowLayoutPanel1.Width - select1.Width - button1.Width - dropdown1.Width - 30);
         }
     }
 }
