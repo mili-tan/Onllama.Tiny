@@ -107,8 +107,8 @@ namespace Onllama.Tiny
                     }.open();
                     break;
                 case "web-chat":
-                    AntdUI.Message.success(this, "已带您前往 Ollama GUI");
-                    Process.Start(new ProcessStartInfo($"https://ollama-gui.vercel.app") { UseShellExecute = true });
+                    AntdUI.Message.success(this, "已带您前往 Onllama WebChat");
+                    Process.Start(new ProcessStartInfo($"https://onllama.netlify.app/") { UseShellExecute = true });
                     break;
                 case "copy":
                     new FormCopy(data.name).ShowDialog();
