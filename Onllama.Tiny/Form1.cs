@@ -20,6 +20,8 @@ namespace Onllama.Tiny
             {
                 Task.Run(
                     () => Environment.SetEnvironmentVariable("OLLAMA_ORIGINS", "*", EnvironmentVariableTarget.User));
+                OllamaUri = new Uri(Environment.GetEnvironmentVariable("OLLAMA_API") ?? "http://127.0.0.1:11434");
+                OllamaApi = new OllamaApiClient(OllamaUri);
             }
             catch (Exception e)
             {
