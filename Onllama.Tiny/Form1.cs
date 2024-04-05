@@ -56,8 +56,8 @@ namespace Onllama.Tiny
             progress1.Hide();
             select1.SelectedIndex = (new ComputerInfo().TotalPhysicalMemory / 1024f / 1024f / 1024f) switch
             {
-                >= 14 => 1,
-                >= 6 => 2,
+                >= 14 => 2,
+                >= 6 => 1,
                 _ => select1.SelectedIndex
             };
 
