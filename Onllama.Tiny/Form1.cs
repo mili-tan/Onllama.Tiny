@@ -47,7 +47,12 @@ namespace Onllama.Tiny
             select1.Items.Add(new SelectItem("Embed")
             {
                 Sub = new List<object>
-                    {"znbang/bge:large-zh-v1.5-f16", "znbang/bge:large-en-v1.5-f16", "nomic-embed-text", "all-minilm"}
+                {
+                    "znbang/bge:large-zh-v1.5-f16", "znbang/bge:large-en-v1.5-f16",
+                    "milkey/m3e:large-f16", "milkey/gte:large-zh-f16",
+                    "milkey/dmeta-embedding-zh:f16", "mofanke/acge_text_embedding",
+                    "nomic-embed-text", "mxbai-embed-large"
+                }
             });
         }
 
