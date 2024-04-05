@@ -50,7 +50,7 @@ namespace Onllama.Tiny
                 {
                     "znbang/bge:large-zh-v1.5-f16", "znbang/bge:large-en-v1.5-f16",
                     "milkey/m3e:large-f16", "milkey/gte:large-zh-f16",
-                    "milkey/dmeta-embedding-zh:f16", "mofanke/acge_text_embedding",
+                    "milkey/dmeta-embedding-zh:f32", "mofanke/acge_text_embedding",
                     "nomic-embed-text", "mxbai-embed-large"
                 }
             });
@@ -58,6 +58,7 @@ namespace Onllama.Tiny
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Width++;
             progress1.Hide();
             select1.SelectedIndex = (new ComputerInfo().TotalPhysicalMemory / 1024f / 1024f / 1024f) switch
             {

@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AntdUI" Version="1.1.3" />
-    <PackageReference Include="Kai.OllamaSharp" Version="1.1.0.5" />
+    <PackageReference Include="AntdUI" Version="1.1.5" />
+    <PackageReference Include="Kai.OllamaSharp" Version="1.1.0.6" />
   </ItemGroup>
 
   <ItemGroup>
