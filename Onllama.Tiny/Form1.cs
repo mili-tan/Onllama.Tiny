@@ -203,9 +203,11 @@ namespace Onllama.Tiny
                             name = item.Name ?? "Empty",
                             size = (item.Size / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.00") + "G",
                             modifiedAt = item.ModifiedAt ?? DateTime.MinValue,
-                            families = item.Details != null && item.Details.Families != null
-                                ? item.Details.Families.Distinct()
-                                    .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray()
+                            families = item.Details != null
+                                ? item.Details.Families != null
+                                    ? item.Details.Families.Distinct()
+                                        .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray()
+                                    : new CellTag[] {new(item.Details.Family?.ToUpper()!, TTypeMini.Info)}
                                 : new CellTag[] { },
                             quantization = quartList.ToArray(),
                             btns = btnList.ToArray()
