@@ -62,6 +62,7 @@
             // inputName
             // 
             inputName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            inputName.Back = Color.Transparent;
             inputName.BackColor = Color.Transparent;
             inputName.Location = new Point(11, 75);
             inputName.Name = "inputName";
@@ -72,6 +73,7 @@
             // inputMf
             // 
             inputMf.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            inputMf.Back = Color.Transparent;
             inputMf.BackColor = Color.Transparent;
             inputMf.Location = new Point(11, 176);
             inputMf.Multiline = true;
@@ -82,6 +84,7 @@
             // select1
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            select1.Back = Color.Transparent;
             select1.BackColor = Color.Transparent;
             select1.Items.AddRange(new object[] { "qwen", "yi", "gemma", "mistral", "deepseek", "none" });
             select1.Location = new Point(11, 140);
@@ -93,6 +96,7 @@
             // buttonSave
             // 
             buttonSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            buttonSave.Back = Color.Transparent;
             buttonSave.BackColor = Color.Transparent;
             buttonSave.BorderWidth = 1F;
             buttonSave.Location = new Point(11, 349);
@@ -105,11 +109,13 @@
             // panel2
             // 
             panel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel2.BackColor = Color.Transparent;
+            panel2.Back = Color.White;
+            panel2.BackColor = Color.White;
             panel2.Controls.Add(input1);
             panel2.Controls.Add(buttonOpen);
             panel2.Location = new Point(11, 32);
             panel2.Name = "panel2";
+            panel2.Radius = 0;
             panel2.Size = new Size(538, 35);
             panel2.TabIndex = 2;
             // 
