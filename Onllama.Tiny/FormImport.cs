@@ -15,12 +15,19 @@ namespace Onllama.Tiny
 
         private void buttonOpen_Click(object sender, EventArgs e)
         {
-            var f = new OpenFileDialog();
-            if (f.ShowDialog() == DialogResult.OK) input1.Text = f.FileName;
-            inputName.Text = f.SafeFileNames.Last().Split('.', '-').First();
-            foreach (var item in select1.Items)
-                if (input1.Text.Contains(item.ToString() ?? string.Empty))
-                    select1.SelectedValue = item.ToString();
+            try
+            {
+                var f = new OpenFileDialog();
+                if (f.ShowDialog() == DialogResult.OK) input1.Text = f.FileName;
+                inputName.Text = f.SafeFileNames.Last().Split('.', '-').First();
+                foreach (var item in select1.Items)
+                    if (input1.Text.Contains(item.ToString() ?? string.Empty))
+                        select1.SelectedValue = item.ToString();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
