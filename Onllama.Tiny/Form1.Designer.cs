@@ -78,7 +78,7 @@
             // select1
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            select1.Items.AddRange(new object[] { "qwen:4b", "qwen:7b", "qwen:14b", "yi:6b", "yi:34b", "gemma:7b", "deepseek-llm:7b", "llama2-chinese:7b", "llama2-chinese:13b" });
+            select1.Items.AddRange(new object[] { "qwen:4b", "qwen:7b", "qwen:14b", "yi:6b", "yi:34b", "llama3:8b", "command-r:35b", "gemma:7b", "deepseek-llm:7b", "llama2-chinese:7b", "llama2-chinese:13b" });
             select1.Location = new Point(3, 3);
             select1.Name = "select1";
             select1.SelectedIndex = 0;
