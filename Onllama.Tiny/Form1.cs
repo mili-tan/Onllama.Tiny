@@ -19,7 +19,15 @@ namespace Onllama.Tiny
             try
             {
                 Task.Run(
-                    () => Environment.SetEnvironmentVariable("OLLAMA_ORIGINS", "*", EnvironmentVariableTarget.User));
+                    () =>
+                    {
+                        if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OLLAMA_ORIGINS", EnvironmentVariableTarget.User) ?? string.Empty))
+                            Environment.SetEnvironmentVariable("OLLAMA_ORIGINS", "*", EnvironmentVariableTarget.User);
+                        if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OLLAMA_MAX_LOADED_MODELS", EnvironmentVariableTarget.User) ?? string.Empty))
+                            Environment.SetEnvironmentVariable("OLLAMA_MAX_LOADED_MODELS", "4", EnvironmentVariableTarget.User);
+                        if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OLLAMA_NUM_PARALLEL", EnvironmentVariableTarget.User) ?? string.Empty))
+                            Environment.SetEnvironmentVariable("OLLAMA_NUM_PARALLEL", "6", EnvironmentVariableTarget.User);
+                    });
                 OllamaUri = new Uri(Environment.GetEnvironmentVariable("OLLAMA_API") ?? "http://127.0.0.1:11434");
                 OllamaApi = new OllamaApiClient(OllamaUri);
             }
