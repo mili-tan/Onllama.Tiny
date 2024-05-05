@@ -38,12 +38,16 @@
             checkboxAny = new AntdUI.Checkbox();
             divider2 = new AntdUI.Divider();
             divider1 = new AntdUI.Divider();
+            checkboxPara = new AntdUI.Checkbox();
+            checkboxModels = new AntdUI.Checkbox();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(checkboxModels);
+            panel1.Controls.Add(checkboxPara);
             panel1.Controls.Add(buttonSave);
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(checkboxNoGpu);
@@ -53,7 +57,7 @@
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(310, 207);
+            panel1.Size = new Size(310, 268);
             panel1.TabIndex = 0;
             panel1.Text = "panel1";
             // 
@@ -62,7 +66,7 @@
             buttonSave.Back = Color.Transparent;
             buttonSave.BackColor = Color.Transparent;
             buttonSave.BorderWidth = 1F;
-            buttonSave.Location = new Point(11, 174);
+            buttonSave.Location = new Point(11, 235);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(288, 25);
             buttonSave.TabIndex = 6;
@@ -146,11 +150,29 @@
             divider1.TabIndex = 0;
             divider1.Text = "模型位置";
             // 
+            // checkboxPara
+            // 
+            checkboxPara.BackColor = Color.Transparent;
+            checkboxPara.Location = new Point(11, 157);
+            checkboxPara.Name = "checkboxPara";
+            checkboxPara.Size = new Size(288, 23);
+            checkboxPara.TabIndex = 7;
+            checkboxPara.Text = "允许对话并发请求";
+            // 
+            // checkboxModels
+            // 
+            checkboxModels.BackColor = Color.Transparent;
+            checkboxModels.Location = new Point(11, 186);
+            checkboxModels.Name = "checkboxModels";
+            checkboxModels.Size = new Size(288, 23);
+            checkboxModels.TabIndex = 8;
+            checkboxModels.Text = "允许同时加载多个模型";
+            // 
             // FormSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(334, 231);
+            ClientSize = new Size(334, 292);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -178,5 +200,7 @@
         private AntdUI.Divider divider2;
         private AntdUI.Checkbox checkboxNoGpu;
         private AntdUI.Button buttonSave;
+        private AntdUI.Checkbox checkboxModels;
+        private AntdUI.Checkbox checkboxPara;
     }
 }
