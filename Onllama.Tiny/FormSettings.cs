@@ -16,6 +16,8 @@ namespace Onllama.Tiny
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.ollama\\models";
             input1.Text = Environment.GetEnvironmentVariable("OLLAMA_MODELS", EnvironmentVariableTarget.User) ?? "";
             checkboxAny.Checked = (Environment.GetEnvironmentVariable("OLLAMA_HOST", EnvironmentVariableTarget.User) ?? "").Equals("0.0.0.0");
+            checkboxNoHistory.Checked = (Environment.GetEnvironmentVariable("OLLAMA_NOHISTORY", EnvironmentVariableTarget.User) ?? "").Equals("1");
+            checkboxFlushAttention.Checked = (Environment.GetEnvironmentVariable("OLLAMA_FLASH_ATTENTION", EnvironmentVariableTarget.User) ?? "").Equals("1");
             checkboxPara.Checked = (Environment.GetEnvironmentVariable("OLLAMA_NUM_PARALLEL", EnvironmentVariableTarget.User) ?? "").Equals("6");
             checkboxModels.Checked = (Environment.GetEnvironmentVariable("OLLAMA_MAX_LOADED_MODELS", EnvironmentVariableTarget.User) ?? "").Equals("4");
             checkboxNoGpu.Checked = (Environment.GetEnvironmentVariable("CUDA_VISIBLE_DEVICES", EnvironmentVariableTarget.User) ?? "").Equals("-1") ||
@@ -42,6 +44,10 @@ namespace Onllama.Tiny
                                 EnvironmentVariableTarget.User),
                             () => Environment.SetEnvironmentVariable("OLLAMA_HOST",
                                 checkboxAny.Checked ? "0.0.0.0" : null, EnvironmentVariableTarget.User),
+                            () => Environment.SetEnvironmentVariable("OLLAMA_NOHISTORY",
+                                checkboxNoHistory.Checked ? "1" : null, EnvironmentVariableTarget.User),
+                            () => Environment.SetEnvironmentVariable("OLLAMA_FLASH_ATTENTION",
+                                checkboxFlushAttention.Checked ? "1" : null, EnvironmentVariableTarget.User),
                             () => Environment.SetEnvironmentVariable("CUDA_VISIBLE_DEVICES",
                                 checkboxNoGpu.Checked ? " " : null, EnvironmentVariableTarget.User),
                             () => Environment.SetEnvironmentVariable("HIP_VISIBLE_DEVICES",

@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             panel1 = new AntdUI.Panel();
+            checkboxNoHistory = new AntdUI.Checkbox();
+            checkboxModels = new AntdUI.Checkbox();
+            checkboxPara = new AntdUI.Checkbox();
             buttonSave = new AntdUI.Button();
             panel2 = new AntdUI.Panel();
             input1 = new AntdUI.Input();
@@ -38,14 +41,15 @@
             checkboxAny = new AntdUI.Checkbox();
             divider2 = new AntdUI.Divider();
             divider1 = new AntdUI.Divider();
-            checkboxPara = new AntdUI.Checkbox();
-            checkboxModels = new AntdUI.Checkbox();
+            checkboxFlushAttention = new AntdUI.Checkbox();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(checkboxFlushAttention);
+            panel1.Controls.Add(checkboxNoHistory);
             panel1.Controls.Add(checkboxModels);
             panel1.Controls.Add(checkboxPara);
             panel1.Controls.Add(buttonSave);
@@ -57,16 +61,42 @@
             panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(310, 268);
+            panel1.Size = new Size(310, 360);
             panel1.TabIndex = 0;
             panel1.Text = "panel1";
             // 
+            // checkboxNoHistory
+            // 
+            checkboxNoHistory.BackColor = Color.Transparent;
+            checkboxNoHistory.Location = new Point(11, 215);
+            checkboxNoHistory.Name = "checkboxNoHistory";
+            checkboxNoHistory.Size = new Size(288, 23);
+            checkboxNoHistory.TabIndex = 9;
+            checkboxNoHistory.Text = "禁用注意力";
+            // 
+            // checkboxModels
+            // 
+            checkboxModels.BackColor = Color.Transparent;
+            checkboxModels.Location = new Point(11, 186);
+            checkboxModels.Name = "checkboxModels";
+            checkboxModels.Size = new Size(288, 23);
+            checkboxModels.TabIndex = 8;
+            checkboxModels.Text = "允许同时加载多个模型";
+            // 
+            // checkboxPara
+            // 
+            checkboxPara.BackColor = Color.Transparent;
+            checkboxPara.Location = new Point(11, 157);
+            checkboxPara.Name = "checkboxPara";
+            checkboxPara.Size = new Size(288, 23);
+            checkboxPara.TabIndex = 7;
+            checkboxPara.Text = "允许对话并发请求";
+            // 
             // buttonSave
             // 
-            buttonSave.Back = Color.Transparent;
             buttonSave.BackColor = Color.Transparent;
             buttonSave.BorderWidth = 1F;
-            buttonSave.Location = new Point(11, 235);
+            buttonSave.Location = new Point(11, 327);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(288, 25);
             buttonSave.TabIndex = 6;
@@ -150,29 +180,20 @@
             divider1.TabIndex = 0;
             divider1.Text = "模型位置";
             // 
-            // checkboxPara
+            // checkboxFlushAttention
             // 
-            checkboxPara.BackColor = Color.Transparent;
-            checkboxPara.Location = new Point(11, 157);
-            checkboxPara.Name = "checkboxPara";
-            checkboxPara.Size = new Size(288, 23);
-            checkboxPara.TabIndex = 7;
-            checkboxPara.Text = "允许对话并发请求";
-            // 
-            // checkboxModels
-            // 
-            checkboxModels.BackColor = Color.Transparent;
-            checkboxModels.Location = new Point(11, 186);
-            checkboxModels.Name = "checkboxModels";
-            checkboxModels.Size = new Size(288, 23);
-            checkboxModels.TabIndex = 8;
-            checkboxModels.Text = "允许同时加载多个模型";
+            checkboxFlushAttention.BackColor = Color.Transparent;
+            checkboxFlushAttention.Location = new Point(11, 244);
+            checkboxFlushAttention.Name = "checkboxFlushAttention";
+            checkboxFlushAttention.Size = new Size(288, 23);
+            checkboxFlushAttention.TabIndex = 10;
+            checkboxFlushAttention.Text = "启用 Flush Attention";
             // 
             // FormSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(334, 292);
+            ClientSize = new Size(334, 384);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -202,5 +223,7 @@
         private AntdUI.Button buttonSave;
         private AntdUI.Checkbox checkboxModels;
         private AntdUI.Checkbox checkboxPara;
+        private AntdUI.Checkbox checkboxNoHistory;
+        private AntdUI.Checkbox checkboxFlushAttention;
     }
 }
