@@ -117,7 +117,7 @@ namespace Onllama.Tiny
                         OnOk = _ =>
                         {
                             Task.Run(async () => await OllamaApi.DeleteModel(data.name)).Wait();
-                            Invoke(ListModels);
+                            Invoke(() => ListModels());
                             return true;
                         }
                     }.open();
