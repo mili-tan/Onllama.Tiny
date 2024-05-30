@@ -72,7 +72,7 @@
             checkboxNoHistory.Name = "checkboxNoHistory";
             checkboxNoHistory.Size = new Size(288, 23);
             checkboxNoHistory.TabIndex = 9;
-            checkboxNoHistory.Text = "禁用注意力";
+            checkboxNoHistory.Text = "禁用历史对话";
             // 
             // checkboxModels
             // 
