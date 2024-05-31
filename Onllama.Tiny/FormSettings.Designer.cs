@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             panel1 = new AntdUI.Panel();
+            checkboxFlashAttention = new AntdUI.Checkbox();
             checkboxNoHistory = new AntdUI.Checkbox();
             checkboxModels = new AntdUI.Checkbox();
             checkboxPara = new AntdUI.Checkbox();
@@ -41,14 +42,13 @@
             checkboxAny = new AntdUI.Checkbox();
             divider2 = new AntdUI.Divider();
             divider1 = new AntdUI.Divider();
-            checkboxFlushAttention = new AntdUI.Checkbox();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.Controls.Add(checkboxFlushAttention);
+            panel1.Controls.Add(checkboxFlashAttention);
             panel1.Controls.Add(checkboxNoHistory);
             panel1.Controls.Add(checkboxModels);
             panel1.Controls.Add(checkboxPara);
@@ -64,6 +64,15 @@
             panel1.Size = new Size(310, 360);
             panel1.TabIndex = 0;
             panel1.Text = "panel1";
+            // 
+            // checkboxFlashAttention
+            // 
+            checkboxFlashAttention.BackColor = Color.Transparent;
+            checkboxFlashAttention.Location = new Point(11, 244);
+            checkboxFlashAttention.Name = "checkboxFlashAttention";
+            checkboxFlashAttention.Size = new Size(288, 23);
+            checkboxFlashAttention.TabIndex = 10;
+            checkboxFlashAttention.Text = "启用 Flash Attention";
             // 
             // checkboxNoHistory
             // 
@@ -180,15 +189,6 @@
             divider1.TabIndex = 0;
             divider1.Text = "模型位置";
             // 
-            // checkboxFlushAttention
-            // 
-            checkboxFlushAttention.BackColor = Color.Transparent;
-            checkboxFlushAttention.Location = new Point(11, 244);
-            checkboxFlushAttention.Name = "checkboxFlushAttention";
-            checkboxFlushAttention.Size = new Size(288, 23);
-            checkboxFlushAttention.TabIndex = 10;
-            checkboxFlushAttention.Text = "启用 Flush Attention";
-            // 
             // FormSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -224,6 +224,6 @@
         private AntdUI.Checkbox checkboxModels;
         private AntdUI.Checkbox checkboxPara;
         private AntdUI.Checkbox checkboxNoHistory;
-        private AntdUI.Checkbox checkboxFlushAttention;
+        private AntdUI.Checkbox checkboxFlashAttention;
     }
 }
