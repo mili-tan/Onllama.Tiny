@@ -1,9 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using AntdUI;
 using Microsoft.VisualBasic.Devices;
 using OllamaSharp;
+using OllamaSharp.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Onllama.Tiny
@@ -126,11 +128,42 @@ namespace Onllama.Tiny
                     break;
                 case "web-chat":
                     AntdUI.Message.success(this, "已带您前往 Onllama WebChat");
-                    Process.Start(new ProcessStartInfo($"https://onllama.netlify.app/") { UseShellExecute = true });
+                    Process.Start(new ProcessStartInfo($"https://onllama.netlify.app/") {UseShellExecute = true});
                     break;
                 case "copy":
                     new FormCopy(data.name).ShowDialog();
                     ListModels();
+                    break;
+                case "run":
+                    new Modal.Config(this, "要预热模型吗？", data.name, TType.Info)
+                    {
+                        OnOk = _ =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
+                                    {Model = data.name, KeepAlive = "-1s", Stream = false});
+                            }).Wait();
+                            Invoke(() => ListModels());
+                            return true;
+                        }
+                    }.open();
+                    break;
+                case "sleep":
+                    new Modal.Config(this, "要休眠模型吗？", data.name, TType.Warn)
+                    {
+                        OnOk = _ =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
+                                    {Model = data.name, KeepAlive = "0", Stream = false});
+                            }).Wait();
+                            Thread.Sleep(1000);
+                            Invoke(() => ListModels());
+                            return true;
+                        }
+                    }.open();
                     break;
             }
         }
@@ -182,6 +215,7 @@ namespace Onllama.Tiny
                 if (models.Any())
                     foreach (var item in models)
                     {
+                        var running = runningModels.Any(x => x.Name == item.Name);
                         var statusList = new List<CellTag>();
                         var quartList = item.Details != null
                             ? new List<CellTag>
@@ -194,24 +228,23 @@ namespace Onllama.Tiny
 
                         var btnList = new List<CellButton>
                         {
-                            new("delete", "删除", TTypeMini.Error)
-                                {Ghost = true, BorderWidth = 1},
-                            new("copy", "新命名", TTypeMini.Success)
-                                {Ghost = true, BorderWidth = 1}
+                            new("delete", "删除", TTypeMini.Error) {Ghost = true, BorderWidth = 1},
+                            new("copy", "复制", TTypeMini.Success) {Ghost = true, BorderWidth = 1},
                         };
 
-                        if (runningModels.Any(x => x.Name == item.Name))
+                        if (running)
                         {
-                            var running = runningModels.First(x => x.Name == item.Name);
-                            var expires = running.ExpiresAt ?? DateTime.MaxValue;
-                            statusList.Add(new CellTag("活动", TTypeMini.Primary));
-                            statusList.Add(new CellTag((running.Size / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.0") + "G", TTypeMini.Success));
-                            if (running.SizeVRAM.HasValue) statusList.Add(new CellTag((running.SizeVRAM / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.0") + "G (GPU)", TTypeMini.Warn));
+                            //statusList.Add(new CellTag("活动", TTypeMini.Primary));
+
+                            var runModel = runningModels.First(x => x.Name == item.Name);
+                            var expires = runModel.ExpiresAt ?? DateTime.MaxValue;
+                            statusList.Add(new CellTag((runModel.Size / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.0") + "G", TTypeMini.Primary));
+                            if (runModel.SizeVRAM.HasValue) statusList.Add(new CellTag((runModel.SizeVRAM / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.0") + "G (GPU)", TTypeMini.Warn));
                             statusList.Add(new CellTag(
                                 expires.Year > 2300
                                     ? "永久"
                                     : (expires - DateTime.Now).TotalMinutes.ToString("0.0") + " 分钟",
-                                TTypeMini.Default));
+                                TTypeMini.Success));
                         }
                         else
                         {
@@ -222,8 +255,11 @@ namespace Onllama.Tiny
                         {
                             btnList.AddRange(new[]
                             {
-                                new CellButton("web-chat", "WebUI", TTypeMini.Default)
-                                    {Ghost = true, BorderWidth = 1},
+                                running
+                                    ? new CellButton("sleep", "休眠", TTypeMini.Warn) {Ghost = true, BorderWidth = 1}
+                                    : new CellButton("run", "预热", TTypeMini.Primary) {Ghost = true, BorderWidth = 1},
+                                new CellButton("web-chat", "Web", TTypeMini.Default)
+                                    {Ghost = false, BorderWidth = 1}
                             });
                         }
 
