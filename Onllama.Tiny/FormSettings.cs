@@ -18,8 +18,8 @@ namespace Onllama.Tiny
             checkboxAny.Checked = (Environment.GetEnvironmentVariable("OLLAMA_HOST", EnvironmentVariableTarget.User) ?? "").Equals("0.0.0.0");
             checkboxNoHistory.Checked = (Environment.GetEnvironmentVariable("OLLAMA_NOHISTORY", EnvironmentVariableTarget.User) ?? "").Equals("1");
             checkboxFlashAttention.Checked = (Environment.GetEnvironmentVariable("OLLAMA_FLASH_ATTENTION", EnvironmentVariableTarget.User) ?? "").Equals("1");
-            checkboxPara.Checked = (Environment.GetEnvironmentVariable("OLLAMA_NUM_PARALLEL", EnvironmentVariableTarget.User) ?? "").Equals("6");
-            checkboxModels.Checked = (Environment.GetEnvironmentVariable("OLLAMA_MAX_LOADED_MODELS", EnvironmentVariableTarget.User) ?? "").Equals("4");
+            checkboxPara.Checked = (Environment.GetEnvironmentVariable("OLLAMA_NUM_PARALLEL", EnvironmentVariableTarget.User) ?? "1") != "1";
+            checkboxModels.Checked = (Environment.GetEnvironmentVariable("OLLAMA_MAX_LOADED_MODELS", EnvironmentVariableTarget.User) ?? "1") != "1";
             checkboxNoGpu.Checked = (Environment.GetEnvironmentVariable("CUDA_VISIBLE_DEVICES", EnvironmentVariableTarget.User) ?? "").Equals("-1") ||
                                     (Environment.GetEnvironmentVariable("HIP_VISIBLE_DEVICES", EnvironmentVariableTarget.User) ?? "").Equals("-1");
         }
