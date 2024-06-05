@@ -4,6 +4,7 @@ using System.Net.NetworkInformation;
 using AntdUI;
 using Microsoft.VisualBasic.Devices;
 using OllamaSharp;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Onllama.Tiny
 {
@@ -38,11 +39,12 @@ namespace Onllama.Tiny
 
             table1.Columns = new Column[]
             {
-                new("name", "模型名称"),
-                new("size", "模型大小"),
-                new("modifiedAt", "上次修改"),
+                new("name", "名称"),
+                new("size", "容量"),
+                new("status", "状态"),
                 new("families", "家族"),
                 new("quantization", "格式与规模"),
+                new("modifiedAt", "上次修改"),
                 new("btns", "操作") {Fixed = true},
             };
             dropdown1.Items.Add(new SelectItem("Ollama")
@@ -176,15 +178,17 @@ namespace Onllama.Tiny
             {
                 var modelsClasses = new List<ModelsClass>();
                 var models = Task.Run(async () => await OllamaApi.ListLocalModels()).Result.ToArray();
+                var runningModels = Task.Run(async () => await OllamaApi.ListRunningModels()).Result.ToArray();
                 if (models.Any())
                     foreach (var item in models)
                     {
+                        var statusList = new List<CellTag>();
                         var quartList = item.Details != null
                             ? new List<CellTag>
                             {
-                                new((item.Details.Format ?? "Unknown").ToUpper(), TTypeMini.Default),
                                 new((item.Details.ParameterSize ?? "Unknown").ToUpper(), TTypeMini.Success),
-                                new((item.Details.QuantizationLevel ?? "Unknown").ToUpper(), TTypeMini.Warn)
+                                new((item.Details.QuantizationLevel ?? "Unknown").ToUpper(), TTypeMini.Warn),
+                                new((item.Details.Format ?? "Unknown").ToUpper(), TTypeMini.Default)
                             }
                             : new List<CellTag>();
 
@@ -195,6 +199,24 @@ namespace Onllama.Tiny
                             new("copy", "新命名", TTypeMini.Success)
                                 {Ghost = true, BorderWidth = 1}
                         };
+
+                        if (runningModels.Any(x => x.Name == item.Name))
+                        {
+                            var running = runningModels.First(x => x.Name == item.Name);
+                            var expires = running.ExpiresAt ?? DateTime.MaxValue;
+                            statusList.Add(new CellTag("活动", TTypeMini.Primary));
+                            statusList.Add(new CellTag((running.Size / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.0") + "G", TTypeMini.Success));
+                            if (running.SizeVRAM.HasValue) statusList.Add(new CellTag((running.SizeVRAM / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.0") + "G (GPU)", TTypeMini.Warn));
+                            statusList.Add(new CellTag(
+                                expires.Year > 2300
+                                    ? "永久"
+                                    : (expires - DateTime.Now).TotalMinutes.ToString("0.0") + " 分钟",
+                                TTypeMini.Default));
+                        }
+                        else
+                        {
+                            statusList.Add(new CellTag("休眠", TTypeMini.Default));
+                        }
 
                         if (item.Details != null && !(item.Details.Family ?? string.Empty).ToLower().EndsWith("bert"))
                         {
@@ -209,14 +231,15 @@ namespace Onllama.Tiny
                         modelsClasses.Add(new ModelsClass
                         {
                             name = item.Name ?? "Empty",
-                            size = (item.Size / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.00") + "G",
-                            modifiedAt = item.ModifiedAt ?? DateTime.MinValue,
+                            size = (item.Size / 1024.00 / 1024.00 / 1024.00 ).ToString("0.00") + "G", // ?? 0
+                            modifiedAt = item.ModifiedAt, //?? DateTime.MinValue
                             families = item.Details != null
                                 ? item.Details.Families != null
                                     ? item.Details.Families.Distinct()
                                         .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray()
                                     : new CellTag[] {new(item.Details.Family?.ToUpper()!, TTypeMini.Info)}
                                 : new CellTag[] { },
+                            status = statusList.ToArray(),
                             quantization = quartList.ToArray(),
                             btns = btnList.ToArray()
                         });
@@ -310,6 +333,18 @@ namespace Onllama.Tiny
                 {
                     _families = value;
                     OnPropertyChanged("families");
+                }
+            }
+
+            CellTag[]? _status;
+
+            public CellTag[]? status
+            {
+                get => _status;
+                set
+                {
+                    _status = value;
+                    OnPropertyChanged("status");
                 }
             }
 
