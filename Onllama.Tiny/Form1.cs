@@ -142,7 +142,22 @@ namespace Onllama.Tiny
                             Task.Run(async () =>
                             {
                                 await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                    {Model = data.name, KeepAlive = "-1s", Stream = false});
+                                    {Model = data.name, KeepAlive = "30m", Stream = false});
+                            }).Wait();
+                            Invoke(() => ListModels());
+                            return true;
+                        }
+                    }.open();
+                    break;
+                case "pin":
+                    new Modal.Config(this, "要固定模型吗？", data.name, TType.Info)
+                    {
+                        OnOk = _ =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
+                                    { Model = data.name, KeepAlive = "-1m", Stream = false });
                             }).Wait();
                             Invoke(() => ListModels());
                             return true;
@@ -157,9 +172,9 @@ namespace Onllama.Tiny
                             Task.Run(async () =>
                             {
                                 await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                    {Model = data.name, KeepAlive = "0", Stream = false});
+                                    {Model = data.name, KeepAlive = "0m", Stream = false});
                             }).Wait();
-                            Thread.Sleep(1000);
+                            Thread.Sleep(2000);
                             Invoke(() => ListModels());
                             return true;
                         }
@@ -215,7 +230,8 @@ namespace Onllama.Tiny
                 if (models.Any())
                     foreach (var item in models)
                     {
-                        var running = runningModels.Any(x => x.Name == item.Name);
+                        var isRunning = runningModels.Any(x => x.Name == item.Name);
+                        var isEmbed = (item.Details.Family ?? string.Empty).ToLower().EndsWith("bert");
                         var statusList = new List<CellTag>();
                         var quartList = item.Details != null
                             ? new List<CellTag>
@@ -228,11 +244,10 @@ namespace Onllama.Tiny
 
                         var btnList = new List<CellButton>
                         {
-                            new("delete", "删除", TTypeMini.Error) {Ghost = true, BorderWidth = 1},
                             new("copy", "复制", TTypeMini.Success) {Ghost = true, BorderWidth = 1},
                         };
 
-                        if (running)
+                        if (isRunning)
                         {
                             //statusList.Add(new CellTag("活动", TTypeMini.Primary));
 
@@ -245,17 +260,19 @@ namespace Onllama.Tiny
                                     ? "永久"
                                     : (expires - DateTime.Now).TotalMinutes.ToString("0.0") + " 分钟",
                                 TTypeMini.Success));
+                            btnList.Insert(0, new("pin", "固定", TTypeMini.Info) { Ghost = true, BorderWidth = 1 });
                         }
                         else
                         {
                             statusList.Add(new CellTag("休眠", TTypeMini.Default));
+                            btnList.Insert(0, new("delete", "删除", TTypeMini.Error) { Ghost = true, BorderWidth = 1 });
                         }
 
-                        if (item.Details != null && !(item.Details.Family ?? string.Empty).ToLower().EndsWith("bert"))
+                        if (item.Details != null && !isEmbed)
                         {
                             btnList.AddRange(new[]
                             {
-                                running
+                                isRunning
                                     ? new CellButton("sleep", "休眠", TTypeMini.Warn) {Ghost = true, BorderWidth = 1}
                                     : new CellButton("run", "预热", TTypeMini.Primary) {Ghost = true, BorderWidth = 1},
                                 new CellButton("web-chat", "Web", TTypeMini.Default)
