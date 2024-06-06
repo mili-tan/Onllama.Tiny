@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormImport));
             panel1 = new AntdUI.Panel();
+            select2 = new AntdUI.Select();
             inputName = new AntdUI.Input();
             inputMf = new AntdUI.Input();
             select1 = new AntdUI.Select();
@@ -45,6 +46,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(select2);
             panel1.Controls.Add(inputName);
             panel1.Controls.Add(inputMf);
             panel1.Controls.Add(select1);
@@ -55,9 +57,20 @@
             panel1.Location = new Point(14, 13);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(640, 433);
+            panel1.Size = new Size(640, 472);
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
+            // 
+            // select2
+            // 
+            select2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            select2.BackColor = Color.Transparent;
+            select2.Items.AddRange(new object[] { "不量化", "Q4_0", "Q8_0" });
+            select2.Location = new Point(13, 196);
+            select2.Name = "select2";
+            select2.PlaceholderText = "量化等级";
+            select2.Size = new Size(615, 34);
+            select2.TabIndex = 10;
             // 
             // inputName
             // 
@@ -73,7 +86,7 @@
             // 
             inputMf.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             inputMf.BackColor = Color.Transparent;
-            inputMf.Location = new Point(13, 197);
+            inputMf.Location = new Point(13, 236);
             inputMf.Multiline = true;
             inputMf.Name = "inputMf";
             inputMf.Size = new Size(615, 187);
@@ -86,6 +99,7 @@
             select1.Items.AddRange(new object[] { "qwen", "yi", "gemma", "mistral", "deepseek", "deepseek-v2", "none" });
             select1.Location = new Point(13, 156);
             select1.Name = "select1";
+            select1.PlaceholderText = "模型模板";
             select1.Size = new Size(615, 34);
             select1.TabIndex = 7;
             select1.SelectedValueChanged += select1_SelectedValueChanged;
@@ -95,7 +109,7 @@
             buttonSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             buttonSave.BackColor = Color.Transparent;
             buttonSave.BorderWidth = 1F;
-            buttonSave.Location = new Point(13, 390);
+            buttonSave.Location = new Point(13, 429);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(615, 34);
             buttonSave.TabIndex = 6;
@@ -120,7 +134,7 @@
             input1.Dock = DockStyle.Fill;
             input1.JoinRight = true;
             input1.Location = new Point(0, 0);
-            input1.Margin = new Padding(6, 6, 6, 6);
+            input1.Margin = new Padding(6);
             input1.Margins = 6;
             input1.Name = "input1";
             input1.PlaceholderText = "qwen1_5-14b-chat-q4_0.gguf";
@@ -168,7 +182,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(667, 459);
+            ClientSize = new Size(667, 497);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -196,5 +210,6 @@
         private AntdUI.Divider divider1;
         private AntdUI.Input inputMf;
         private AntdUI.Input inputName;
+        private AntdUI.Select select2;
     }
 }

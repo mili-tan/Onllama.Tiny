@@ -45,10 +45,12 @@ namespace Onllama.Tiny
                 {
                     try
                     {
+                        var req = new CreateModelRequest
+                            {ModelFileContent = inputMf.Text, Model = inputName.Text, Stream = true};
                         var textInfo = new CultureInfo("en-US", false).TextInfo;
-                        Task.Run(() => Form1.OllamaApi.CreateModel(
-                            new CreateModelRequest
-                                {ModelFileContent = inputMf.Text, Model = inputName.Text, Stream = true},
+                        if (string.IsNullOrWhiteSpace(select2.Text) || select2.Text != "不量化")
+                            req.Quantize = select2.Text;
+                        Task.Run(() => Form1.OllamaApi.CreateModel(req,
                             new ActionResponseStreamer<CreateModelResponse>(x =>
                                 Invoke(() => Text = textInfo.ToTitleCase(x.Status))))).Wait();
                     }
