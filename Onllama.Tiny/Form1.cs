@@ -237,9 +237,9 @@ namespace Onllama.Tiny
                             //statusList.Add(new CellTag("活动", TTypeMini.Primary));
 
                             var runModel = runningModels.First(x => x.Name == item.Name);
-                            var expires = runModel.ExpiresAt ?? DateTime.MaxValue;
-                            statusList.Add(new CellTag((runModel.Size / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.0") + "G", TTypeMini.Primary));
-                            if (runModel.SizeVRAM.HasValue) statusList.Add(new CellTag((runModel.SizeVRAM / 1024.00 / 1024.00 / 1024.00 ?? 0).ToString("0.0") + "G (GPU)", TTypeMini.Warn));
+                            var expires = runModel.ExpiresAt;
+                            statusList.Add(new CellTag((runModel.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.0") + "G", TTypeMini.Primary));
+                            if (runModel.SizeVRAM != 0) statusList.Add(new CellTag((runModel.SizeVRAM / 1024.00 / 1024.00 / 1024.00).ToString("0.0") + "G (GPU)", TTypeMini.Warn));
                             statusList.Add(new CellTag(
                                 expires.Year > 2300
                                     ? "永久"

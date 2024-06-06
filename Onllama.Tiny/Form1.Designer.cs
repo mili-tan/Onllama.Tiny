@@ -45,7 +45,7 @@
             table1.Dock = DockStyle.Fill;
             table1.Location = new Point(0, 0);
             table1.Name = "table1";
-            table1.Size = new Size(684, 381);
+            table1.Size = new Size(782, 426);
             table1.TabIndex = 0;
             table1.Text = "table1";
             table1.CellButtonClick += table1_CellButtonClick;
@@ -54,10 +54,10 @@
             // 
             panel1.Controls.Add(flowLayoutPanel1);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 336);
+            panel1.Location = new Point(0, 376);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(684, 45);
+            panel1.Size = new Size(782, 50);
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
             // 
@@ -71,19 +71,19 @@
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(5, 5);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(674, 35);
+            flowLayoutPanel1.Size = new Size(772, 40);
             flowLayoutPanel1.TabIndex = 0;
             flowLayoutPanel1.SizeChanged += flowLayoutPanel1_SizeChanged;
             // 
             // select1
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            select1.Items.AddRange(new object[] { "qwen:4b", "qwen:7b", "qwen:14b", "qwen:32b", "yi:6b", "yi:9b", "yi:34b", "llama3:8b", "phi3:mini", "command-r:35b", "gemma:7b", "deepseek-llm:7b", "llama2-chinese:7b", "llama2-chinese:13b" });
+            select1.Items.AddRange(new object[] { "qwen:4b", "qwen:7b", "qwen:14b", "qwen:32b", "yi:6b", "yi:9b", "yi:34b", "llama3:8b", "phi3:3.8b", "phi3:14b", "command-r:35b", "gemma:7b", "deepseek-llm:7b", "deepseek-v2:16b" });
             select1.Location = new Point(3, 3);
             select1.Name = "select1";
             select1.SelectedIndex = 0;
             select1.SelectedValue = "qwen:4b";
-            select1.Size = new Size(560, 30);
+            select1.Size = new Size(640, 34);
             select1.TabIndex = 0;
             select1.Text = "qwen:4b";
             // 
@@ -92,9 +92,9 @@
             button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             button1.BorderWidth = 1F;
             button1.Ghost = true;
-            button1.Location = new Point(569, 3);
+            button1.Location = new Point(649, 3);
             button1.Name = "button1";
-            button1.Size = new Size(65, 30);
+            button1.Size = new Size(74, 34);
             button1.TabIndex = 1;
             button1.Text = "下载";
             button1.Click += button1_Click;
@@ -106,10 +106,10 @@
             dropdown1.Ghost = true;
             dropdown1.ImageSvg = Properties.Resources.settingSvg;
             dropdown1.Items.AddRange(new object[] { "导入模型", "Ollama 设置", "刷新模型列表" });
-            dropdown1.Location = new Point(640, 3);
+            dropdown1.Location = new Point(729, 3);
             dropdown1.Name = "dropdown1";
             dropdown1.Placement = AntdUI.TAlignFrom.TR;
-            dropdown1.Size = new Size(30, 30);
+            dropdown1.Size = new Size(34, 34);
             dropdown1.TabIndex = 2;
             dropdown1.SelectedValueChanged += dropdown1_SelectedValueChanged;
             // 
@@ -119,16 +119,16 @@
             progress1.Location = new Point(0, 0);
             progress1.Name = "progress1";
             progress1.Radius = 0;
-            progress1.Size = new Size(684, 2);
+            progress1.Size = new Size(782, 2);
             progress1.TabIndex = 2;
             progress1.Text = "";
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(684, 381);
+            ClientSize = new Size(782, 426);
             Controls.Add(progress1);
             Controls.Add(panel1);
             Controls.Add(table1);

@@ -125,6 +125,16 @@ Assistant:
 """
 PARAMETER num_ctx 4096</value>
   </data>
+  <data name="deekseekv2Tmp" xml:space="preserve">
+    <value>TEMPLATE "{{ if .System }}{{ .System }}
+
+{{ end }}{{ if .Prompt }}User: {{ .Prompt }}
+
+{{ end }}Assistant: {{ .Response }}"
+PARAMETER stop User:
+PARAMETER stop Assistant:
+PARAMETER num_gpu 0</value>
+  </data>
   <data name="gemmaTmp" xml:space="preserve">
     <value>TEMPLATE """&lt;start_of_turn&gt;user
 {{ if .System }}{{ .System }} {{ end }}{{ .Prompt }}&lt;end_of_turn&gt;

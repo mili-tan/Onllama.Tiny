@@ -75,6 +75,22 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
+        ///   查找类似 TEMPLATE &quot;{{ if .System }}{{ .System }}
+        ///
+        ///{{ end }}{{ if .Prompt }}User: {{ .Prompt }}
+        ///
+        ///{{ end }}Assistant: {{ .Response }}&quot;
+        ///PARAMETER stop User:
+        ///PARAMETER stop Assistant:
+        ///PARAMETER num_gpu 0 的本地化字符串。
+        /// </summary>
+        internal static string deekseekv2Tmp {
+            get {
+                return ResourceManager.GetString("deekseekv2Tmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 TEMPLATE &quot;&quot;&quot;&lt;start_of_turn&gt;user
         ///{{ if .System }}{{ .System }} {{ end }}{{ .Prompt }}&lt;end_of_turn&gt;
         ///&lt;start_of_turn&gt;model

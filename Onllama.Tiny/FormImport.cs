@@ -23,6 +23,8 @@ namespace Onllama.Tiny
                 foreach (var item in select1.Items)
                     if (input1.Text.Contains(item.ToString() ?? string.Empty))
                         select1.SelectedValue = item.ToString();
+                if (select1.Items.Contains("embed") || select1.Items.Contains("bge") || select1.Items.Contains("m3e"))
+                    select1.SelectedValue = "none";
             }
             catch (Exception exception)
             {
@@ -46,8 +48,8 @@ namespace Onllama.Tiny
                         var textInfo = new CultureInfo("en-US", false).TextInfo;
                         Task.Run(() => Form1.OllamaApi.CreateModel(
                             new CreateModelRequest
-                                {ModelFileContent = inputMf.Text, Name = inputName.Text, Stream = true},
-                            new ActionResponseStreamer<CreateStatus>(x =>
+                                {ModelFileContent = inputMf.Text, Model = inputName.Text, Stream = true},
+                            new ActionResponseStreamer<CreateModelResponse>(x =>
                                 Invoke(() => Text = textInfo.ToTitleCase(x.Status))))).Wait();
                     }
                     catch (Exception exception)
@@ -77,6 +79,9 @@ namespace Onllama.Tiny
                     break;
                 case "mistral":
                     inputMf.Text += Resources.mistralTmp;
+                    break;
+                case "deepseek-v2":
+                    inputMf.Text += Resources.deekseekv2Tmp;
                     break;
                 case "deepseek":
                     inputMf.Text += Resources.deekseekTmp;
