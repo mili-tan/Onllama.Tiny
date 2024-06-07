@@ -3,4 +3,5 @@
 
 <a href='https://github.com/mili-tan/Onllama.Tiny/releases/latest'><img src='https://img.shields.io/github/release/mili-tan/Onllama.Tiny.svg' alt='GitHub-release' referrerPolicy='no-referrer' /></a>
 
-![图片](https://github.com/mili-tan/Onllama.Tiny/assets/24996957/9ce0c41d-3d2f-4f55-b31d-a6a21cb8d87a)
+![Snipaste](https://github.com/mili-tan/Onllama.Tiny/assets/24996957/701a7c50-a90a-43fa-ae7d-5e96c72aade9)
+
