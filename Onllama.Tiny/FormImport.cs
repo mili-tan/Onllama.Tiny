@@ -73,8 +73,11 @@ namespace Onllama.Tiny
                 case "qwen2":
                     inputMf.Text += Resources.qwen2Tmp;
                     break;
-                case "qwen":
+                case "qwen1.5":
                     inputMf.Text += Resources.qwenTmp;
+                    break;
+                case "yi-1.5":
+                    inputMf.Text += Resources.yi15Tmp;
                     break;
                 case "yi":
                     inputMf.Text += Resources.yiTmp;

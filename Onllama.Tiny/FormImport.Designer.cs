@@ -96,7 +96,7 @@
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             select1.BackColor = Color.Transparent;
-            select1.Items.AddRange(new object[] { "qwen", "yi", "gemma", "mistral", "deepseek", "deepseek-v2", "none" });
+            select1.Items.AddRange(new object[] { "qwen2", "qwen1.5", "yi-1.5", "yi", "gemma", "mistral", "deepseek-v2", "deepseek", "none" });
             select1.Location = new Point(13, 156);
             select1.Name = "select1";
             select1.PlaceholderText = "模型模板";
