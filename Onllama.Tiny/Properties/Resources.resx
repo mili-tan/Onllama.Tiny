@@ -131,9 +131,8 @@ PARAMETER num_ctx 4096</value>
 {{ end }}{{ if .Prompt }}User: {{ .Prompt }}
 
 {{ end }}Assistant: {{ .Response }}"
-PARAMETER stop User:
-PARAMETER stop Assistant:
-PARAMETER num_gpu 0</value>
+PARAMETER stop "User:"
+PARAMETER stop "Assistant:"</value>
   </data>
   <data name="gemmaTmp" xml:space="preserve">
     <value>TEMPLATE """&lt;start_of_turn&gt;user
@@ -158,7 +157,6 @@ PARAMETER stop "[/INST]"</value>
 {{ end }}&lt;|im_start|&gt;assistant
 {{ .Response }}&lt;|im_end|&gt;
 """
-PARAMETER num_gpu 0
 PARAMETER stop "&lt;|im_start|&gt;"
 PARAMETER stop "&lt;|im_end|&gt;"</value>
   </data>
