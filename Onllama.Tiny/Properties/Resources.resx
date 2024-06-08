@@ -150,6 +150,18 @@ PARAMETER repeat_penalty 1</value>
 PARAMETER stop "[INST]"
 PARAMETER stop "[/INST]"</value>
   </data>
+  <data name="qwen2Tmp" xml:space="preserve">
+    <value>TEMPLATE """{{ if .System }}&lt;|im_start|&gt;system
+{{ .System }}&lt;|im_end|&gt;
+{{ end }}{{ if .Prompt }}&lt;|im_start|&gt;user
+{{ .Prompt }}&lt;|im_end|&gt;
+{{ end }}&lt;|im_start|&gt;assistant
+{{ .Response }}&lt;|im_end|&gt;
+"""
+PARAMETER num_gpu 0
+PARAMETER stop "&lt;|im_start|&gt;"
+PARAMETER stop "&lt;|im_end|&gt;"</value>
+  </data>
   <data name="qwenTmp" xml:space="preserve">
     <value>TEMPLATE """{{ if .System }}&lt;|im_start|&gt;system
 {{ .System }}&lt;|im_end|&gt;{{ end }}&lt;|im_start|&gt;user
