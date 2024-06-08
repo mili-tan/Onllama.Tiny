@@ -80,9 +80,8 @@ namespace Onllama.Tiny.Properties {
         ///{{ end }}{{ if .Prompt }}User: {{ .Prompt }}
         ///
         ///{{ end }}Assistant: {{ .Response }}&quot;
-        ///PARAMETER stop User:
-        ///PARAMETER stop Assistant:
-        ///PARAMETER num_gpu 0 的本地化字符串。
+        ///PARAMETER stop &quot;User:&quot;
+        ///PARAMETER stop &quot;Assistant:&quot; 的本地化字符串。
         /// </summary>
         internal static string deekseekv2Tmp {
             get {
@@ -125,7 +124,6 @@ namespace Onllama.Tiny.Properties {
         ///{{ end }}&lt;|im_start|&gt;assistant
         ///{{ .Response }}&lt;|im_end|&gt;
         ///&quot;&quot;&quot;
-        ///PARAMETER num_gpu 0
         ///PARAMETER stop &quot;&lt;|im_start|&gt;&quot;
         ///PARAMETER stop &quot;&lt;|im_end|&gt;&quot; 的本地化字符串。
         /// </summary>
