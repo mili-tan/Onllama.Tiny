@@ -70,6 +70,9 @@ namespace Onllama.Tiny
             inputMf.Text = @"FROM " + input1.Text + Environment.NewLine;
             switch (value.ToString())
             {
+                case "qwen2":
+                    inputMf.Text += Resources.qwen2Tmp;
+                    break;
                 case "qwen":
                     inputMf.Text += Resources.qwenTmp;
                     break;

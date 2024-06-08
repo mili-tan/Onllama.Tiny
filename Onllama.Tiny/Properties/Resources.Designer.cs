@@ -119,6 +119,24 @@ namespace Onllama.Tiny.Properties {
         
         /// <summary>
         ///   查找类似 TEMPLATE &quot;&quot;&quot;{{ if .System }}&lt;|im_start|&gt;system
+        ///{{ .System }}&lt;|im_end|&gt;
+        ///{{ end }}{{ if .Prompt }}&lt;|im_start|&gt;user
+        ///{{ .Prompt }}&lt;|im_end|&gt;
+        ///{{ end }}&lt;|im_start|&gt;assistant
+        ///{{ .Response }}&lt;|im_end|&gt;
+        ///&quot;&quot;&quot;
+        ///PARAMETER num_gpu 0
+        ///PARAMETER stop &quot;&lt;|im_start|&gt;&quot;
+        ///PARAMETER stop &quot;&lt;|im_end|&gt;&quot; 的本地化字符串。
+        /// </summary>
+        internal static string qwen2Tmp {
+            get {
+                return ResourceManager.GetString("qwen2Tmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 TEMPLATE &quot;&quot;&quot;{{ if .System }}&lt;|im_start|&gt;system
         ///{{ .System }}&lt;|im_end|&gt;{{ end }}&lt;|im_start|&gt;user
         ///{{ .Prompt }}&lt;|im_end|&gt;
         ///&lt;|im_start|&gt;assistant
