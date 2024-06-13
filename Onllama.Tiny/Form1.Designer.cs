@@ -42,6 +42,7 @@
             // 
             // table1
             // 
+            table1.Bordered = true;
             table1.Dock = DockStyle.Fill;
             table1.Location = new Point(0, 0);
             table1.Name = "table1";
