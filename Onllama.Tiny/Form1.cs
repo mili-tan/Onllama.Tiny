@@ -54,7 +54,10 @@ namespace Onllama.Tiny
             select1.Items.Add(new SelectItem("社区")
             {
                 Sub = new List<object>
-                    {"milkey/bilibili-index:1.9b-chat-q8_0", "roger/minicpm:latest", "onekuma/sakura-13b-lnovel-v0.9b-q2_k"}
+                {
+                    "milkey/bilibili-index:1.9b-chat-q8_0", "milkey/bilibili-index:1.9b-chat-q8_0",
+                    "roger/minicpm:latest", "onekuma/sakura-13b-lnovel-v0.9b-q2_k"
+                }
             });
             select1.Items.Add(new SelectItem("Embed")
             {
