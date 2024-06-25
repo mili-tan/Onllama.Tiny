@@ -464,16 +464,7 @@ namespace Onllama.Tiny
                     break;
                 case "检查更新":
                     {
-                        var process = Process.Start(new ProcessStartInfo("ollama.exe", "-v")
-                        {
-                            UseShellExecute = false,
-                            CreateNoWindow = true,
-                            RedirectStandardOutput = true,
-                            RedirectStandardInput = true
-                        });
-                        process?.WaitForExit();
-                        var version = process?.StandardOutput.ReadToEnd() ?? string.Empty;
-                        new Modal.Config(this, "Ollama 核心版本", version, TType.Info)
+                        new Modal.Config(this, "Ollama 核心版本", Task.Run(() => OllamaApi.GetVersion()).Result, TType.Info)
                         {
                             OnOk = _ =>
                             {
