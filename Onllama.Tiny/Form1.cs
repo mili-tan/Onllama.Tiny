@@ -182,6 +182,9 @@ namespace Onllama.Tiny
                         }
                     }.open();
                     break;
+                case "info":
+                    new FormInfo(data.name).ShowDialog();
+                    break;
             }
         }
 
@@ -247,6 +250,7 @@ namespace Onllama.Tiny
                         var btnList = new List<CellButton>
                         {
                             new("copy", "复制", TTypeMini.Success) {Ghost = true, BorderWidth = 1},
+                            new("info", "信息", TTypeMini.Default) {Ghost = true, BorderWidth = 1},
                         };
 
                         if (isRunning)
