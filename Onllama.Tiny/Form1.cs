@@ -272,7 +272,7 @@ namespace Onllama.Tiny
                                     : (expires - DateTime.Now).TotalMinutes.ToString("0.0") + " 分钟",
                                 TTypeMini.Success));
                             btnList.Insert(0,
-                                new("pin", null, TTypeMini.Info)
+                                new("pin", null, TTypeMini.Warn)
                                     {Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgPin});
                         }
                         else
@@ -291,12 +291,12 @@ namespace Onllama.Tiny
                                     ? new CellButton("sleep", null, TTypeMini.Primary)
                                     {
                                         Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgSnow,
-                                        Back = Color.FromArgb(52, 152, 219), BackHover = Color.FromArgb(44, 129, 186)
+                                        //Back = Color.FromArgb(30, 136, 229), BackHover = Color.FromArgb(12, 129, 224)
                                     }
                                     : new CellButton("run", null, TTypeMini.Warn)
                                     {
                                         Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgWarm,
-                                        Back = Color.FromArgb(255, 152, 0), BackHover = Color.FromArgb(230, 147, 0)
+                                        //Back = Color.FromArgb(255, 152, 0), BackHover = Color.FromArgb(230, 147, 0)
                                     },
                                 new CellButton("web-chat", "Web", TTypeMini.Default)
                                     {Ghost = false, BorderWidth = 1}
