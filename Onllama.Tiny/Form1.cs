@@ -254,7 +254,7 @@ namespace Onllama.Tiny
                             new("info", null, TTypeMini.Success)
                             {
                                 Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgInfo,
-                                Back = Color.FromArgb(24, 188, 156), BackHover = Color.FromArgb(20, 160, 133)
+                                Back = Color.FromArgb(24, 188, 156), BackHover = Color.FromArgb(105, 211, 191)
                             },
                         };
 
