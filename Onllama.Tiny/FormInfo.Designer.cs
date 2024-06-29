@@ -37,11 +37,14 @@
             label1 = new AntdUI.Label();
             label3 = new AntdUI.Label();
             inputLicense = new AntdUI.Input();
+            panel1 = new AntdUI.Panel();
             tableLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
+            tableLayoutPanel1.BackColor = Color.Transparent;
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
@@ -54,7 +57,7 @@
             tableLayoutPanel1.Controls.Add(label3, 0, 3);
             tableLayoutPanel1.Controls.Add(inputLicense, 1, 3);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Location = new Point(15, 15);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.Padding = new Padding(10);
             tableLayoutPanel1.RowCount = 5;
@@ -63,24 +66,24 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(634, 461);
+            tableLayoutPanel1.Size = new Size(604, 431);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // inputParameters
             // 
             inputParameters.Dock = DockStyle.Fill;
-            inputParameters.Location = new Point(143, 263);
+            inputParameters.Location = new Point(143, 248);
             inputParameters.Multiline = true;
             inputParameters.Name = "inputParameters";
             inputParameters.ReadOnly = true;
-            inputParameters.Size = new Size(478, 185);
+            inputParameters.Size = new Size(448, 170);
             inputParameters.TabIndex = 13;
             inputParameters.Text = "input4";
             // 
             // label7
             // 
             label7.Dock = DockStyle.Top;
-            label7.Location = new Point(13, 263);
+            label7.Location = new Point(13, 248);
             label7.Name = "label7";
             label7.Size = new Size(124, 32);
             label7.TabIndex = 9;
@@ -142,22 +145,34 @@
             inputLicense.Multiline = true;
             inputLicense.Name = "inputLicense";
             inputLicense.ReadOnly = true;
-            inputLicense.Size = new Size(478, 184);
+            inputLicense.Size = new Size(448, 169);
             inputLicense.TabIndex = 10;
             inputLicense.Text = "input1";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(tableLayoutPanel1);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Shadow = 15;
+            panel1.Size = new Size(634, 461);
+            panel1.TabIndex = 1;
+            panel1.Text = "panel1";
             // 
             // FormInfo
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(634, 461);
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(panel1);
             Name = "FormInfo";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "模型信息";
             Load += FormInfo_Load;
             tableLayoutPanel1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -172,5 +187,6 @@
         private AntdUI.Label label3;
         private AntdUI.Input inputParameters;
         private AntdUI.Input inputLicense;
+        private AntdUI.Panel panel1;
     }
 }
