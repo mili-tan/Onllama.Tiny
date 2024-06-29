@@ -18,7 +18,8 @@ namespace Onllama.Tiny
             this.Text += @" - " + model;
 
             var show = Task.Run(() => Form1.OllamaApi.ShowModelInformation(model)).Result;
-            inputLicense.Text = show.License ?? string.Empty;
+            inputLicense.Text = string.Join(Environment.NewLine,
+                (show.License ?? string.Empty).Trim().Split('\n').ToList().Select(x => x.Trim()));
             inputParameters.Text = show.Parameters ?? string.Empty;
 
             var info = show.Info;
