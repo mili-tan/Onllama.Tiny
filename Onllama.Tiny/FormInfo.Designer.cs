@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            inputParameters = new AntdUI.Input();
             label7 = new AntdUI.Label();
             label2 = new AntdUI.Label();
             badgeContext = new AntdUI.Badge();
@@ -38,6 +37,9 @@
             label3 = new AntdUI.Label();
             inputLicense = new AntdUI.Input();
             panel1 = new AntdUI.Panel();
+            inputParameters = new AntdUI.Input();
+            inputTemplate = new AntdUI.Input();
+            label4 = new AntdUI.Label();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -48,6 +50,8 @@
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(label4, 0, 5);
+            tableLayoutPanel1.Controls.Add(inputTemplate, 0, 5);
             tableLayoutPanel1.Controls.Add(inputParameters, 1, 4);
             tableLayoutPanel1.Controls.Add(label7, 0, 4);
             tableLayoutPanel1.Controls.Add(label2, 0, 1);
@@ -60,25 +64,15 @@
             tableLayoutPanel1.Location = new Point(15, 15);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.Padding = new Padding(10);
-            tableLayoutPanel1.RowCount = 5;
+            tableLayoutPanel1.RowCount = 6;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.Size = new Size(604, 431);
             tableLayoutPanel1.TabIndex = 0;
-            // 
-            // inputParameters
-            // 
-            inputParameters.Dock = DockStyle.Fill;
-            inputParameters.Location = new Point(143, 248);
-            inputParameters.Multiline = true;
-            inputParameters.Name = "inputParameters";
-            inputParameters.ReadOnly = true;
-            inputParameters.Size = new Size(448, 170);
-            inputParameters.TabIndex = 13;
-            inputParameters.Text = "input4";
             // 
             // label7
             // 
@@ -160,6 +154,38 @@
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
             // 
+            // inputParameters
+            // 
+            inputParameters.Dock = DockStyle.Fill;
+            inputParameters.Location = new Point(143, 248);
+            inputParameters.Multiline = true;
+            inputParameters.Name = "inputParameters";
+            inputParameters.ReadOnly = true;
+            inputParameters.Size = new Size(448, 81);
+            inputParameters.TabIndex = 13;
+            inputParameters.Text = "input2";
+            // 
+            // inputTmp
+            // 
+            inputTemplate.Dock = DockStyle.Fill;
+            inputTemplate.Location = new Point(143, 335);
+            inputTemplate.Multiline = true;
+            inputTemplate.Name = "inputTemplate";
+            inputTemplate.ReadOnly = true;
+            inputTemplate.Size = new Size(448, 83);
+            inputTemplate.TabIndex = 14;
+            inputTemplate.Text = "input3";
+            // 
+            // label4
+            // 
+            label4.Dock = DockStyle.Top;
+            label4.Location = new Point(13, 335);
+            label4.Name = "label4";
+            label4.Size = new Size(124, 32);
+            label4.TabIndex = 15;
+            label4.Text = "模板：";
+            label4.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // FormInfo
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
@@ -185,8 +211,10 @@
         private AntdUI.Label label1;
         private AntdUI.Label label7;
         private AntdUI.Label label3;
-        private AntdUI.Input inputParameters;
         private AntdUI.Input inputLicense;
         private AntdUI.Panel panel1;
+        private AntdUI.Input inputParameters;
+        private AntdUI.Input inputTemplate;
+        private AntdUI.Label label4;
     }
 }

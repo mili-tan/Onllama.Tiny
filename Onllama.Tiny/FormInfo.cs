@@ -21,6 +21,7 @@ namespace Onllama.Tiny
             inputLicense.Text = string.Join(Environment.NewLine,
                 (show.License ?? string.Empty).Trim().Split('\n').ToList().Select(x => x.Trim()));
             inputParameters.Text = show.Parameters ?? string.Empty;
+            inputTemplate.Text = show.Template ?? string.Empty;
 
             var info = show.Info;
             badgeContext.Text = info.ExtraInfo[$"{info.Architecture}.context_length"].ToString();
