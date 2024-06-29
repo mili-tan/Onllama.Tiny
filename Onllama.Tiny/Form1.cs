@@ -249,8 +249,13 @@ namespace Onllama.Tiny
 
                         var btnList = new List<CellButton>
                         {
-                            new("copy", "复制", TTypeMini.Success) {Ghost = true, BorderWidth = 1},
-                            new("info", "信息", TTypeMini.Default) {Ghost = true, BorderWidth = 1},
+                            new("copy", null, TTypeMini.Success)
+                                {Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgCopy},
+                            new("info", null, TTypeMini.Success)
+                            {
+                                Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgInfo,
+                                Back = Color.FromArgb(24, 188, 156), BackHover = Color.FromArgb(20, 160, 133)
+                            },
                         };
 
                         if (isRunning)
@@ -266,12 +271,16 @@ namespace Onllama.Tiny
                                     ? "永久"
                                     : (expires - DateTime.Now).TotalMinutes.ToString("0.0") + " 分钟",
                                 TTypeMini.Success));
-                            btnList.Insert(0, new("pin", "固定", TTypeMini.Info) { Ghost = true, BorderWidth = 1 });
+                            btnList.Insert(0,
+                                new("pin", null, TTypeMini.Info)
+                                    {Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgPin});
                         }
                         else
                         {
                             statusList.Add(new CellTag("休眠", TTypeMini.Default));
-                            btnList.Insert(0, new("delete", "删除", TTypeMini.Error) { Ghost = true, BorderWidth = 1 });
+                            btnList.Insert(0,
+                                new("delete", null, TTypeMini.Error)
+                                    {Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgDel});
                         }
 
                         if (item.Details != null && !isEmbed)
@@ -279,8 +288,16 @@ namespace Onllama.Tiny
                             btnList.AddRange(new[]
                             {
                                 isRunning
-                                    ? new CellButton("sleep", "休眠", TTypeMini.Warn) {Ghost = true, BorderWidth = 1}
-                                    : new CellButton("run", "预热", TTypeMini.Primary) {Ghost = true, BorderWidth = 1},
+                                    ? new CellButton("sleep", null, TTypeMini.Primary)
+                                    {
+                                        Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgSnow,
+                                        Back = Color.FromArgb(52, 152, 219), BackHover = Color.FromArgb(44, 129, 186)
+                                    }
+                                    : new CellButton("run", null, TTypeMini.Warn)
+                                    {
+                                        Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgWarm,
+                                        Back = Color.FromArgb(255, 152, 0), BackHover = Color.FromArgb(230, 147, 0)
+                                    },
                                 new CellButton("web-chat", "Web", TTypeMini.Default)
                                     {Ghost = false, BorderWidth = 1}
                             });

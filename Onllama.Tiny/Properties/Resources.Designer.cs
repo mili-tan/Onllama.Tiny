@@ -149,11 +149,74 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
+        ///   查找类似 &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-clipboard-fill&quot; viewBox=&quot;0 0 16 16&quot;&gt;
+        ///  &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2&quot;/&gt;
+        ///&lt;/svg&gt; 的本地化字符串。
+        /// </summary>
+        internal static string svgCopy {
+            get {
+                return ResourceManager.GetString("svgCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-trash3-fill&quot; viewBox=&quot;0 0 16 16&quot;&gt;
+        ///  &lt;path d=&quot;M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string svgDel {
+            get {
+                return ResourceManager.GetString("svgDel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-info-circle-fill&quot; viewBox=&quot;0 0 16 16&quot;&gt;
+        ///  &lt;path d=&quot;M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2&quot;/&gt;
+        ///&lt;/svg&gt; 的本地化字符串。
+        /// </summary>
+        internal static string svgInfo {
+            get {
+                return ResourceManager.GetString("svgInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-pin-angle-fill&quot; viewBox=&quot;0 0 16 16&quot;&gt;
+        ///  &lt;path d=&quot;M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134- [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string svgPin {
+            get {
+                return ResourceManager.GetString("svgPin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 &lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot; &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;&gt;&lt;svg t=&quot;1710874848376&quot; class=&quot;icon&quot; viewBox=&quot;0 0 1024 1024&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; p-id=&quot;8348&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; width=&quot;200&quot; height=&quot;200&quot;&gt;&lt;path d=&quot;M924.8 625.7l-65.5-56c3.1-19 4.7-38.4 4.7-57.8s-1.6-38.8-4.7-57.8l65.5-56c10.1-8.6 13.8-22.6 9.3-35.2l-0.9-2.6c-18.1-50.5-44.9-96.9-79.7-137.9l-1.8-2.1c-8.6-10.1-22.5-13.9-35.1-9. [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
-        internal static string settingSvg {
+        internal static string svgSetting {
             get {
-                return ResourceManager.GetString("settingSvg", resourceCulture);
+                return ResourceManager.GetString("svgSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-snow2&quot; viewBox=&quot;0 0 16 16&quot;&gt;
+        ///  &lt;path d=&quot;M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.086l-.646.647a.5.5 0 0 1-.707-.708L7.5 10.293V8.866l-1.236.713-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-.94.542-.496 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.884-.237a.5.5 0 1 1 .26-.966l1.848.495.94-.542-.882-.237a.5.5 0 1 1 .258-.966l1.85.495L7 8l-1.236-.713-1.849.49 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string svgSnow {
+            get {
+                return ResourceManager.GetString("svgSnow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-cup-hot-fill&quot; viewBox=&quot;0 0 16 16&quot;&gt;
+        ///  &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M.5 6a.5.5 0 0 0-.488.608l1.652 7.434A2.5 2.5 0 0 0 4.104 16h5.792a2.5 2.5 0 0 0 2.44-1.958l.131-.59a3 3 0 0 0 1.3-5.854l.221-.99A.5.5 0 0 0 13.5 6zM13 12.5a2 2 0 0 1-.316-.025l.867-3.898A2.001 2.001 0 0 1 13 12.5&quot;/&gt;
+        ///  &lt;path d=&quot;m4.4.8-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.1 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string svgWarm {
+            get {
+                return ResourceManager.GetString("svgWarm", resourceCulture);
             }
         }
         

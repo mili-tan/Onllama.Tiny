@@ -105,7 +105,7 @@
             dropdown1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             dropdown1.BorderWidth = 1F;
             dropdown1.Ghost = true;
-            dropdown1.ImageSvg = Properties.Resources.settingSvg;
+            dropdown1.ImageSvg = Properties.Resources.svgSetting;
             dropdown1.Items.AddRange(new object[] { "导入模型", "Ollama 设置", "刷新模型列表" });
             dropdown1.Location = new Point(729, 3);
             dropdown1.Name = "dropdown1";
