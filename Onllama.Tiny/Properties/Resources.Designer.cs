@@ -181,6 +181,18 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
+        ///   查找类似 &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-info-circle&quot; viewBox=&quot;0 0 16 16&quot;&gt;
+        ///  &lt;path d=&quot;M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16&quot;/&gt;
+        ///  &lt;path d=&quot;m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0&quot;/&gt;
+        ///&lt;/svg&gt; 的本地化字符串。
+        /// </summary>
+        internal static string svgInfoOutline {
+            get {
+                return ResourceManager.GetString("svgInfoOutline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;16&quot; height=&quot;16&quot; fill=&quot;currentColor&quot; class=&quot;bi bi-pin-angle-fill&quot; viewBox=&quot;0 0 16 16&quot;&gt;
         ///  &lt;path d=&quot;M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134- [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>

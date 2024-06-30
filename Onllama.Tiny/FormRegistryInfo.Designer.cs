@@ -1,6 +1,6 @@
 ﻿namespace Onllama.Tiny
 {
-    partial class FormInfo
+    partial class FormRegistryInfo
     {
         /// <summary>
         /// Required designer variable.
@@ -28,21 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
+            panel1 = new AntdUI.Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             label4 = new AntdUI.Label();
             inputTemplate = new AntdUI.Input();
             inputParameters = new AntdUI.Input();
             label7 = new AntdUI.Label();
-            label2 = new AntdUI.Label();
-            badgeContext = new AntdUI.Badge();
-            badgeEmbedding = new AntdUI.Badge();
+            badgeSize = new AntdUI.Badge();
             label1 = new AntdUI.Label();
             label3 = new AntdUI.Label();
             inputLicense = new AntdUI.Input();
-            panel1 = new AntdUI.Panel();
-            tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(tableLayoutPanel1);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Shadow = 15;
+            panel1.Size = new Size(584, 461);
+            panel1.TabIndex = 2;
+            panel1.Text = "panel1";
             // 
             // tableLayoutPanel1
             // 
@@ -54,9 +63,7 @@
             tableLayoutPanel1.Controls.Add(inputTemplate, 0, 5);
             tableLayoutPanel1.Controls.Add(inputParameters, 1, 4);
             tableLayoutPanel1.Controls.Add(label7, 0, 4);
-            tableLayoutPanel1.Controls.Add(label2, 0, 1);
-            tableLayoutPanel1.Controls.Add(badgeContext, 1, 0);
-            tableLayoutPanel1.Controls.Add(badgeEmbedding, 1, 1);
+            tableLayoutPanel1.Controls.Add(badgeSize, 1, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(label3, 0, 3);
             tableLayoutPanel1.Controls.Add(inputLicense, 1, 3);
@@ -71,7 +78,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.Size = new Size(604, 431);
+            tableLayoutPanel1.Size = new Size(554, 431);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // label4
@@ -91,9 +98,8 @@
             inputTemplate.Multiline = true;
             inputTemplate.Name = "inputTemplate";
             inputTemplate.ReadOnly = true;
-            inputTemplate.Size = new Size(448, 83);
+            inputTemplate.Size = new Size(398, 83);
             inputTemplate.TabIndex = 14;
-            inputTemplate.Text = "input3";
             // 
             // inputParameters
             // 
@@ -102,9 +108,8 @@
             inputParameters.Multiline = true;
             inputParameters.Name = "inputParameters";
             inputParameters.ReadOnly = true;
-            inputParameters.Size = new Size(448, 81);
+            inputParameters.Size = new Size(398, 81);
             inputParameters.TabIndex = 13;
-            inputParameters.Text = "input2";
             // 
             // label7
             // 
@@ -116,33 +121,14 @@
             label7.Text = "推理参数：";
             label7.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // label2
+            // badgeSize
             // 
-            label2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            label2.Location = new Point(14, 33);
-            label2.Name = "label2";
-            label2.Size = new Size(123, 14);
-            label2.TabIndex = 3;
-            label2.Text = "Embedding 长度：";
-            label2.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // badgeContext
-            // 
-            badgeContext.Location = new Point(143, 13);
-            badgeContext.Name = "badgeContext";
-            badgeContext.Size = new Size(248, 14);
-            badgeContext.State = AntdUI.TState.Primary;
-            badgeContext.TabIndex = 0;
-            badgeContext.Text = "badge1";
-            // 
-            // badgeEmbedding
-            // 
-            badgeEmbedding.Location = new Point(143, 33);
-            badgeEmbedding.Name = "badgeEmbedding";
-            badgeEmbedding.Size = new Size(248, 14);
-            badgeEmbedding.State = AntdUI.TState.Success;
-            badgeEmbedding.TabIndex = 1;
-            badgeEmbedding.Text = "badge2";
+            badgeSize.Location = new Point(143, 13);
+            badgeSize.Name = "badgeSize";
+            badgeSize.Size = new Size(248, 14);
+            badgeSize.State = AntdUI.TState.Primary;
+            badgeSize.TabIndex = 0;
+            badgeSize.Text = "Unknown";
             // 
             // label1
             // 
@@ -151,7 +137,7 @@
             label1.Name = "label1";
             label1.Size = new Size(123, 14);
             label1.TabIndex = 2;
-            label1.Text = "上下文长度：";
+            label1.Text = "模型大小：";
             label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label3
@@ -171,51 +157,37 @@
             inputLicense.Multiline = true;
             inputLicense.Name = "inputLicense";
             inputLicense.ReadOnly = true;
-            inputLicense.Size = new Size(448, 169);
+            inputLicense.Size = new Size(398, 169);
             inputLicense.TabIndex = 10;
-            inputLicense.Text = "input1";
             // 
-            // panel1
-            // 
-            panel1.Controls.Add(tableLayoutPanel1);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Shadow = 15;
-            panel1.Size = new Size(634, 461);
-            panel1.TabIndex = 1;
-            panel1.Text = "panel1";
-            // 
-            // FormInfo
+            // FormRegistryInfo
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(634, 461);
+            ClientSize = new Size(584, 461);
             Controls.Add(panel1);
-            Name = "FormInfo";
+            Name = "FormRegistryInfo";
             ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "模型信息";
-            Load += FormInfo_Load;
-            tableLayoutPanel1.ResumeLayout(false);
+            Load += FormRegistryInfo_Load;
             panel1.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
+        private AntdUI.Panel panel1;
         private TableLayoutPanel tableLayoutPanel1;
-        private AntdUI.Label label2;
-        private AntdUI.Badge badgeContext;
-        private AntdUI.Badge badgeEmbedding;
-        private AntdUI.Label label1;
+        private AntdUI.Label label4;
+        private AntdUI.Input inputTemplate;
+        private AntdUI.Input inputParameters;
         private AntdUI.Label label7;
+        private AntdUI.Badge badgeSize;
+        private AntdUI.Label label1;
         private AntdUI.Label label3;
         private AntdUI.Input inputLicense;
-        private AntdUI.Panel panel1;
-        private AntdUI.Input inputParameters;
-        private AntdUI.Input inputTemplate;
-        private AntdUI.Label label4;
     }
 }

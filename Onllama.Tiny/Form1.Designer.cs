@@ -34,6 +34,7 @@
             flowLayoutPanel1 = new AntdUI.In.FlowLayoutPanel();
             select1 = new AntdUI.Select();
             button1 = new AntdUI.Button();
+            button2 = new AntdUI.Button();
             dropdown1 = new AntdUI.Dropdown();
             progress1 = new AntdUI.Progress();
             panel1.SuspendLayout();
@@ -68,6 +69,7 @@
             flowLayoutPanel1.BackColor = Color.Transparent;
             flowLayoutPanel1.Controls.Add(select1);
             flowLayoutPanel1.Controls.Add(button1);
+            flowLayoutPanel1.Controls.Add(button2);
             flowLayoutPanel1.Controls.Add(dropdown1);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(5, 5);
@@ -79,12 +81,12 @@
             // select1
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            select1.Items.AddRange(new object[] { "qwen:4b", "qwen2:7b", "qwen:14b", "qwen:32b", "yi:6b", "yi:9b", "yi:34b", "llama3:8b", "phi3:3.8b", "phi3:14b", "aya:8b", "aya:35b", "command-r:35b", "gemma:7b", "deepseek-v2:16b" });
+            select1.Items.AddRange(new object[] { "qwen:4b", "qwen2:7b", "qwen:14b", "qwen:32b", "yi:6b", "yi:9b", "yi:34b", "llama3:8b", "phi3:3.8b", "phi3:14b", "aya:8b", "aya:35b", "command-r:35b", "gemma2:9b", "deepseek-v2:16b" });
             select1.Location = new Point(3, 3);
             select1.Name = "select1";
             select1.SelectedIndex = 0;
             select1.SelectedValue = "qwen:4b";
-            select1.Size = new Size(640, 34);
+            select1.Size = new Size(590, 34);
             select1.TabIndex = 0;
             select1.Text = "qwen:4b";
             // 
@@ -93,12 +95,24 @@
             button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             button1.BorderWidth = 1F;
             button1.Ghost = true;
-            button1.Location = new Point(649, 3);
+            button1.Location = new Point(599, 3);
             button1.Name = "button1";
             button1.Size = new Size(74, 34);
             button1.TabIndex = 1;
             button1.Text = "下载";
             button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            button2.BorderWidth = 1F;
+            button2.Ghost = true;
+            button2.ImageSvg = Properties.Resources.svgInfoOutline;
+            button2.Location = new Point(679, 3);
+            button2.Name = "button2";
+            button2.Size = new Size(34, 34);
+            button2.TabIndex = 3;
+            button2.Click += button2_Click;
             // 
             // dropdown1
             // 
@@ -107,7 +121,7 @@
             dropdown1.Ghost = true;
             dropdown1.ImageSvg = Properties.Resources.svgSetting;
             dropdown1.Items.AddRange(new object[] { "导入模型", "Ollama 设置", "刷新模型列表" });
-            dropdown1.Location = new Point(729, 3);
+            dropdown1.Location = new Point(719, 3);
             dropdown1.Name = "dropdown1";
             dropdown1.Placement = AntdUI.TAlignFrom.TR;
             dropdown1.Size = new Size(34, 34);
@@ -116,6 +130,7 @@
             // 
             // progress1
             // 
+            progress1.ContainerControl = this;
             progress1.Dock = DockStyle.Top;
             progress1.Location = new Point(0, 0);
             progress1.Name = "progress1";
@@ -154,5 +169,6 @@
         private AntdUI.Progress progress1;
         private AntdUI.Dropdown dropdown1;
         private AntdUI.In.FlowLayoutPanel flowLayoutPanel1;
+        private AntdUI.Button button2;
     }
 }

@@ -58,46 +58,46 @@
             panel1.Controls.Add(checkboxAny);
             panel1.Controls.Add(divider2);
             panel1.Controls.Add(divider1);
-            panel1.Location = new Point(12, 12);
+            panel1.Location = new Point(14, 13);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(310, 360);
+            panel1.Size = new Size(354, 402);
             panel1.TabIndex = 0;
             panel1.Text = "panel1";
             // 
             // checkboxFlashAttention
             // 
             checkboxFlashAttention.BackColor = Color.Transparent;
-            checkboxFlashAttention.Location = new Point(11, 244);
+            checkboxFlashAttention.Location = new Point(13, 273);
             checkboxFlashAttention.Name = "checkboxFlashAttention";
-            checkboxFlashAttention.Size = new Size(288, 23);
+            checkboxFlashAttention.Size = new Size(329, 26);
             checkboxFlashAttention.TabIndex = 10;
             checkboxFlashAttention.Text = "启用 Flash Attention";
             // 
             // checkboxNoHistory
             // 
             checkboxNoHistory.BackColor = Color.Transparent;
-            checkboxNoHistory.Location = new Point(11, 215);
+            checkboxNoHistory.Location = new Point(13, 240);
             checkboxNoHistory.Name = "checkboxNoHistory";
-            checkboxNoHistory.Size = new Size(288, 23);
+            checkboxNoHistory.Size = new Size(329, 26);
             checkboxNoHistory.TabIndex = 9;
             checkboxNoHistory.Text = "禁用历史对话";
             // 
             // checkboxModels
             // 
             checkboxModels.BackColor = Color.Transparent;
-            checkboxModels.Location = new Point(11, 186);
+            checkboxModels.Location = new Point(13, 208);
             checkboxModels.Name = "checkboxModels";
-            checkboxModels.Size = new Size(288, 23);
+            checkboxModels.Size = new Size(329, 26);
             checkboxModels.TabIndex = 8;
             checkboxModels.Text = "允许同时加载多个模型";
             // 
             // checkboxPara
             // 
             checkboxPara.BackColor = Color.Transparent;
-            checkboxPara.Location = new Point(11, 157);
+            checkboxPara.Location = new Point(13, 175);
             checkboxPara.Name = "checkboxPara";
-            checkboxPara.Size = new Size(288, 23);
+            checkboxPara.Size = new Size(329, 26);
             checkboxPara.TabIndex = 7;
             checkboxPara.Text = "允许对话并发请求";
             // 
@@ -105,9 +105,9 @@
             // 
             buttonSave.BackColor = Color.Transparent;
             buttonSave.BorderWidth = 1F;
-            buttonSave.Location = new Point(11, 327);
+            buttonSave.Location = new Point(13, 365);
             buttonSave.Name = "buttonSave";
-            buttonSave.Size = new Size(288, 25);
+            buttonSave.Size = new Size(329, 28);
             buttonSave.TabIndex = 6;
             buttonSave.Text = "保存";
             buttonSave.Click += buttonSave_Click;
@@ -118,10 +118,10 @@
             panel2.BackColor = Color.White;
             panel2.Controls.Add(input1);
             panel2.Controls.Add(buttonOpen);
-            panel2.Location = new Point(11, 32);
+            panel2.Location = new Point(13, 36);
             panel2.Name = "panel2";
             panel2.Radius = 0;
-            panel2.Size = new Size(288, 35);
+            panel2.Size = new Size(329, 39);
             panel2.TabIndex = 2;
             // 
             // input1
@@ -129,11 +129,11 @@
             input1.Dock = DockStyle.Fill;
             input1.JoinRight = true;
             input1.Location = new Point(0, 0);
-            input1.Margin = new Padding(5);
+            input1.Margin = new Padding(6, 6, 6, 6);
             input1.Margins = 6;
             input1.Name = "input1";
             input1.PlaceholderText = ".ollama";
-            input1.Size = new Size(239, 35);
+            input1.Size = new Size(277, 39);
             input1.TabIndex = 0;
             // 
             // buttonOpen
@@ -143,10 +143,10 @@
             buttonOpen.Dock = DockStyle.Right;
             buttonOpen.Ghost = true;
             buttonOpen.JoinLeft = true;
-            buttonOpen.Location = new Point(239, 0);
+            buttonOpen.Location = new Point(277, 0);
             buttonOpen.Margins = 6;
             buttonOpen.Name = "buttonOpen";
-            buttonOpen.Size = new Size(49, 35);
+            buttonOpen.Size = new Size(52, 39);
             buttonOpen.TabIndex = 1;
             buttonOpen.Text = "更改";
             buttonOpen.Click += buttonOpen_Click;
@@ -154,46 +154,46 @@
             // checkboxNoGpu
             // 
             checkboxNoGpu.BackColor = Color.Transparent;
-            checkboxNoGpu.Location = new Point(11, 128);
+            checkboxNoGpu.Location = new Point(13, 143);
             checkboxNoGpu.Name = "checkboxNoGpu";
-            checkboxNoGpu.Size = new Size(288, 23);
+            checkboxNoGpu.Size = new Size(329, 26);
             checkboxNoGpu.TabIndex = 5;
             checkboxNoGpu.Text = "禁用 NVIDIA CUDA、AMD ROCm 显卡加速 ";
             // 
             // checkboxAny
             // 
             checkboxAny.BackColor = Color.Transparent;
-            checkboxAny.Location = new Point(11, 99);
+            checkboxAny.Location = new Point(13, 111);
             checkboxAny.Name = "checkboxAny";
-            checkboxAny.Size = new Size(288, 23);
+            checkboxAny.Size = new Size(329, 26);
             checkboxAny.TabIndex = 4;
             checkboxAny.Text = "允许局域网和外部访问";
             // 
             // divider2
             // 
             divider2.BackColor = Color.Transparent;
-            divider2.Location = new Point(8, 70);
+            divider2.Location = new Point(9, 78);
             divider2.Name = "divider2";
             divider2.Orientation = AntdUI.TOrientation.Left;
-            divider2.Size = new Size(294, 23);
+            divider2.Size = new Size(336, 26);
             divider2.TabIndex = 3;
             divider2.Text = "设置";
             // 
             // divider1
             // 
             divider1.BackColor = Color.Transparent;
-            divider1.Location = new Point(8, 8);
+            divider1.Location = new Point(9, 9);
             divider1.Name = "divider1";
             divider1.Orientation = AntdUI.TOrientation.Left;
-            divider1.Size = new Size(294, 23);
+            divider1.Size = new Size(336, 26);
             divider1.TabIndex = 0;
             divider1.Text = "模型位置";
             // 
             // FormSettings
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(334, 384);
+            ClientSize = new Size(382, 429);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -201,6 +201,7 @@
             MinimizeBox = false;
             Name = "FormSettings";
             ShowIcon = false;
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "设置";
             Load += FormSettings_Load;

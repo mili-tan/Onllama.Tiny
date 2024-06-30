@@ -130,7 +130,7 @@ namespace Onllama.Tiny
                     break;
                 case "web-chat":
                     AntdUI.Message.success(this, "已带您前往 Onllama WebChat");
-                    Process.Start(new ProcessStartInfo($"https://onllama.netlify.app/") {UseShellExecute = true});
+                    Process.Start(new ProcessStartInfo($"https://onllama.netlify.app/") { UseShellExecute = true });
                     break;
                 case "copy":
                     new FormCopy(data.name).ShowDialog();
@@ -144,7 +144,7 @@ namespace Onllama.Tiny
                             Task.Run(async () =>
                             {
                                 await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                    {Model = data.name, KeepAlive = "30m", Stream = false});
+                                { Model = data.name, KeepAlive = "30m", Stream = false });
                             }).Wait();
                             Invoke(() => ListModels());
                             return true;
@@ -159,7 +159,7 @@ namespace Onllama.Tiny
                             Task.Run(async () =>
                             {
                                 await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                    { Model = data.name, KeepAlive = "-1m", Stream = false });
+                                { Model = data.name, KeepAlive = "-1m", Stream = false });
                             }).Wait();
                             Invoke(() => ListModels());
                             return true;
@@ -174,7 +174,7 @@ namespace Onllama.Tiny
                             Task.Run(async () =>
                             {
                                 await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                    {Model = data.name, KeepAlive = "0m", Stream = false});
+                                { Model = data.name, KeepAlive = "0m", Stream = false });
                             }).Wait();
                             Thread.Sleep(2000);
                             Invoke(() => ListModels());
@@ -273,14 +273,14 @@ namespace Onllama.Tiny
                                 TTypeMini.Success));
                             btnList.Insert(0,
                                 new("pin", null, TTypeMini.Warn)
-                                    {Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgPin});
+                                { Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgPin });
                         }
                         else
                         {
                             statusList.Add(new CellTag("休眠", TTypeMini.Default));
                             btnList.Insert(0,
                                 new("delete", null, TTypeMini.Error)
-                                    {Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgDel});
+                                { Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgDel });
                         }
 
                         if (item.Details != null && !isEmbed)
@@ -307,13 +307,13 @@ namespace Onllama.Tiny
                         modelsClasses.Add(new ModelsClass
                         {
                             name = item.Name ?? "Empty",
-                            size = (item.Size / 1024.00 / 1024.00 / 1024.00 ).ToString("0.00") + "G", // ?? 0
+                            size = (item.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.00") + "G", // ?? 0
                             modifiedAt = item.ModifiedAt, //?? DateTime.MinValue
                             families = item.Details != null
                                 ? item.Details.Families != null
                                     ? item.Details.Families.Distinct()
                                         .Select(x => new CellTag(x.ToUpper(), TTypeMini.Info)).ToArray()
-                                    : new CellTag[] {new(item.Details.Family?.ToUpper()!, TTypeMini.Info)}
+                                    : new CellTag[] { new(item.Details.Family?.ToUpper()!, TTypeMini.Info) }
                                 : new CellTag[] { },
                             status = statusList.ToArray(),
                             quantization = quartList.ToArray(),
@@ -521,7 +521,14 @@ namespace Onllama.Tiny
 
         private void flowLayoutPanel1_SizeChanged(object sender, EventArgs e)
         {
-            select1.Width += (flowLayoutPanel1.Width - select1.Width - button1.Width - dropdown1.Width - 50);
+            select1.Width += (flowLayoutPanel1.Width - select1.Width - button1.Width - button2.Width - dropdown1.Width -
+                              50);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (select1.Text.Contains(" ")) select1.Text = select1.Text.Split(' ').Last();
+            new FormRegistryInfo(select1.Text).ShowDialog();
         }
     }
 }

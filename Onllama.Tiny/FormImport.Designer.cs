@@ -190,6 +190,7 @@
             MinimizeBox = false;
             Name = "FormImport";
             ShowIcon = false;
+            ShowInTaskbar = false;
             Text = "导入";
             Load += FormImport_Load;
             panel1.ResumeLayout(false);
