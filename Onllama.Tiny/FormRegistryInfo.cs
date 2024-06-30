@@ -13,19 +13,23 @@ namespace Onllama.Tiny
             InitializeComponent();
             this.Text += @" - " + tags;
 
-            var model = tags;
+            var repo = tags;
             var version = "latest";
             if (tags.Contains(":"))
             {
-                model = tags.Split(':').First();
+                repo = tags.Split(':').First();
                 version = tags.Split(':').Last();
+            }
+            if (!repo.Contains("/"))
+            {
+                repo = "library/" + repo;
             }
 
             try
             {
                 using var httpClient = new HttpClient();
                 using var request = new HttpRequestMessage(new HttpMethod("GET"),
-                    $"https://registry.ollama.ai/v2/library/{model}/manifests/{version}");
+                    $"https://registry.ollama.ai/v2/{repo}/manifests/{version}");
                 request.Headers.TryAddWithoutValidation("Accept", "application/vnd.docker.distribution.manifest.v2+json");
 
                 var response = JsonNode.Parse(httpClient.SendAsync(request).Result.Content.ReadAsStringAsync().Result);
@@ -40,17 +44,17 @@ namespace Onllama.Tiny
                     else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.template")
                     {
                         inputTemplate.Text = new HttpClient().GetStringAsync(
-                            $"https://registry.ollama.ai/v2/library/{model}/blobs/{layer["digest"]}").Result;
+                            $"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}").Result;
                     }
                     else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.license")
                     {
                         inputLicense.Text = new HttpClient().GetStringAsync(
-                            $"https://registry.ollama.ai/v2/library/{model}/blobs/{layer["digest"]}").Result;
+                            $"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}").Result;
                     }
                     else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.params")
                     {
                         inputParameters.Text += new HttpClient()
-                            .GetStringAsync($"https://registry.ollama.ai/v2/library/{model}/blobs/{layer["digest"]}")
+                            .GetStringAsync($"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}")
                             .Result;
                     }
                 });
