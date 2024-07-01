@@ -204,7 +204,7 @@ namespace Onllama.Tiny
                         {
                             var textInfo = new CultureInfo("en-US", false).TextInfo;
                             progress1.Value = (float)x.Completed / x.Total;
-                            Text = "Onllama - " + textInfo.ToTitleCase(x.Status) + " " + x.Percent + "%";
+                            Text = "Onllama - " + textInfo.ToTitleCase(x.Status) + " " + x.Percent.ToString("0.00") + "%";
                             if (string.IsNullOrEmpty(x.Status))
                             {
                                 Notification.info(this, "已完成", "模型下载任务无响应，请检查与 ollama.com 的连接。");
