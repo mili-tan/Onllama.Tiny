@@ -422,7 +422,15 @@ namespace Onllama.Tiny
                             OkText = "复制 URL",
                             OnOk = _ =>
                             {
-                                Invoke(() => Clipboard.SetText(OllamaUri + "v1"));
+                                Thread.Sleep(1);
+                                try
+                                {
+                                    Invoke(() => Clipboard.SetText(OllamaUri + "v1"));
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                }
                                 return true;
                             }
                         }.open();
