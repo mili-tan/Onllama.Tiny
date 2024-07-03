@@ -55,7 +55,7 @@ namespace Onllama.Tiny
             {
                 Sub = new List<object>
                 {
-                    "milkey/bilibili-index:1.9b-chat-q8_0", "milkey/bilibili-index:1.9b-chat-q8_0",
+                    "milkey/bilibili-index:1.9b-chat-q8_0", "milkey/bilibili-index:1.9b-character-q8_0",
                     "roger/minicpm:latest", "onekuma/sakura-13b-lnovel-v0.9b-q2_k"
                 }
             });
@@ -324,9 +324,7 @@ namespace Onllama.Tiny
                 {
                     modelsClasses.Add(new ModelsClass
                     {
-                        name = "❓ 未找到模型…",
-                        size = string.Empty,
-                        modifiedAt = null
+                        name = "❓ 未找到模型…"
                     });
                 }
 
@@ -339,9 +337,7 @@ namespace Onllama.Tiny
                 {
                     new ModelsClass
                     {
-                        name = "❌ 加载模型列表失败",
-                        size = string.Empty,
-                        modifiedAt = null
+                        name = "❌ 加载模型列表失败"
                     }
                 };
                 Console.WriteLine(e);

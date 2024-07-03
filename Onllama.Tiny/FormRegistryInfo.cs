@@ -3,6 +3,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Unicode;
+using Newtonsoft.Json.Linq;
 
 namespace Onllama.Tiny
 {
@@ -27,6 +28,7 @@ namespace Onllama.Tiny
 
             try
             {
+                
                 using var httpClient = new HttpClient();
                 using var request = new HttpRequestMessage(new HttpMethod("GET"),
                     $"https://registry.ollama.ai/v2/{repo}/manifests/{version}");
@@ -53,9 +55,28 @@ namespace Onllama.Tiny
                     }
                     else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.params")
                     {
-                        inputParameters.Text += new HttpClient()
-                            .GetStringAsync($"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}")
-                            .Result;
+                        JObject.Parse(new HttpClient()
+                                .GetStringAsync($"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}")
+                                .Result)
+                            .Properties().ToList().ForEach(p =>
+                            {
+                                if (p.Value.Type == JTokenType.Array)
+                                {
+                                    foreach (var i in p.Value.ToArray())
+                                    {
+                                        inputParameters.Text += $"{p.Name.PadRight(30)}\"{i}\"{Environment.NewLine}";
+                                    }
+                                }
+                                else if (p.Value.Type == JTokenType.String)
+                                {
+                                    inputParameters.Text += $"{p.Name.PadRight(30)}\"{p.Value}\"{Environment.NewLine}";
+
+                                }
+                                else
+                                {
+                                    inputParameters.Text += $"{p.Name.PadRight(30)}{p.Value}{Environment.NewLine}";
+                                }
+                            });
                     }
                 });
             }
