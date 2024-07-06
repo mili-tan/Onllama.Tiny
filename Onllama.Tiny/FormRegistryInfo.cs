@@ -39,7 +39,7 @@ namespace Onllama.Tiny
                         if (layer["mediaType"].ToString() == "application/vnd.ollama.image.model")
                         {
                             badgeSize.Text =
-                                (long.Parse(layer["size"].ToString()) / 1024.00 / 1024.00 / 1024.00).ToString("0.0") +
+                                (long.Parse(layer["size"].ToString()) / 1024.00 / 1024.00 / 1024.00).ToString("0.00") +
                                 "G";
                         }
                         else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.template")
