@@ -34,10 +34,10 @@
             inputTemplate = new AntdUI.Input();
             inputParameters = new AntdUI.Input();
             label7 = new AntdUI.Label();
-            badgeSize = new AntdUI.Badge();
             label1 = new AntdUI.Label();
             label3 = new AntdUI.Label();
             inputLicense = new AntdUI.Input();
+            badgeSize = new AntdUI.Badge();
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -63,18 +63,18 @@
             tableLayoutPanel1.Controls.Add(inputTemplate, 0, 5);
             tableLayoutPanel1.Controls.Add(inputParameters, 1, 4);
             tableLayoutPanel1.Controls.Add(label7, 0, 4);
-            tableLayoutPanel1.Controls.Add(badgeSize, 1, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(label3, 0, 3);
             tableLayoutPanel1.Controls.Add(inputLicense, 1, 3);
+            tableLayoutPanel1.Controls.Add(badgeSize, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(15, 15);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.Padding = new Padding(10);
             tableLayoutPanel1.RowCount = 6;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 22F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 18F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
@@ -121,15 +121,6 @@
             label7.Text = "推理参数：";
             label7.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // badgeSize
-            // 
-            badgeSize.Location = new Point(143, 13);
-            badgeSize.Name = "badgeSize";
-            badgeSize.Size = new Size(248, 14);
-            badgeSize.State = AntdUI.TState.Primary;
-            badgeSize.TabIndex = 0;
-            badgeSize.Text = "Unknown";
-            // 
             // label1
             // 
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
@@ -159,6 +150,15 @@
             inputLicense.ReadOnly = true;
             inputLicense.Size = new Size(398, 169);
             inputLicense.TabIndex = 10;
+            // 
+            // badgeSize
+            // 
+            badgeSize.Location = new Point(143, 13);
+            badgeSize.Name = "badgeSize";
+            badgeSize.Size = new Size(248, 14);
+            badgeSize.State = AntdUI.TState.Primary;
+            badgeSize.TabIndex = 0;
+            badgeSize.Text = "Unknown";
             // 
             // FormRegistryInfo
             // 

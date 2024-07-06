@@ -1,8 +1,4 @@
-﻿using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Unicode;
+﻿using System.Text.Json.Nodes;
 using Newtonsoft.Json.Linq;
 
 namespace Onllama.Tiny
@@ -28,57 +24,68 @@ namespace Onllama.Tiny
 
             try
             {
-                
+
                 using var httpClient = new HttpClient();
                 using var request = new HttpRequestMessage(new HttpMethod("GET"),
                     $"https://registry.ollama.ai/v2/{repo}/manifests/{version}");
-                request.Headers.TryAddWithoutValidation("Accept", "application/vnd.docker.distribution.manifest.v2+json");
-
+                request.Headers.TryAddWithoutValidation("Accept",
+                    "application/vnd.docker.distribution.manifest.v2+json");
                 var response = JsonNode.Parse(httpClient.SendAsync(request).Result.Content.ReadAsStringAsync().Result);
 
-                Parallel.ForEach(response["layers"].AsArray(), layer =>
+                Task.Run(async () =>
                 {
-                    if (layer["mediaType"].ToString() == "application/vnd.ollama.image.model")
+                    Parallel.ForEach(response["layers"].AsArray(), async layer =>
                     {
-                        badgeSize.Text =
-                            (long.Parse(layer["size"].ToString()) / 1024.00 / 1024.00 / 1024.00).ToString("0.0") + "G";
-                    }
-                    else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.template")
-                    {
-                        inputTemplate.Text = new HttpClient().GetStringAsync(
-                            $"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}").Result;
-                    }
-                    else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.license")
-                    {
-                        inputLicense.Text = new HttpClient().GetStringAsync(
-                            $"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}").Result;
-                    }
-                    else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.params")
-                    {
-                        JObject.Parse(new HttpClient()
-                                .GetStringAsync($"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}")
-                                .Result)
-                            .Properties().ToList().ForEach(p =>
-                            {
-                                if (p.Value.Type == JTokenType.Array)
+                        if (layer["mediaType"].ToString() == "application/vnd.ollama.image.model")
+                        {
+                            badgeSize.Text =
+                                (long.Parse(layer["size"].ToString()) / 1024.00 / 1024.00 / 1024.00).ToString("0.0") +
+                                "G";
+                        }
+                        else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.template")
+                        {
+                            inputTemplate.Text = await new HttpClient().GetStringAsync(
+                                $"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}");
+                        }
+                        else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.license")
+                        {
+                            inputLicense.Text = await new HttpClient().GetStringAsync(
+                                $"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}");
+                        }
+                        else if (layer["mediaType"].ToString() == "application/vnd.ollama.image.params")
+                        {
+                            JObject.Parse(await new HttpClient()
+                                    .GetStringAsync($"https://registry.ollama.ai/v2/{repo}/blobs/{layer["digest"]}")
+                                )
+                                .Properties().ToList().ForEach(p =>
                                 {
-                                    foreach (var i in p.Value.ToArray())
+                                    if (p.Value.Type == JTokenType.Array)
                                     {
-                                        inputParameters.Text += $"{p.Name.PadRight(30)}\"{i}\"{Environment.NewLine}";
+                                        foreach (var i in p.Value.ToArray())
+                                        {
+                                            inputParameters.Text +=
+                                                $"{p.Name.PadRight(30)}\"{i}\"{Environment.NewLine}";
+                                        }
                                     }
-                                }
-                                else if (p.Value.Type == JTokenType.String)
-                                {
-                                    inputParameters.Text += $"{p.Name.PadRight(30)}\"{p.Value}\"{Environment.NewLine}";
+                                    else if (p.Value.Type == JTokenType.String)
+                                    {
+                                        inputParameters.Text +=
+                                            $"{p.Name.PadRight(30)}\"{p.Value}\"{Environment.NewLine}";
 
-                                }
-                                else
-                                {
-                                    inputParameters.Text += $"{p.Name.PadRight(30)}{p.Value}{Environment.NewLine}";
-                                }
-                            });
-                    }
-                });
+                                    }
+                                    else
+                                    {
+                                        inputParameters.Text += $"{p.Name.PadRight(30)}{p.Value}{Environment.NewLine}";
+                                    }
+                                });
+                        }
+                    });
+
+                    badgeSize.Text += " (" + JsonNode.Parse(
+                        await new HttpClient().GetStringAsync(
+                            $"https://registry.ollama.ai/v2/{repo}/blobs/{response["config"]["digest"]}")
+                    )["file_type"].ToString().ToUpper() + ")";
+                }).Start();
             }
             catch (Exception e)
             {
