@@ -90,7 +90,7 @@
             checkboxModels.Name = "checkboxModels";
             checkboxModels.Size = new Size(329, 26);
             checkboxModels.TabIndex = 8;
-            checkboxModels.Text = "允许同时加载多个模型";
+            checkboxModels.Text = "允许同时加载更多模型";
             // 
             // checkboxPara
             // 
@@ -99,7 +99,7 @@
             checkboxPara.Name = "checkboxPara";
             checkboxPara.Size = new Size(329, 26);
             checkboxPara.TabIndex = 7;
-            checkboxPara.Text = "允许对话并发请求";
+            checkboxPara.Text = "允许更多对话并发请求";
             // 
             // buttonSave
             // 
@@ -129,7 +129,7 @@
             input1.Dock = DockStyle.Fill;
             input1.JoinRight = true;
             input1.Location = new Point(0, 0);
-            input1.Margin = new Padding(6, 6, 6, 6);
+            input1.Margin = new Padding(6);
             input1.Margins = 6;
             input1.Name = "input1";
             input1.PlaceholderText = ".ollama";

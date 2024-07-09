@@ -53,9 +53,9 @@ namespace Onllama.Tiny
                             () => Environment.SetEnvironmentVariable("HIP_VISIBLE_DEVICES",
                                 checkboxNoGpu.Checked ? " " : null, EnvironmentVariableTarget.User),
                             () => Environment.SetEnvironmentVariable("OLLAMA_NUM_PARALLEL",
-                                checkboxPara.Checked ? "6" : "1", EnvironmentVariableTarget.User),
+                                checkboxPara.Checked ? "32" : "1", EnvironmentVariableTarget.User),
                             () => Environment.SetEnvironmentVariable("OLLAMA_MAX_LOADED_MODELS",
-                                checkboxModels.Checked ? "4" : "1", EnvironmentVariableTarget.User),
+                                checkboxModels.Checked ? "8" : "1", EnvironmentVariableTarget.User),
                             () => Kill("ollama app"),
                             () => Kill("ollama")
                         );
