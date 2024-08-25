@@ -39,16 +39,15 @@ namespace Onllama.Tiny
                 Console.WriteLine(e);
             }
 
-            table1.Columns = new Column[]
-            {
+            table1.Columns = new ColumnCollection([
                 new("name", "名称"),
                 new("size", "容量"),
                 new("status", "状态"),
                 new("families", "家族"),
                 new("quantization", "格式与规模"),
                 new("modifiedAt", "上次修改"),
-                new("btns", "操作") {Fixed = true},
-            };
+                new("btns", "操作") {Fixed = true}
+            ]);
             dropdown1.Items.Add(new SelectItem("Ollama")
             { Sub = new List<object> { "NextChat", "OpenAI 兼容 API", "在线查找模型", "查看模型位置", "查看日志", "检查更新" } });
             select1.Items.Add(new SelectItem("社区")

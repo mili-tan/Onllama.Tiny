@@ -130,7 +130,7 @@
             input1.JoinRight = true;
             input1.Location = new Point(0, 0);
             input1.Margin = new Padding(6);
-            input1.Margins = 6;
+            input1.Margin = new Padding(6);
             input1.Name = "input1";
             input1.PlaceholderText = ".ollama";
             input1.Size = new Size(277, 39);
@@ -144,7 +144,7 @@
             buttonOpen.Ghost = true;
             buttonOpen.JoinLeft = true;
             buttonOpen.Location = new Point(277, 0);
-            buttonOpen.Margins = 6;
+            buttonOpen.Margin = new Padding(6);
             buttonOpen.Name = "buttonOpen";
             buttonOpen.Size = new Size(52, 39);
             buttonOpen.TabIndex = 1;

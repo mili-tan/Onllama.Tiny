@@ -53,7 +53,7 @@ namespace Onllama.Tiny
             input1.JoinRight = true;
             input1.Location = new Point(0, 0);
             input1.Margin = new Padding(5);
-            input1.Margins = 6;
+            input1.Margin = new Padding(6);
             input1.Name = "input1";
             input1.PlaceholderText = "新模型名称";
             input1.Size = new Size(300, 35);
@@ -67,7 +67,7 @@ namespace Onllama.Tiny
             button1.Ghost = true;
             button1.JoinLeft = true;
             button1.Location = new Point(300, 0);
-            button1.Margins = 6;
+            button1.Margin = new Padding(6);
             button1.Name = "button1";
             button1.Size = new Size(49, 35);
             button1.TabIndex = 1;
