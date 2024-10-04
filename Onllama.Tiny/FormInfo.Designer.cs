@@ -72,7 +72,7 @@
             tableLayoutPanel1.RowCount = 6;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 18F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 18F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 31F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
@@ -162,7 +162,7 @@
             // label3
             // 
             label3.Dock = DockStyle.Top;
-            label3.Location = new Point(12, 79);
+            label3.Location = new Point(12, 78);
             label3.Name = "label3";
             label3.Size = new Size(108, 25);
             label3.TabIndex = 4;
@@ -172,11 +172,11 @@
             // inputLicense
             // 
             inputLicense.Dock = DockStyle.Fill;
-            inputLicense.Location = new Point(126, 79);
+            inputLicense.Location = new Point(126, 78);
             inputLicense.Multiline = true;
             inputLicense.Name = "inputLicense";
             inputLicense.ReadOnly = true;
-            inputLicense.Size = new Size(387, 142);
+            inputLicense.Size = new Size(387, 143);
             inputLicense.TabIndex = 10;
             inputLicense.Text = "input1";
             // 
@@ -184,9 +184,10 @@
             // 
             panel2.Controls.Add(visionTag);
             panel2.Controls.Add(toolTag);
+            panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(126, 48);
             panel2.Name = "panel2";
-            panel2.Size = new Size(217, 23);
+            panel2.Size = new Size(387, 24);
             panel2.TabIndex = 16;
             panel2.Text = "panel2";
             // 
