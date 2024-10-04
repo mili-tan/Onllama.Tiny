@@ -13,6 +13,8 @@
             inputParameters.Text = show.Parameters ?? string.Empty;
             inputTemplate.Text = show.Template ?? string.Empty;
 
+            if (show.Template != null && show.Template.Contains("{{- if or .System .Tools }}")) toolTag.Visible = true;
+
             var info = show.Info;
             badgeContext.Text = info.ExtraInfo[$"{info.Architecture}.context_length"].ToString();
             badgeEmbedding.Text = info.ExtraInfo[$"{info.Architecture}.embedding_length"].ToString();
@@ -20,6 +22,7 @@
 
         private void FormInfo_Load(object sender, EventArgs e)
         {
+            
         }
     }
 }

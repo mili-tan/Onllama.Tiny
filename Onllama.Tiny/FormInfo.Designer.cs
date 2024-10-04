@@ -39,8 +39,12 @@
             label1 = new AntdUI.Label();
             label3 = new AntdUI.Label();
             inputLicense = new AntdUI.Input();
+            panel2 = new AntdUI.Panel();
+            visionTag = new AntdUI.Tag();
+            toolTag = new AntdUI.Tag();
             panel1 = new AntdUI.Panel();
             tableLayoutPanel1.SuspendLayout();
+            panel2.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -48,7 +52,7 @@
             // 
             tableLayoutPanel1.BackColor = Color.Transparent;
             tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 114F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Controls.Add(label4, 0, 5);
             tableLayoutPanel1.Controls.Add(inputTemplate, 0, 5);
@@ -60,26 +64,27 @@
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(label3, 0, 3);
             tableLayoutPanel1.Controls.Add(inputLicense, 1, 3);
+            tableLayoutPanel1.Controls.Add(panel2, 1, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(15, 15);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.Padding = new Padding(10);
+            tableLayoutPanel1.Padding = new Padding(9);
             tableLayoutPanel1.RowCount = 6;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 18F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 18F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 31F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.Size = new Size(604, 431);
+            tableLayoutPanel1.Size = new Size(525, 382);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // label4
             // 
             label4.Dock = DockStyle.Top;
-            label4.Location = new Point(13, 335);
+            label4.Location = new Point(12, 301);
             label4.Name = "label4";
-            label4.Size = new Size(124, 32);
+            label4.Size = new Size(108, 29);
             label4.TabIndex = 15;
             label4.Text = "模板：";
             label4.TextAlign = ContentAlignment.MiddleRight;
@@ -87,31 +92,31 @@
             // inputTemplate
             // 
             inputTemplate.Dock = DockStyle.Fill;
-            inputTemplate.Location = new Point(143, 335);
+            inputTemplate.Location = new Point(126, 301);
             inputTemplate.Multiline = true;
             inputTemplate.Name = "inputTemplate";
             inputTemplate.ReadOnly = true;
-            inputTemplate.Size = new Size(448, 83);
+            inputTemplate.Size = new Size(387, 69);
             inputTemplate.TabIndex = 14;
             inputTemplate.Text = "input3";
             // 
             // inputParameters
             // 
             inputParameters.Dock = DockStyle.Fill;
-            inputParameters.Location = new Point(143, 248);
+            inputParameters.Location = new Point(126, 227);
             inputParameters.Multiline = true;
             inputParameters.Name = "inputParameters";
             inputParameters.ReadOnly = true;
-            inputParameters.Size = new Size(448, 81);
+            inputParameters.Size = new Size(387, 68);
             inputParameters.TabIndex = 13;
             inputParameters.Text = "input2";
             // 
             // label7
             // 
             label7.Dock = DockStyle.Top;
-            label7.Location = new Point(13, 248);
+            label7.Location = new Point(12, 227);
             label7.Name = "label7";
-            label7.Size = new Size(124, 32);
+            label7.Size = new Size(108, 29);
             label7.TabIndex = 9;
             label7.Text = "推理参数：";
             label7.TextAlign = ContentAlignment.MiddleRight;
@@ -119,27 +124,27 @@
             // label2
             // 
             label2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            label2.Location = new Point(14, 33);
+            label2.Location = new Point(12, 30);
             label2.Name = "label2";
-            label2.Size = new Size(123, 14);
+            label2.Size = new Size(108, 12);
             label2.TabIndex = 3;
             label2.Text = "Embedding 长度：";
             label2.TextAlign = ContentAlignment.MiddleRight;
             // 
             // badgeContext
             // 
-            badgeContext.Location = new Point(143, 13);
+            badgeContext.Location = new Point(126, 12);
             badgeContext.Name = "badgeContext";
-            badgeContext.Size = new Size(248, 14);
+            badgeContext.Size = new Size(217, 12);
             badgeContext.State = AntdUI.TState.Primary;
             badgeContext.TabIndex = 0;
             badgeContext.Text = "badge1";
             // 
             // badgeEmbedding
             // 
-            badgeEmbedding.Location = new Point(143, 33);
+            badgeEmbedding.Location = new Point(126, 30);
             badgeEmbedding.Name = "badgeEmbedding";
-            badgeEmbedding.Size = new Size(248, 14);
+            badgeEmbedding.Size = new Size(217, 12);
             badgeEmbedding.State = AntdUI.TState.Success;
             badgeEmbedding.TabIndex = 1;
             badgeEmbedding.Text = "badge2";
@@ -147,9 +152,9 @@
             // label1
             // 
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            label1.Location = new Point(14, 13);
+            label1.Location = new Point(12, 12);
             label1.Name = "label1";
-            label1.Size = new Size(123, 14);
+            label1.Size = new Size(108, 12);
             label1.TabIndex = 2;
             label1.Text = "上下文长度：";
             label1.TextAlign = ContentAlignment.MiddleRight;
@@ -157,9 +162,9 @@
             // label3
             // 
             label3.Dock = DockStyle.Top;
-            label3.Location = new Point(13, 73);
+            label3.Location = new Point(12, 79);
             label3.Name = "label3";
-            label3.Size = new Size(124, 28);
+            label3.Size = new Size(108, 25);
             label3.TabIndex = 4;
             label3.Text = "许可证：";
             label3.TextAlign = ContentAlignment.MiddleRight;
@@ -167,13 +172,41 @@
             // inputLicense
             // 
             inputLicense.Dock = DockStyle.Fill;
-            inputLicense.Location = new Point(143, 73);
+            inputLicense.Location = new Point(126, 79);
             inputLicense.Multiline = true;
             inputLicense.Name = "inputLicense";
             inputLicense.ReadOnly = true;
-            inputLicense.Size = new Size(448, 169);
+            inputLicense.Size = new Size(387, 142);
             inputLicense.TabIndex = 10;
             inputLicense.Text = "input1";
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(visionTag);
+            panel2.Controls.Add(toolTag);
+            panel2.Location = new Point(126, 48);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(217, 23);
+            panel2.TabIndex = 16;
+            panel2.Text = "panel2";
+            // 
+            // visionTag
+            // 
+            visionTag.Location = new Point(59, 0);
+            visionTag.Name = "visionTag";
+            visionTag.Size = new Size(50, 20);
+            visionTag.TabIndex = 1;
+            visionTag.Text = "Vision";
+            visionTag.Visible = false;
+            // 
+            // toolTag
+            // 
+            toolTag.Location = new Point(3, 0);
+            toolTag.Name = "toolTag";
+            toolTag.Size = new Size(50, 20);
+            toolTag.TabIndex = 0;
+            toolTag.Text = "Tools";
+            toolTag.Visible = false;
             // 
             // panel1
             // 
@@ -182,15 +215,15 @@
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Shadow = 15;
-            panel1.Size = new Size(634, 461);
+            panel1.Size = new Size(555, 412);
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
             // 
             // FormInfo
             // 
-            AutoScaleDimensions = new SizeF(8F, 19F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(634, 461);
+            ClientSize = new Size(555, 412);
             Controls.Add(panel1);
             Name = "FormInfo";
             ShowIcon = false;
@@ -199,6 +232,7 @@
             Text = "模型信息";
             Load += FormInfo_Load;
             tableLayoutPanel1.ResumeLayout(false);
+            panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -217,5 +251,8 @@
         private AntdUI.Input inputParameters;
         private AntdUI.Input inputTemplate;
         private AntdUI.Label label4;
+        private AntdUI.Panel panel2;
+        private AntdUI.Tag toolTag;
+        private AntdUI.Tag visionTag;
     }
 }
