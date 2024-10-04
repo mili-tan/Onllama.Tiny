@@ -1,4 +1,6 @@
-﻿namespace Onllama.Tiny
+﻿using OllamaSharp.Models;
+
+namespace Onllama.Tiny
 {
     public partial class FormInfo : Form
     {
@@ -14,6 +16,11 @@
             inputTemplate.Text = show.Template ?? string.Empty;
 
             if (show.Template != null && show.Template.Contains("{{- if or .System .Tools }}")) toolTag.Visible = true;
+            if (show.Details.Families != null && show.Details.Families.Contains("clip"))
+            {
+                if (!toolTag.Visible) visionTag.Location = new Point(toolTag.Location.X, toolTag.Location.Y);
+                visionTag.Visible = true;
+            }
 
             var info = show.Info;
             badgeContext.Text = info.ExtraInfo[$"{info.Architecture}.context_length"].ToString();
