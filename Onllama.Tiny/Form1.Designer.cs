@@ -47,19 +47,19 @@
             table1.Dock = DockStyle.Fill;
             table1.Location = new Point(0, 0);
             table1.Name = "table1";
-            table1.Size = new Size(782, 426);
+            table1.Size = new Size(684, 381);
             table1.TabIndex = 0;
             table1.Text = "table1";
-            table1.CellButtonClick += table1_CellButtonClick;
+            table1.CellButtonClick += Table1OnCellButtonClick;
             // 
             // panel1
             // 
             panel1.Controls.Add(flowLayoutPanel1);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 376);
+            panel1.Location = new Point(0, 336);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(782, 50);
+            panel1.Size = new Size(684, 45);
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
             // 
@@ -74,7 +74,7 @@
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(5, 5);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(772, 40);
+            flowLayoutPanel1.Size = new Size(674, 35);
             flowLayoutPanel1.TabIndex = 0;
             flowLayoutPanel1.SizeChanged += flowLayoutPanel1_SizeChanged;
             // 
@@ -86,7 +86,7 @@
             select1.Name = "select1";
             select1.SelectedIndex = 0;
             select1.SelectedValue = "qwen2.5:3b";
-            select1.Size = new Size(590, 34);
+            select1.Size = new Size(516, 30);
             select1.TabIndex = 0;
             select1.Text = "qwen2.5:3b";
             // 
@@ -95,9 +95,9 @@
             button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             button1.BorderWidth = 1F;
             button1.Ghost = true;
-            button1.Location = new Point(599, 3);
+            button1.Location = new Point(525, 3);
             button1.Name = "button1";
-            button1.Size = new Size(74, 34);
+            button1.Size = new Size(65, 30);
             button1.TabIndex = 1;
             button1.Text = "下载";
             button1.Click += button1_Click;
@@ -107,10 +107,10 @@
             button2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             button2.BorderWidth = 1F;
             button2.Ghost = true;
-            button2.ImageSvg = Properties.Resources.svgInfoOutline;
-            button2.Location = new Point(679, 3);
+            button2.IconSvg = Properties.Resources.svgInfoOutline;
+            button2.Location = new Point(596, 3);
             button2.Name = "button2";
-            button2.Size = new Size(34, 34);
+            button2.Size = new Size(30, 30);
             button2.TabIndex = 3;
             button2.Click += button2_Click;
             // 
@@ -119,12 +119,12 @@
             dropdown1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             dropdown1.BorderWidth = 1F;
             dropdown1.Ghost = true;
-            dropdown1.ImageSvg = Properties.Resources.svgSetting;
+            dropdown1.IconSvg = resources.GetString("dropdown1.IconSvg");
             dropdown1.Items.AddRange(new object[] { "导入模型", "Ollama 设置", "刷新模型列表" });
-            dropdown1.Location = new Point(719, 3);
+            dropdown1.Location = new Point(632, 3);
             dropdown1.Name = "dropdown1";
             dropdown1.Placement = AntdUI.TAlignFrom.TR;
-            dropdown1.Size = new Size(34, 34);
+            dropdown1.Size = new Size(30, 30);
             dropdown1.TabIndex = 2;
             dropdown1.SelectedValueChanged += dropdown1_SelectedValueChanged;
             // 
@@ -134,17 +134,16 @@
             progress1.Dock = DockStyle.Top;
             progress1.Location = new Point(0, 0);
             progress1.Name = "progress1";
-            progress1.Radius = 0;
-            progress1.Size = new Size(782, 2);
+            progress1.Size = new Size(684, 2);
             progress1.TabIndex = 2;
             progress1.Text = "";
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 19F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(782, 426);
+            ClientSize = new Size(684, 381);
             Controls.Add(progress1);
             Controls.Add(panel1);
             Controls.Add(table1);

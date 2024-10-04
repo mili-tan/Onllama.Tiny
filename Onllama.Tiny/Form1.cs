@@ -103,90 +103,6 @@ namespace Onllama.Tiny
             ListModels();
         }
 
-        private void table1_CellButtonClick(object sender, CellLink btn, MouseEventArgs args, object record,
-            int rowIndex, int columnIndex)
-        {
-            if (record is not ModelsClass data) return;
-            switch (btn.Id)
-            {
-                case "delete":
-                    new Modal.Config(this, "您确定要删除模型吗？",
-                        new[]
-                        {
-                            new Modal.TextLine(data.name, Style.Db.Primary),
-                            new Modal.TextLine(data.size, Style.Db.TextSecondary)
-                        }, TType.Warn)
-                    {
-                        OkType = TTypeMini.Error,
-                        OkText = "删除",
-                        OnOk = _ =>
-                        {
-                            Task.Run(async () => await OllamaApi.DeleteModel(data.name)).Wait();
-                            Invoke(() => ListModels());
-                            return true;
-                        }
-                    }.open();
-                    break;
-                case "web-chat":
-                    AntdUI.Message.success(this, "已带您前往 Onllama WebChat");
-                    Process.Start(new ProcessStartInfo($"https://onllama.netlify.app/") { UseShellExecute = true });
-                    break;
-                case "copy":
-                    new FormCopy(data.name).ShowDialog();
-                    ListModels();
-                    break;
-                case "run":
-                    new Modal.Config(this, "要预热模型吗？", data.name, TType.Info)
-                    {
-                        OnOk = _ =>
-                        {
-                            Task.Run(async () =>
-                            {
-                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                { Model = data.name, KeepAlive = "30m", Stream = false });
-                            }).Wait();
-                            Invoke(() => ListModels());
-                            return true;
-                        }
-                    }.open();
-                    break;
-                case "pin":
-                    new Modal.Config(this, "要固定模型吗？", data.name, TType.Info)
-                    {
-                        OnOk = _ =>
-                        {
-                            Task.Run(async () =>
-                            {
-                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                { Model = data.name, KeepAlive = "-1m", Stream = false });
-                            }).Wait();
-                            Invoke(() => ListModels());
-                            return true;
-                        }
-                    }.open();
-                    break;
-                case "sleep":
-                    new Modal.Config(this, "要休眠模型吗？", data.name, TType.Warn)
-                    {
-                        OnOk = _ =>
-                        {
-                            Task.Run(async () =>
-                            {
-                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                { Model = data.name, KeepAlive = "0m", Stream = false });
-                            }).Wait();
-                            Thread.Sleep(2000);
-                            Invoke(() => ListModels());
-                            return true;
-                        }
-                    }.open();
-                    break;
-                case "info":
-                    new FormInfo(data.name).ShowDialog();
-                    break;
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             if (select1.Text.Contains(" ")) select1.Text = select1.Text.Split(' ').Last();
@@ -249,10 +165,10 @@ namespace Onllama.Tiny
                         var btnList = new List<CellButton>
                         {
                             new("copy", null, TTypeMini.Success)
-                                {Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgCopy},
+                                {Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgCopy},
                             new("info", null, TTypeMini.Success)
                             {
-                                Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgInfo,
+                                Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgInfo,
                                 Back = Color.FromArgb(24, 188, 156), BackHover = Color.FromArgb(105, 211, 191)
                             },
                         };
@@ -272,14 +188,14 @@ namespace Onllama.Tiny
                                 TTypeMini.Success));
                             btnList.Insert(0,
                                 new("pin", null, TTypeMini.Warn)
-                                { Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgPin });
+                                { Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgPin });
                         }
                         else
                         {
                             statusList.Add(new CellTag("休眠", TTypeMini.Default));
                             btnList.Insert(0,
                                 new("delete", null, TTypeMini.Error)
-                                { Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgDel });
+                                { Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgDel });
                         }
 
                         if (item.Details != null && !isEmbed)
@@ -289,12 +205,12 @@ namespace Onllama.Tiny
                                 isRunning
                                     ? new CellButton("sleep", null, TTypeMini.Primary)
                                     {
-                                        Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgSnow,
+                                        Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgSnow,
                                         //Back = Color.FromArgb(30, 136, 229), BackHover = Color.FromArgb(12, 129, 224)
                                     }
                                     : new CellButton("run", null, TTypeMini.Warn)
                                     {
-                                        Ghost = false, BorderWidth = 1, ImageSvg = Properties.Resources.svgWarm,
+                                        Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgWarm,
                                         //Back = Color.FromArgb(255, 152, 0), BackHover = Color.FromArgb(230, 147, 0)
                                     },
                                 new CellButton("web-chat", "Web", TTypeMini.Default)
@@ -444,6 +360,92 @@ namespace Onllama.Tiny
         {
             if (select1.Text.Contains(" ")) select1.Text = select1.Text.Split(' ').Last();
             new FormRegistryInfo(select1.Text).ShowDialog();
+        }
+
+        private void Table1OnCellButtonClick(object sender, TableButtonEventArgs e)
+        {
+            var record = e.Record;
+            var btn = e.Btn;
+
+            if (record is not ModelsClass data) return;
+            switch (btn.Id)
+            {
+                case "delete":
+                    new Modal.Config(this, "您确定要删除模型吗？",
+                        new[]
+                        {
+                            new Modal.TextLine(data.name, Style.Db.Primary),
+                            new Modal.TextLine(data.size, Style.Db.TextSecondary)
+                        }, TType.Warn)
+                    {
+                        OkType = TTypeMini.Error,
+                        OkText = "删除",
+                        OnOk = _ =>
+                        {
+                            Task.Run(async () => await OllamaApi.DeleteModel(data.name)).Wait();
+                            Invoke(() => ListModels());
+                            return true;
+                        }
+                    }.open();
+                    break;
+                case "web-chat":
+                    AntdUI.Message.success(this, "已带您前往 Onllama WebChat");
+                    Process.Start(new ProcessStartInfo($"https://onllama.netlify.app/") { UseShellExecute = true });
+                    break;
+                case "copy":
+                    new FormCopy(data.name).ShowDialog();
+                    ListModels();
+                    break;
+                case "run":
+                    new Modal.Config(this, "要预热模型吗？", data.name, TType.Info)
+                    {
+                        OnOk = _ =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
+                                { Model = data.name, KeepAlive = "30m", Stream = false });
+                            }).Wait();
+                            Invoke(() => ListModels());
+                            return true;
+                        }
+                    }.open();
+                    break;
+                case "pin":
+                    new Modal.Config(this, "要固定模型吗？", data.name, TType.Info)
+                    {
+                        OnOk = _ =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
+                                { Model = data.name, KeepAlive = "-1m", Stream = false });
+                            }).Wait();
+                            Invoke(() => ListModels());
+                            return true;
+                        }
+                    }.open();
+                    break;
+                case "sleep":
+                    new Modal.Config(this, "要休眠模型吗？", data.name, TType.Warn)
+                    {
+                        OnOk = _ =>
+                        {
+                            Task.Run(async () =>
+                            {
+                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
+                                { Model = data.name, KeepAlive = "0m", Stream = false });
+                            }).Wait();
+                            Thread.Sleep(2000);
+                            Invoke(() => ListModels());
+                            return true;
+                        }
+                    }.open();
+                    break;
+                case "info":
+                    new FormInfo(data.name).ShowDialog();
+                    break;
+            }
         }
     }
 }
