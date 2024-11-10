@@ -18,7 +18,7 @@ namespace Onllama.Tiny
             try
             {
                 Task.Run(() =>
-                        Form1.OllamaApi.CopyModel(new CopyModelRequest { Destination = input1.Text, Source = sourceName }))
+                        Form1.OllamaApi.CopyModelAsync(new CopyModelRequest { Destination = input1.Text, Source = sourceName }))
                     .Wait();
             }
             catch (Exception exception)

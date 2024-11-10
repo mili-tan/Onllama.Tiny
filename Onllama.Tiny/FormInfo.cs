@@ -9,7 +9,7 @@ namespace Onllama.Tiny
             InitializeComponent();
             this.Text += @" - " + model;
 
-            var show = Task.Run(() => Form1.OllamaApi.ShowModelInformation(model)).Result;
+            var show = Task.Run(() => Form1.OllamaApi.ShowModelAsync(new ShowModelRequest { Model = model })).Result;
             inputLicense.Text = string.Join(Environment.NewLine,
                 (show.License ?? string.Empty).Trim().Split('\n').ToList().Select(x => x.Trim()));
             inputParameters.Text = show.Parameters ?? string.Empty;

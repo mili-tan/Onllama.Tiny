@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using AntdUI;
 using OllamaSharp.Models;
-using OllamaSharp.Streamer;
 using Onllama.Tiny.Properties;
 
 namespace Onllama.Tiny
@@ -50,9 +49,12 @@ namespace Onllama.Tiny
                         var textInfo = new CultureInfo("en-US", false).TextInfo;
                         if (string.IsNullOrWhiteSpace(select2.Text) || select2.Text != "不量化")
                             req.Quantize = select2.Text;
-                        Task.Run(() => Form1.OllamaApi.CreateModel(req,
-                            new ActionResponseStreamer<CreateModelResponse>(x =>
-                                Invoke(() => Text = textInfo.ToTitleCase(x.Status))))).Wait();
+
+                        Task.Run(async () =>
+                        {
+                            await foreach (var x in Form1.OllamaApi.CreateModelAsync(req))
+                                Invoke(() => Text = textInfo.ToTitleCase(x.Status));
+                        }).Wait();
                     }
                     catch (Exception exception)
                     {

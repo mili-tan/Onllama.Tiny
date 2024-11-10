@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using AntdUI;
 using Microsoft.VisualBasic.Devices;
 using OllamaSharp;
 using OllamaSharp.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Onllama.Tiny
 {
@@ -113,28 +111,33 @@ namespace Onllama.Tiny
                 OnOk = _ =>
                 {
                     Invoke(progress1.Show);
-                    Task.Run(() => OllamaApi.PullModel(select1.Text, (x) =>
+
+                    Task.Run(async () =>
                     {
-                        Invoke(() =>
+                        await foreach (var x in OllamaApi.PullModelAsync(select1.Text))
                         {
-                            var textInfo = new CultureInfo("en-US", false).TextInfo;
-                            progress1.Value = (float)x.Completed / x.Total;
-                            Text = "Onllama - " + textInfo.ToTitleCase(x.Status) + " " + x.Percent.ToString("0.00") + "%";
-                            if (string.IsNullOrEmpty(x.Status))
+                            Invoke(() =>
                             {
-                                Notification.info(this, "已完成", "模型下载任务无响应，请检查与 ollama.com 的连接。");
-                                Text = "Onllama - Models";
-                                progress1.Hide();
-                            }
-                            else if (x.Status == "success")
-                            {
-                                Notification.success(this, "已完成", "模型已下载完成！");
-                                Text = "Onllama - Models";
-                                progress1.Hide();
-                                ListModels();
-                            }
-                        });
-                    }));
+                                var textInfo = new CultureInfo("en-US", false).TextInfo;
+                                progress1.Value = (float)x.Completed / x.Total;
+                                Text = "Onllama - " + textInfo.ToTitleCase(x.Status) + " " + x.Percent.ToString("0.00") + "%";
+                                if (string.IsNullOrEmpty(x.Status))
+                                {
+                                    Notification.info(this, "已完成", "模型下载任务无响应，请检查与 ollama.com 的连接。");
+                                    Text = "Onllama - Models";
+                                    progress1.Hide();
+                                }
+                                else if (x.Status == "success")
+                                {
+                                    Notification.success(this, "已完成", "模型已下载完成！");
+                                    Text = "Onllama - Models";
+                                    progress1.Hide();
+                                    ListModels();
+                                }
+                            });
+                        }
+                    });
+
                     return true;
                 }
             }.open();
@@ -145,8 +148,8 @@ namespace Onllama.Tiny
             try
             {
                 var modelsClasses = new List<ModelsClass>();
-                var models = Task.Run(async () => await OllamaApi.ListLocalModels()).Result.ToArray();
-                var runningModels = Task.Run(async () => await OllamaApi.ListRunningModels()).Result.ToArray();
+                var models = Task.Run(async () => await OllamaApi.ListLocalModelsAsync()).Result.ToArray();
+                var runningModels = Task.Run(async () => await OllamaApi.ListRunningModelsAsync()).Result.ToArray();
                 if (models.Any())
                     foreach (var item in models)
                     {
@@ -180,7 +183,7 @@ namespace Onllama.Tiny
                             var runModel = runningModels.First(x => x.Name == item.Name);
                             var expires = runModel.ExpiresAt;
                             statusList.Add(new CellTag((runModel.Size / 1024.00 / 1024.00 / 1024.00).ToString("0.0") + "G", TTypeMini.Primary));
-                            if (runModel.SizeVRAM != 0) statusList.Add(new CellTag((runModel.SizeVRAM / 1024.00 / 1024.00 / 1024.00).ToString("0.0") + "G (GPU)", TTypeMini.Warn));
+                            if (runModel.SizeVram != 0) statusList.Add(new CellTag((runModel.SizeVram / 1024.00 / 1024.00 / 1024.00).ToString("0.0") + "G (GPU)", TTypeMini.Warn));
                             statusList.Add(new CellTag(
                                 expires.Year > 2300
                                     ? "永久"
@@ -308,7 +311,7 @@ namespace Onllama.Tiny
                     break;
                 case "检查更新":
                     {
-                        new Modal.Config(this, "Ollama 核心版本", Task.Run(() => OllamaApi.GetVersion()).Result, TType.Info)
+                        new Modal.Config(this, "Ollama 核心版本", Task.Run(() => OllamaApi.GetVersionAsync()).Result, TType.Info)
                         {
                             OnOk = _ =>
                             {
@@ -382,7 +385,7 @@ namespace Onllama.Tiny
                         OkText = "删除",
                         OnOk = _ =>
                         {
-                            Task.Run(async () => await OllamaApi.DeleteModel(data.name)).Wait();
+                            Task.Run(async () => await OllamaApi.DeleteModelAsync(data.name)).Wait();
                             Invoke(() => ListModels());
                             return true;
                         }
@@ -403,8 +406,8 @@ namespace Onllama.Tiny
                         {
                             Task.Run(async () =>
                             {
-                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                { Model = data.name, KeepAlive = "30m", Stream = false });
+                                await foreach (var _ in OllamaApi.GenerateAsync(new GenerateRequest()
+                                                   {Model = data.name, KeepAlive = "30m", Stream = false})) { }
                             }).Wait();
                             Invoke(() => ListModels());
                             return true;
@@ -418,8 +421,8 @@ namespace Onllama.Tiny
                         {
                             Task.Run(async () =>
                             {
-                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                { Model = data.name, KeepAlive = "-1m", Stream = false });
+                                await foreach (var _ in OllamaApi.GenerateAsync(new GenerateRequest()
+                                                   { Model = data.name, KeepAlive = "-1m", Stream = false })) { }
                             }).Wait();
                             Invoke(() => ListModels());
                             return true;
@@ -433,8 +436,8 @@ namespace Onllama.Tiny
                         {
                             Task.Run(async () =>
                             {
-                                await OllamaApi.GetCompletion(new GenerateCompletionRequest()
-                                { Model = data.name, KeepAlive = "0m", Stream = false });
+                                await foreach (var _ in OllamaApi.GenerateAsync(new GenerateRequest()
+                                { Model = data.name, KeepAlive = "0m", Stream = false })) { }
                             }).Wait();
                             Thread.Sleep(2000);
                             Invoke(() => ListModels());
