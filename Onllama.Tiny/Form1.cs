@@ -275,9 +275,9 @@ namespace Onllama.Tiny
                 return true;
             }
         }
-        private void dropdown1_SelectedValueChanged(object sender, object value)
+        private void dropdown1_SelectedValueChanged(object sender, ObjectNEventArgs e)
         {
-            switch (value.ToString())
+            switch (e.Value.ToString())
             {
                 case "导入模型":
                     new FormImport().ShowDialog();
