@@ -53,14 +53,16 @@ namespace Onllama.Tiny
                 Sub = new List<object>
                 {
                     "milkey/bilibili-index:1.9b-chat-q8_0", "milkey/bilibili-index:1.9b-character-q8_0",
-                    "roger/minicpm:latest", "onekuma/sakura-13b-lnovel-v0.9b-q2_k"
+                    "shibing624/minicpm3_4b", "hf.co/SakuraLLM/Sakura-14B-Qwen2.5-v1.0-GGUF"
                 }
             });
             select1.Items.Add(new SelectItem("Embed")
             {
                 Sub = new List<object>
                 {
-                    "znbang/bge:large-zh-v1.5-f16", "znbang/bge:large-en-v1.5-f16",
+                    "bge-m3:567m-fp16", "bge-large:335m-en-v1.5-fp16",
+                    "cwchang/jina-embeddings-v2-base-zh:f16",
+                    "znbang/bge:large-zh-v1.5-f16",
                     "milkey/m3e:large-f16", "milkey/gte:large-zh-f16",
                     "nomic-embed-text", "mxbai-embed-large"
                 }
