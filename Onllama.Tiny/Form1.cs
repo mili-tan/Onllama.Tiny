@@ -168,9 +168,13 @@ namespace Onllama.Tiny
                         var btnList = new List<CellButton>
                         {
                             new("copy", null, TTypeMini.Success)
-                                {Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgCopy},
+                            {
+                                Tooltip = "复制模型",
+                                Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgCopy
+                            },
                             new("info", null, TTypeMini.Success)
                             {
+                                Tooltip = "模型信息",
                                 Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgInfo,
                                 Back = Color.FromArgb(24, 188, 156), BackHover = Color.FromArgb(105, 211, 191)
                             },
@@ -208,11 +212,13 @@ namespace Onllama.Tiny
                                 isRunning
                                     ? new CellButton("sleep", null, TTypeMini.Primary)
                                     {
+                                        Tooltip = "休眠模型",
                                         Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgSnow,
                                         //Back = Color.FromArgb(30, 136, 229), BackHover = Color.FromArgb(12, 129, 224)
                                     }
                                     : new CellButton("run", null, TTypeMini.Warn)
                                     {
+                                        Tooltip = "预热模型",
                                         Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgWarm,
                                         //Back = Color.FromArgb(255, 152, 0), BackHover = Color.FromArgb(230, 147, 0)
                                     },
