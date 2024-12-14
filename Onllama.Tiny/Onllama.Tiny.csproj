@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AntdUI" Version="1.7.6" />
+    <PackageReference Include="AntdUI" Version="1.7.11" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="OllamaSharp" Version="4.0.8" />
+    <PackageReference Include="OllamaSharp" Version="4.0.11" />
   </ItemGroup>
 
   <ItemGroup>
