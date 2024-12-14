@@ -34,7 +34,15 @@ namespace Onllama.Tiny
         private void buttonSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(input1.Text) || string.IsNullOrEmpty(inputName.Text) ||
-                string.IsNullOrEmpty(inputMf.Text)) return;
+                string.IsNullOrEmpty(inputMf.Text))
+            {
+                new Modal.Config(this, "模板不应为空！", new[] {new Modal.TextLine(inputName.Text, Style.Db.Error)},
+                    TType.Error)
+                {
+                    OkType = TTypeMini.Error,
+                }.open();
+                return;
+            }
             new Modal.Config(this, "您确定要导入模型吗？", new[] {new Modal.TextLine(inputName.Text, Style.Db.Primary)},
                 TType.Success)
             {
@@ -67,10 +75,10 @@ namespace Onllama.Tiny
             }.open();
         }
 
-        private void select1_SelectedValueChanged(object sender, object value)
+        private void select1_SelectedValueChanged(object sender, ObjectNEventArgs value)
         {
             inputMf.Text = @"FROM " + input1.Text + Environment.NewLine;
-            switch (value.ToString())
+            switch (value.Value.ToString())
             {
                 case "qwen2":
                     inputMf.Text += Resources.qwen2Tmp;
