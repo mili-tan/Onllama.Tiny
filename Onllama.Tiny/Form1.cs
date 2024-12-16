@@ -10,6 +10,7 @@ namespace Onllama.Tiny
 {
     public partial class Form1 : BaseForm
     {
+        public static bool IsRemote = false;
         public static Uri OllamaUri = new Uri("http://127.0.0.1:11434");
         public static OllamaApiClient OllamaApi = new(OllamaUri);
 
@@ -29,8 +30,12 @@ namespace Onllama.Tiny
                         //if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OLLAMA_NUM_PARALLEL", EnvironmentVariableTarget.User) ?? string.Empty))
                         //    Environment.SetEnvironmentVariable("OLLAMA_NUM_PARALLEL", "6", EnvironmentVariableTarget.User);
                     });
-                OllamaUri = new Uri(Environment.GetEnvironmentVariable("OLLAMA_API") ?? OllamaUri.ToString());
-                OllamaApi = new OllamaApiClient(OllamaUri);
+                IsRemote = string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OLLAMA_REMOTE_API"));
+                if (IsRemote)
+                {
+                    OllamaUri = new Uri(Environment.GetEnvironmentVariable("OLLAMA_REMOTE_API") ?? OllamaUri.ToString());
+                    OllamaApi = new OllamaApiClient(OllamaUri);
+                }
             }
             catch (Exception e)
             {
@@ -83,24 +88,27 @@ namespace Onllama.Tiny
                 _ => select1.SelectedIndex
             };
 
-            var ollamaPath = (Environment.GetEnvironmentVariable("PATH")
-                    ?.Split(';')
-                    .Select(x => Path.Combine(x, "ollama app.exe"))!)
-                .FirstOrDefault(File.Exists);
+            if (!IsRemote)
+            {
+                var ollamaPath = (Environment.GetEnvironmentVariable("PATH")
+                        ?.Split(';')
+                        .Select(x => Path.Combine(x, "ollama app.exe"))!)
+                    .FirstOrDefault(File.Exists);
 
-            if (string.IsNullOrWhiteSpace(ollamaPath))
-            {
-                Notification.warn(this, "Ollama 核心未安装", "请先安装 Ollama 服务，并稍候重试。");
-                Process.Start(new ProcessStartInfo($"https://ollama.com/download/windows") { UseShellExecute = true });
-                Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
-                { UseShellExecute = true });
-                panel1.Enabled = false;
-            }
-            else if (!PortIsUse(11434))
-            {
-                //Notification.info(this, "Ollama 核心未在运行", "正在启动 Ollama 服务，请稍等…");
-                AntdUI.Message.info(this, "正在启动 Ollama 服务…");
-                Process.Start(ollamaPath, "serve");
+                if (string.IsNullOrWhiteSpace(ollamaPath))
+                {
+                    Notification.warn(this, "Ollama 核心未安装", "请先安装 Ollama 服务，并稍候重试。");
+                    Process.Start(new ProcessStartInfo($"https://ollama.com/download/windows") { UseShellExecute = true });
+                    Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
+                        { UseShellExecute = true });
+                    panel1.Enabled = false;
+                }
+                else if (!PortIsUse(11434))
+                {
+                    //Notification.info(this, "Ollama 核心未在运行", "正在启动 Ollama 服务，请稍等…");
+                    AntdUI.Message.info(this, "正在启动 Ollama 服务…");
+                    Process.Start(ollamaPath, "serve");
+                }
             }
 
             ListModels();
@@ -291,10 +299,20 @@ namespace Onllama.Tiny
             switch (e.Value.ToString())
             {
                 case "导入模型":
+                    if (IsRemote)
+                    {
+                        AntdUI.Message.warn(this, "远程管理暂不支持该功能");
+                        return;
+                    }
                     new FormImport().ShowDialog();
                     ListModels();
                     break;
                 case "Ollama 设置":
+                    if (IsRemote)
+                    {
+                        AntdUI.Message.warn(this, "远程管理暂不支持该功能");
+                        return;
+                    }
                     new FormSettings().ShowDialog();
                     break;
                 case "刷新模型列表":
@@ -304,19 +322,29 @@ namespace Onllama.Tiny
                 case "NextChat":
                     Process.Start(
                         new ProcessStartInfo(
-                                $"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://127.0.0.1:11434%22}}")
+                                $"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://{OllamaUri}%22}}")
                         { UseShellExecute = true });
                     break;
                 case "在线查找模型":
                     Process.Start(new ProcessStartInfo($"https://ollama.com/library") { UseShellExecute = true });
                     break;
                 case "查看模型位置":
+                    if (IsRemote)
+                    {
+                        AntdUI.Message.warn(this, "远程管理暂不支持该功能");
+                        return;
+                    }
                     Process.Start(new ProcessStartInfo($"explorer.exe",
                         Environment.GetEnvironmentVariable("OLLAMA_MODELS", EnvironmentVariableTarget.User) ??
                         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.ollama\\models"
                     ));
                     break;
                 case "查看日志":
+                    if (IsRemote)
+                    {
+                        AntdUI.Message.warn(this, "远程管理暂不支持该功能");
+                        return;
+                    }
                     Process.Start(new ProcessStartInfo($"explorer.exe",
                         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Ollama\\"));
                     break;
