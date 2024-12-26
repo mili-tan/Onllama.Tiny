@@ -30,7 +30,7 @@ namespace Onllama.Tiny
                         //if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OLLAMA_NUM_PARALLEL", EnvironmentVariableTarget.User) ?? string.Empty))
                         //    Environment.SetEnvironmentVariable("OLLAMA_NUM_PARALLEL", "6", EnvironmentVariableTarget.User);
                     });
-                IsRemote = string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OLLAMA_REMOTE_API"));
+                IsRemote = !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OLLAMA_REMOTE_API"));
                 if (IsRemote)
                 {
                     OllamaUri = new Uri(Environment.GetEnvironmentVariable("OLLAMA_REMOTE_API") ?? OllamaUri.ToString());
