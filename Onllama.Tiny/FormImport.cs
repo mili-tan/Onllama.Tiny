@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using AntdUI;
 using OllamaSharp.Models;
 using Onllama.Tiny.Properties;
+using Message = AntdUI.Message;
 
 namespace Onllama.Tiny
 {
@@ -52,18 +53,25 @@ namespace Onllama.Tiny
                 {
                     try
                     {
-                        var bytes = File.ReadAllBytes(input1.Text);
-                        var digest =
-                            $"sha256:{BitConverter.ToString(SHA256.HashData(bytes)).Replace("-", string.Empty).ToLower()}";
+                        var ggufBytes = File.ReadAllBytes(input1.Text);
+                        var ggufDigest =
+                            $"sha256:{BitConverter.ToString(SHA256.HashData(ggufBytes)).Replace("-", string.Empty).ToLower()}";
                         var textInfo = new CultureInfo("en-US", false).TextInfo;
 
                         var req = new CreateModelRequest
-                            {Files = new Dictionary<string, string> {{input1.Text, digest}}, Model = inputName.Text};
+                        {
+                            Files = new Dictionary<string, string>
+                            {
+                                {new FileInfo(input1.Text).Name, ggufDigest}
+                            },
+                            Model = inputName.Text
+                        };
                         if (string.IsNullOrWhiteSpace(select2.Text) || select2.Text != "不量化")
                             req.Quantize = select2.Text;
 
                         Task.Run(async () =>
                         {
+                            await Form1.OllamaApi.PushBlobAsync(ggufDigest, ggufBytes);
                             await foreach (var x in Form1.OllamaApi.CreateModelAsync(req))
                                 Invoke(() => Text = textInfo.ToTitleCase(x.Status));
                         }).Wait();
