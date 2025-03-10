@@ -65,7 +65,6 @@
             // 
             select2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             select2.BackColor = Color.Transparent;
-            select2.Enabled = false;
             select2.Items.AddRange(new object[] { "不量化", "Q4_0", "Q8_0" });
             select2.Location = new Point(11, 175);
             select2.Name = "select2";
@@ -98,6 +97,7 @@
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             select1.BackColor = Color.Transparent;
+            select1.Enabled = false;
             select1.Items.AddRange(new object[] { "qwen2", "qwen1.5", "yi-1.5", "yi", "gemma", "mistral", "deepseek-v2", "deepseek", "none" });
             select1.Location = new Point(11, 140);
             select1.Name = "select1";
@@ -136,7 +136,7 @@
             input1.Dock = DockStyle.Fill;
             input1.JoinRight = true;
             input1.Location = new Point(0, 0);
-            input1.Margin = new Padding(5, 5, 5, 5);
+            input1.Margin = new Padding(5);
             input1.Name = "input1";
             input1.PlaceholderText = "qwen1_5-14b-chat-q4_0.gguf";
             input1.Size = new Size(489, 35);
@@ -150,7 +150,7 @@
             buttonOpen.Ghost = true;
             buttonOpen.JoinLeft = true;
             buttonOpen.Location = new Point(489, 0);
-            buttonOpen.Margin = new Padding(5, 5, 5, 5);
+            buttonOpen.Margin = new Padding(5);
             buttonOpen.Name = "buttonOpen";
             buttonOpen.Size = new Size(49, 35);
             buttonOpen.TabIndex = 1;
