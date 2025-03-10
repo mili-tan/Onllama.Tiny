@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Security.Cryptography;
 using AntdUI;
 using OllamaSharp.Models;
 using Onllama.Tiny.Properties;
@@ -33,10 +34,9 @@ namespace Onllama.Tiny
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(input1.Text) || string.IsNullOrEmpty(inputName.Text) ||
-                string.IsNullOrEmpty(inputMf.Text))
+            if (string.IsNullOrEmpty(input1.Text) || string.IsNullOrEmpty(inputName.Text))
             {
-                new Modal.Config(this, "模板不应为空！", new[] {new Modal.TextLine(inputName.Text, Style.Db.Error)},
+                new Modal.Config(this, "模型文件名与模型名称不应为空！", new[] {new Modal.TextLine(inputName.Text, Style.Db.Error)},
                     TType.Error)
                 {
                     OkType = TTypeMini.Error,
@@ -52,9 +52,13 @@ namespace Onllama.Tiny
                 {
                     try
                     {
-                        var req = new CreateModelRequest
-                            {ModelFileContent = inputMf.Text, Model = inputName.Text, Stream = true};
+                        var bytes = File.ReadAllBytes(input1.Text);
+                        var digest =
+                            $"sha256:{BitConverter.ToString(SHA256.HashData(bytes)).Replace("-", string.Empty).ToLower()}";
                         var textInfo = new CultureInfo("en-US", false).TextInfo;
+
+                        var req = new CreateModelRequest
+                            {Files = new Dictionary<string, string> {{input1.Text, digest}}, Model = inputName.Text};
                         if (string.IsNullOrWhiteSpace(select2.Text) || select2.Text != "不量化")
                             req.Quantize = select2.Text;
 
@@ -66,7 +70,7 @@ namespace Onllama.Tiny
                     }
                     catch (Exception exception)
                     {
-                        Console.WriteLine(exception);
+                        MessageBox.Show(exception.ToString());
                     }
 
                     Invoke(Close);
