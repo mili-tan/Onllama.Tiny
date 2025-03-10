@@ -54,10 +54,10 @@
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(divider2);
             panel1.Controls.Add(divider1);
-            panel1.Location = new Point(14, 13);
+            panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(640, 472);
+            panel1.Size = new Size(560, 422);
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
             // 
@@ -65,31 +65,33 @@
             // 
             select2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             select2.BackColor = Color.Transparent;
+            select2.Enabled = false;
             select2.Items.AddRange(new object[] { "不量化", "Q4_0", "Q8_0" });
-            select2.Location = new Point(13, 196);
+            select2.Location = new Point(11, 175);
             select2.Name = "select2";
             select2.PlaceholderText = "量化等级";
-            select2.Size = new Size(615, 34);
+            select2.Size = new Size(538, 30);
             select2.TabIndex = 10;
             // 
             // inputName
             // 
             inputName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             inputName.BackColor = Color.Transparent;
-            inputName.Location = new Point(13, 84);
+            inputName.Location = new Point(11, 75);
             inputName.Name = "inputName";
             inputName.PlaceholderText = "模型名称";
-            inputName.Size = new Size(615, 34);
+            inputName.Size = new Size(538, 30);
             inputName.TabIndex = 9;
             // 
             // inputMf
             // 
             inputMf.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             inputMf.BackColor = Color.Transparent;
-            inputMf.Location = new Point(13, 236);
+            inputMf.Enabled = false;
+            inputMf.Location = new Point(11, 211);
             inputMf.Multiline = true;
             inputMf.Name = "inputMf";
-            inputMf.Size = new Size(615, 187);
+            inputMf.Size = new Size(538, 167);
             inputMf.TabIndex = 8;
             // 
             // select1
@@ -97,10 +99,10 @@
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             select1.BackColor = Color.Transparent;
             select1.Items.AddRange(new object[] { "qwen2", "qwen1.5", "yi-1.5", "yi", "gemma", "mistral", "deepseek-v2", "deepseek", "none" });
-            select1.Location = new Point(13, 156);
+            select1.Location = new Point(11, 140);
             select1.Name = "select1";
             select1.PlaceholderText = "模型模板";
-            select1.Size = new Size(615, 34);
+            select1.Size = new Size(538, 30);
             select1.TabIndex = 7;
             select1.SelectedValueChanged += select1_SelectedValueChanged;
             // 
@@ -109,9 +111,9 @@
             buttonSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             buttonSave.BackColor = Color.Transparent;
             buttonSave.BorderWidth = 1F;
-            buttonSave.Location = new Point(13, 429);
+            buttonSave.Location = new Point(11, 384);
             buttonSave.Name = "buttonSave";
-            buttonSave.Size = new Size(615, 34);
+            buttonSave.Size = new Size(538, 30);
             buttonSave.TabIndex = 6;
             buttonSave.Text = "导入";
             buttonSave.Click += buttonSave_Click;
@@ -123,10 +125,10 @@
             panel2.BackColor = Color.White;
             panel2.Controls.Add(input1);
             panel2.Controls.Add(buttonOpen);
-            panel2.Location = new Point(13, 36);
+            panel2.Location = new Point(11, 32);
             panel2.Name = "panel2";
             panel2.Radius = 0;
-            panel2.Size = new Size(615, 39);
+            panel2.Size = new Size(538, 35);
             panel2.TabIndex = 2;
             // 
             // input1
@@ -134,11 +136,10 @@
             input1.Dock = DockStyle.Fill;
             input1.JoinRight = true;
             input1.Location = new Point(0, 0);
-            input1.Margin = new Padding(6);
-            input1.Margin = new Padding(6);
+            input1.Margin = new Padding(5, 5, 5, 5);
             input1.Name = "input1";
             input1.PlaceholderText = "qwen1_5-14b-chat-q4_0.gguf";
-            input1.Size = new Size(563, 39);
+            input1.Size = new Size(489, 35);
             input1.TabIndex = 0;
             // 
             // buttonOpen
@@ -148,10 +149,10 @@
             buttonOpen.Dock = DockStyle.Right;
             buttonOpen.Ghost = true;
             buttonOpen.JoinLeft = true;
-            buttonOpen.Location = new Point(563, 0);
-            buttonOpen.Margin = new Padding(6);
+            buttonOpen.Location = new Point(489, 0);
+            buttonOpen.Margin = new Padding(5, 5, 5, 5);
             buttonOpen.Name = "buttonOpen";
-            buttonOpen.Size = new Size(52, 39);
+            buttonOpen.Size = new Size(49, 35);
             buttonOpen.TabIndex = 1;
             buttonOpen.Text = "选择";
             buttonOpen.Click += buttonOpen_Click;
@@ -160,10 +161,10 @@
             // 
             divider2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             divider2.BackColor = Color.Transparent;
-            divider2.Location = new Point(9, 124);
+            divider2.Location = new Point(8, 111);
             divider2.Name = "divider2";
             divider2.Orientation = AntdUI.TOrientation.Left;
-            divider2.Size = new Size(622, 26);
+            divider2.Size = new Size(544, 23);
             divider2.TabIndex = 3;
             divider2.Text = "Modelfile";
             // 
@@ -171,18 +172,18 @@
             // 
             divider1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             divider1.BackColor = Color.Transparent;
-            divider1.Location = new Point(9, 9);
+            divider1.Location = new Point(8, 8);
             divider1.Name = "divider1";
             divider1.Orientation = AntdUI.TOrientation.Left;
-            divider1.Size = new Size(622, 26);
+            divider1.Size = new Size(544, 23);
             divider1.TabIndex = 0;
             divider1.Text = "模型位置";
             // 
             // FormImport
             // 
-            AutoScaleDimensions = new SizeF(8F, 19F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(667, 497);
+            ClientSize = new Size(584, 445);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
