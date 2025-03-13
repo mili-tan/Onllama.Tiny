@@ -61,12 +61,10 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
-        ///   查找类似 TEMPLATE &quot;&quot;&quot;{{ .System }}
+        ///   查找类似 {{ .System }}
         ///User: {{ .Prompt }}
         ///
-        ///Assistant:
-        ///&quot;&quot;&quot;
-        ///PARAMETER num_ctx 4096 的本地化字符串。
+        ///Assistant: 的本地化字符串。
         /// </summary>
         internal static string deekseekTmp {
             get {
@@ -75,13 +73,11 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
-        ///   查找类似 TEMPLATE &quot;{{ if .System }}{{ .System }}
+        ///   查找类似 {{ if .System }}{{ .System }}
         ///
         ///{{ end }}{{ if .Prompt }}User: {{ .Prompt }}
         ///
-        ///{{ end }}Assistant: {{ .Response }}&quot;
-        ///PARAMETER stop &quot;User:&quot;
-        ///PARAMETER stop &quot;Assistant:&quot; 的本地化字符串。
+        ///{{ end }}Assistant: {{ .Response }}&quot; 的本地化字符串。
         /// </summary>
         internal static string deekseekv2Tmp {
             get {
@@ -90,14 +86,10 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
-        ///   查找类似 TEMPLATE &quot;&quot;&quot;&lt;start_of_turn&gt;user
+        ///   查找类似 &lt;start_of_turn&gt;user
         ///{{ if .System }}{{ .System }} {{ end }}{{ .Prompt }}&lt;end_of_turn&gt;
         ///&lt;start_of_turn&gt;model
-        ///{{ .Response }}&lt;end_of_turn&gt;
-        ///&quot;&quot;&quot;
-        ///PARAMETER stop &quot;&lt;start_of_turn&gt;&quot;
-        ///PARAMETER stop &quot;&lt;end_of_turn&gt;&quot;
-        ///PARAMETER repeat_penalty 1 的本地化字符串。
+        ///{{ .Response }}&lt;end_of_turn&gt; 的本地化字符串。
         /// </summary>
         internal static string gemmaTmp {
             get {
@@ -106,9 +98,7 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
-        ///   查找类似 TEMPLATE &quot;&quot;&quot;[INST] {{ .System }} {{ .Prompt }} [/INST]&quot;&quot;&quot;
-        ///PARAMETER stop &quot;[INST]&quot;
-        ///PARAMETER stop &quot;[/INST]&quot; 的本地化字符串。
+        ///   查找类似 [INST] {{ .System }} {{ .Prompt }} [/INST] 的本地化字符串。
         /// </summary>
         internal static string mistralTmp {
             get {
@@ -117,15 +107,12 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
-        ///   查找类似 TEMPLATE &quot;&quot;&quot;{{ if .System }}&lt;|im_start|&gt;system
+        ///   查找类似 {{ if .System }}&lt;|im_start|&gt;system
         ///{{ .System }}&lt;|im_end|&gt;
         ///{{ end }}{{ if .Prompt }}&lt;|im_start|&gt;user
         ///{{ .Prompt }}&lt;|im_end|&gt;
         ///{{ end }}&lt;|im_start|&gt;assistant
-        ///{{ .Response }}&lt;|im_end|&gt;
-        ///&quot;&quot;&quot;
-        ///PARAMETER stop &quot;&lt;|im_start|&gt;&quot;
-        ///PARAMETER stop &quot;&lt;|im_end|&gt;&quot; 的本地化字符串。
+        ///{{ .Response }}&lt;|im_end|&gt; 的本地化字符串。
         /// </summary>
         internal static string qwen2Tmp {
             get {
@@ -134,13 +121,10 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
-        ///   查找类似 TEMPLATE &quot;&quot;&quot;{{ if .System }}&lt;|im_start|&gt;system
+        ///   查找类似 {{ if .System }}&lt;|im_start|&gt;system
         ///{{ .System }}&lt;|im_end|&gt;{{ end }}&lt;|im_start|&gt;user
         ///{{ .Prompt }}&lt;|im_end|&gt;
-        ///&lt;|im_start|&gt;assistant
-        ///&quot;&quot;&quot;
-        ///PARAMETER stop &quot;&lt;|im_start|&gt;&quot;
-        ///PARAMETER stop &quot;&lt;|im_end|&gt;&quot; 的本地化字符串。
+        ///&lt;|im_start|&gt;assistant 的本地化字符串。
         /// </summary>
         internal static string qwenTmp {
             get {
@@ -233,15 +217,13 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
-        ///   查找类似 TEMPLATE &quot;&quot;&quot;{{ if .System }}&lt;|im_start|&gt;system
+        ///   查找类似 {{ if .System }}&lt;|im_start|&gt;system
         ///{{ .System }}&lt;|im_end|&gt;
         ///{{ end }}{{ if .Prompt }}&lt;|im_start|&gt;user
         ///{{ .Prompt }}&lt;|im_end|&gt;
         ///{{ end }}&lt;|im_start|&gt;assistant
         ///{{ .Response }}&lt;|im_end|&gt;
-        ///&quot;&quot;&quot;
-        ///PARAMETER stop &quot;&lt;|im_start|&gt;&quot;
-        ///PARAMETER stop &quot;&lt;|im_end|&gt;&quot; 的本地化字符串。
+        /// 的本地化字符串。
         /// </summary>
         internal static string yi15Tmp {
             get {
@@ -250,14 +232,11 @@ namespace Onllama.Tiny.Properties {
         }
         
         /// <summary>
-        ///   查找类似 TEMPLATE &quot;&quot;&quot;&lt;|im_start|&gt;system
+        ///   查找类似 &lt;|im_start|&gt;system
         ///{{ .System }}&lt;|im_end|&gt;
         ///&lt;|im_start|&gt;user
         ///{{ .Prompt }}&lt;|im_end|&gt;
-        ///&lt;|im_start|&gt;assistant
-        ///&quot;&quot;&quot;
-        ///PARAMETER stop &quot;&lt;|im_start|&gt;&quot;
-        ///PARAMETER stop &quot;&lt;|im_end|&gt;&quot; 的本地化字符串。
+        ///&lt;|im_start|&gt;assistant 的本地化字符串。
         /// </summary>
         internal static string yiTmp {
             get {

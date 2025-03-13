@@ -86,7 +86,6 @@
             // 
             inputMf.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             inputMf.BackColor = Color.Transparent;
-            inputMf.Enabled = false;
             inputMf.Location = new Point(11, 211);
             inputMf.Multiline = true;
             inputMf.Name = "inputMf";
@@ -97,7 +96,6 @@
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             select1.BackColor = Color.Transparent;
-            select1.Enabled = false;
             select1.Items.AddRange(new object[] { "qwen2", "qwen1.5", "yi-1.5", "yi", "gemma", "mistral", "deepseek-v2", "deepseek", "none" });
             select1.Location = new Point(11, 140);
             select1.Name = "select1";

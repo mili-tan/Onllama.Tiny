@@ -118,56 +118,40 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="deekseekTmp" xml:space="preserve">
-    <value>TEMPLATE """{{ .System }}
+    <value>{{ .System }}
 User: {{ .Prompt }}
 
-Assistant:
-"""
-PARAMETER num_ctx 4096</value>
+Assistant:</value>
   </data>
   <data name="deekseekv2Tmp" xml:space="preserve">
-    <value>TEMPLATE "{{ if .System }}{{ .System }}
+    <value>{{ if .System }}{{ .System }}
 
 {{ end }}{{ if .Prompt }}User: {{ .Prompt }}
 
-{{ end }}Assistant: {{ .Response }}"
-PARAMETER stop "User:"
-PARAMETER stop "Assistant:"</value>
+{{ end }}Assistant: {{ .Response }}"</value>
   </data>
   <data name="gemmaTmp" xml:space="preserve">
-    <value>TEMPLATE """&lt;start_of_turn&gt;user
+    <value>&lt;start_of_turn&gt;user
 {{ if .System }}{{ .System }} {{ end }}{{ .Prompt }}&lt;end_of_turn&gt;
 &lt;start_of_turn&gt;model
-{{ .Response }}&lt;end_of_turn&gt;
-"""
-PARAMETER stop "&lt;start_of_turn&gt;"
-PARAMETER stop "&lt;end_of_turn&gt;"
-PARAMETER repeat_penalty 1</value>
+{{ .Response }}&lt;end_of_turn&gt;</value>
   </data>
   <data name="mistralTmp" xml:space="preserve">
-    <value>TEMPLATE """[INST] {{ .System }} {{ .Prompt }} [/INST]"""
-PARAMETER stop "[INST]"
-PARAMETER stop "[/INST]"</value>
+    <value>[INST] {{ .System }} {{ .Prompt }} [/INST]</value>
   </data>
   <data name="qwen2Tmp" xml:space="preserve">
-    <value>TEMPLATE """{{ if .System }}&lt;|im_start|&gt;system
+    <value>{{ if .System }}&lt;|im_start|&gt;system
 {{ .System }}&lt;|im_end|&gt;
 {{ end }}{{ if .Prompt }}&lt;|im_start|&gt;user
 {{ .Prompt }}&lt;|im_end|&gt;
 {{ end }}&lt;|im_start|&gt;assistant
-{{ .Response }}&lt;|im_end|&gt;
-"""
-PARAMETER stop "&lt;|im_start|&gt;"
-PARAMETER stop "&lt;|im_end|&gt;"</value>
+{{ .Response }}&lt;|im_end|&gt;</value>
   </data>
   <data name="qwenTmp" xml:space="preserve">
-    <value>TEMPLATE """{{ if .System }}&lt;|im_start|&gt;system
+    <value>{{ if .System }}&lt;|im_start|&gt;system
 {{ .System }}&lt;|im_end|&gt;{{ end }}&lt;|im_start|&gt;user
 {{ .Prompt }}&lt;|im_end|&gt;
-&lt;|im_start|&gt;assistant
-"""
-PARAMETER stop "&lt;|im_start|&gt;"
-PARAMETER stop "&lt;|im_end|&gt;"</value>
+&lt;|im_start|&gt;assistant</value>
   </data>
   <data name="svgCopy" xml:space="preserve">
     <value>&lt;svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-fill" viewBox="0 0 16 16"&gt;
@@ -210,24 +194,19 @@ PARAMETER stop "&lt;|im_end|&gt;"</value>
 &lt;/svg&gt;</value>
   </data>
   <data name="yi15Tmp" xml:space="preserve">
-    <value>TEMPLATE """{{ if .System }}&lt;|im_start|&gt;system
+    <value>{{ if .System }}&lt;|im_start|&gt;system
 {{ .System }}&lt;|im_end|&gt;
 {{ end }}{{ if .Prompt }}&lt;|im_start|&gt;user
 {{ .Prompt }}&lt;|im_end|&gt;
 {{ end }}&lt;|im_start|&gt;assistant
 {{ .Response }}&lt;|im_end|&gt;
-"""
-PARAMETER stop "&lt;|im_start|&gt;"
-PARAMETER stop "&lt;|im_end|&gt;"</value>
+</value>
   </data>
   <data name="yiTmp" xml:space="preserve">
-    <value>TEMPLATE """&lt;|im_start|&gt;system
+    <value>&lt;|im_start|&gt;system
 {{ .System }}&lt;|im_end|&gt;
 &lt;|im_start|&gt;user
 {{ .Prompt }}&lt;|im_end|&gt;
-&lt;|im_start|&gt;assistant
-"""
-PARAMETER stop "&lt;|im_start|&gt;"
-PARAMETER stop "&lt;|im_end|&gt;"</value>
+&lt;|im_start|&gt;assistant</value>
   </data>
 </root>

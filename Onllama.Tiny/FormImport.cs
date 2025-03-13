@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Security.Cryptography;
+using System.Text;
 using AntdUI;
 using OllamaSharp.Models;
 using Onllama.Tiny.Properties;
@@ -68,6 +69,8 @@ namespace Onllama.Tiny
                         };
                         if (string.IsNullOrWhiteSpace(select2.Text) || select2.Text != "不量化")
                             req.Quantize = select2.Text;
+
+                        if (!string.IsNullOrWhiteSpace(inputMf.Text)) req.Template = inputMf.Text;
 
                         Task.Run(async () =>
                         {
