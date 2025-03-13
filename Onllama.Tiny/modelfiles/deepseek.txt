@@ -1,6 +1,0 @@
-TEMPLATE """{{ .System }}
-User: {{ .Prompt }}
-
-Assistant:
-"""
-PARAMETER num_ctx 4096

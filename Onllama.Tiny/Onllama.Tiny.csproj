@@ -36,8 +36,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="modelfiles\" />
-  </ItemGroup>
-
 </Project>
