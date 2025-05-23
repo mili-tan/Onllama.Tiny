@@ -47,7 +47,7 @@
             table1.Dock = DockStyle.Fill;
             table1.Location = new Point(0, 0);
             table1.Name = "table1";
-            table1.Size = new Size(684, 381);
+            table1.Size = new Size(804, 481);
             table1.TabIndex = 0;
             table1.Text = "table1";
             table1.CellButtonClick += Table1OnCellButtonClick;
@@ -56,10 +56,10 @@
             // 
             panel1.Controls.Add(flowLayoutPanel1);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 336);
+            panel1.Location = new Point(0, 436);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(684, 45);
+            panel1.Size = new Size(804, 45);
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
             // 
@@ -74,7 +74,7 @@
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(5, 5);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(674, 35);
+            flowLayoutPanel1.Size = new Size(794, 35);
             flowLayoutPanel1.TabIndex = 0;
             flowLayoutPanel1.SizeChanged += flowLayoutPanel1_SizeChanged;
             // 
@@ -84,7 +84,6 @@
             select1.Items.AddRange(new object[] { "qwen3:4b", "qwen3:8b", "qwen3:14b", "qwen3:30b", "qwen3:32b", "qwen2.5-coder:3b", "qwen2.5-coder:7b", "qwen2.5-coder:14b", "qwen2.5-coder:32b", "qwq:32b", "gemma3:4b", "gemma3:12b", "gemma3:27b", "minicpm-v:8b", "llama3.2:3b", "llama3.2-vision:11b", "phi4:14b", "phi4-mini:3.8b", "aya-expanse:8b", "aya-expanse:32b", "command-r:35b" });
             select1.Location = new Point(3, 3);
             select1.Name = "select1";
-            select1.SelectedIndex = 0;
             select1.SelectedValue = "qwen2.5:3b";
             select1.Size = new Size(516, 30);
             select1.TabIndex = 0;
@@ -134,7 +133,7 @@
             progress1.Dock = DockStyle.Top;
             progress1.Location = new Point(0, 0);
             progress1.Name = "progress1";
-            progress1.Size = new Size(684, 2);
+            progress1.Size = new Size(804, 2);
             progress1.TabIndex = 2;
             progress1.Text = "";
             // 
@@ -143,7 +142,7 @@
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(684, 381);
+            ClientSize = new Size(804, 481);
             Controls.Add(progress1);
             Controls.Add(panel1);
             Controls.Add(table1);
