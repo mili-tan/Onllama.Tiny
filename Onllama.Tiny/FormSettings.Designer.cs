@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             panel1 = new AntdUI.Panel();
+            divider3 = new AntdUI.Divider();
+            label1 = new AntdUI.Label();
+            comboBoxLanguage = new AntdUI.Select();
             checkboxFlashAttention = new AntdUI.Checkbox();
             checkboxNoHistory = new AntdUI.Checkbox();
             checkboxModels = new AntdUI.Checkbox();
@@ -42,12 +45,17 @@
             checkboxAny = new AntdUI.Checkbox();
             divider2 = new AntdUI.Divider();
             divider1 = new AntdUI.Divider();
+            label2 = new AntdUI.Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(divider3);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(comboBoxLanguage);
             panel1.Controls.Add(checkboxFlashAttention);
             panel1.Controls.Add(checkboxNoHistory);
             panel1.Controls.Add(checkboxModels);
@@ -61,9 +69,37 @@
             panel1.Location = new Point(14, 13);
             panel1.Name = "panel1";
             panel1.Shadow = 5;
-            panel1.Size = new Size(354, 402);
+            panel1.Size = new Size(354, 452);
             panel1.TabIndex = 0;
             panel1.Text = "panel1";
+            // 
+            // divider3
+            // 
+            divider3.BackColor = Color.Transparent;
+            divider3.Location = new Point(9, 303);
+            divider3.Name = "divider3";
+            divider3.Orientation = AntdUI.TOrientation.Left;
+            divider3.Size = new Size(336, 26);
+            divider3.TabIndex = 13;
+            divider3.Text = "Язык интерфейса";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.BackColor = Color.Transparent;
+            label1.Location = new Point(13, 333);
+            label1.Name = "label1";
+            label1.Size = new Size(100, 20);
+            label1.TabIndex = 12;
+            label1.Text = "Язык интерфейса:";
+            // 
+            // comboBoxLanguage
+            // 
+            comboBoxLanguage.Location = new Point(160, 333);
+            comboBoxLanguage.Name = "comboBoxLanguage";
+            comboBoxLanguage.Size = new Size(180, 28);
+            comboBoxLanguage.TabIndex = 11;
+            comboBoxLanguage.SelectedIndexChanged += comboBoxLanguage_SelectedIndexChanged;
             // 
             // checkboxFlashAttention
             // 
@@ -105,7 +141,7 @@
             // 
             buttonSave.BackColor = Color.Transparent;
             buttonSave.BorderWidth = 1F;
-            buttonSave.Location = new Point(13, 365);
+            buttonSave.Location = new Point(13, 415);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(329, 28);
             buttonSave.TabIndex = 6;
@@ -189,11 +225,21 @@
             divider1.TabIndex = 0;
             divider1.Text = "模型位置";
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.BackColor = Color.Transparent;
+            label2.Location = new Point(13, 14);
+            label2.Name = "label2";
+            label2.Size = new Size(336, 20);
+            label2.TabIndex = 14;
+            label2.Text = "Расположение моделей";
+            // 
             // FormSettings
             // 
             AutoScaleDimensions = new SizeF(8F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(382, 429);
+            ClientSize = new Size(382, 479);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -206,6 +252,7 @@
             Text = "设置";
             Load += FormSettings_Load;
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ResumeLayout(false);
@@ -226,5 +273,9 @@
         private AntdUI.Checkbox checkboxPara;
         private AntdUI.Checkbox checkboxNoHistory;
         private AntdUI.Checkbox checkboxFlashAttention;
+        private AntdUI.Label label1;
+        private AntdUI.Select comboBoxLanguage;
+        private AntdUI.Divider divider3;
+        private AntdUI.Label label2;
     }
 }

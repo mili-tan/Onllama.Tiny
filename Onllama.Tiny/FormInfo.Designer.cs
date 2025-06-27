@@ -86,7 +86,7 @@
             label4.Name = "label4";
             label4.Size = new Size(139, 29);
             label4.TabIndex = 15;
-            label4.Text = "模板：";
+            label4.Text = "template";
             label4.TextAlign = ContentAlignment.MiddleRight;
             // 
             // inputTemplate
@@ -118,7 +118,7 @@
             label7.Name = "label7";
             label7.Size = new Size(139, 29);
             label7.TabIndex = 9;
-            label7.Text = "推理参数：";
+            label7.Text = "inference_params";
             label7.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label2
@@ -128,7 +128,7 @@
             label2.Name = "label2";
             label2.Size = new Size(139, 12);
             label2.TabIndex = 3;
-            label2.Text = "Embedding 长度：";
+            label2.Text = "embedding_length";
             label2.TextAlign = ContentAlignment.MiddleRight;
             // 
             // badgeContext
@@ -156,7 +156,7 @@
             label1.Name = "label1";
             label1.Size = new Size(108, 12);
             label1.TabIndex = 2;
-            label1.Text = "上下文长度：";
+            label1.Text = "context_length";
             label1.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label3
@@ -166,7 +166,7 @@
             label3.Name = "label3";
             label3.Size = new Size(139, 25);
             label3.TabIndex = 4;
-            label3.Text = "许可证：";
+            label3.Text = "license";
             label3.TextAlign = ContentAlignment.MiddleRight;
             // 
             // inputLicense
@@ -206,7 +206,7 @@
             toolTag.Name = "toolTag";
             toolTag.Size = new Size(50, 20);
             toolTag.TabIndex = 0;
-            toolTag.Text = "Tools";
+            toolTag.Text = "Tool";
             toolTag.Visible = false;
             // 
             // panel1
@@ -215,7 +215,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Shadow = 15;
+            panel1.Padding = new Padding(15);
             panel1.Size = new Size(555, 412);
             panel1.TabIndex = 1;
             panel1.Text = "panel1";
@@ -230,9 +230,10 @@
             ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "模型信息";
+            Text = "model_info";
             Load += FormInfo_Load;
             tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ResumeLayout(false);

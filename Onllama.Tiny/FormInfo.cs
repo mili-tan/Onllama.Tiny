@@ -10,7 +10,7 @@ namespace Onllama.Tiny
             InitializeComponent();
             try
             {
-                this.Text += @" - " + model;
+                this.Text = LocalizationManager.GetTranslation("model_info") + @" - " + model;
 
                 var show = Task.Run(() => Form1.OllamaApi.ShowModelAsync(new ShowModelRequest {Model = model})).Result;
                 var info = show.Info;
@@ -34,23 +34,59 @@ namespace Onllama.Tiny
                     else
                     {
                         if (!toolTag.Visible) visionTag.Location = new Point(toolTag.Location.X, toolTag.Location.Y);
-                        visionTag.Text = show.Projector.ExtraInfo["general.architecture"].ToString();
+                        if (show.Projector.ExtraInfo.ContainsKey("general.architecture"))
+                        {
+                            visionTag.Text = show.Projector.ExtraInfo["general.architecture"]?.ToString() ?? LocalizationManager.GetTranslation("unknown");
+                        }
+                        else
+                        {
+                            visionTag.Text = LocalizationManager.GetTranslation("unknown");
+                        }
                     }
                 }
 
-                badgeContext.Text = info.ExtraInfo[$"{info.Architecture}.context_length"].ToString();
-                badgeEmbedding.Text = info.ExtraInfo[$"{info.Architecture}.embedding_length"].ToString();
+                if (info?.ExtraInfo != null && !string.IsNullOrEmpty(info.Architecture))
+                {
+                    var contextKey = $"{info.Architecture}.context_length";
+                    var embeddingKey = $"{info.Architecture}.embedding_length";
+                    
+                    if (info.ExtraInfo.ContainsKey(contextKey))
+                    {
+                        badgeContext.Text = info.ExtraInfo[contextKey]?.ToString() ?? LocalizationManager.GetTranslation("unknown");
+                    }
+                    else
+                    {
+                        badgeContext.Text = LocalizationManager.GetTranslation("unknown");
+                    }
+                    
+                    if (info.ExtraInfo.ContainsKey(embeddingKey))
+                    {
+                        badgeEmbedding.Text = info.ExtraInfo[embeddingKey]?.ToString() ?? LocalizationManager.GetTranslation("unknown");
+                    }
+                    else
+                    {
+                        badgeEmbedding.Text = LocalizationManager.GetTranslation("unknown");
+                    }
+                }
+                else
+                {
+                    badgeContext.Text = LocalizationManager.GetTranslation("unknown");
+                    badgeEmbedding.Text = LocalizationManager.GetTranslation("unknown");
+                }
 
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine($"Error in FormInfo: {e}");
+                MessageBox.Show($"{LocalizationManager.GetTranslation("model_info_error")}: {e.Message}", 
+                    LocalizationManager.GetTranslation("error"), 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void FormInfo_Load(object sender, EventArgs e)
         {
-            
+            LocalizationManager.ApplyTranslations(this);
         }
     }
 }

@@ -33,8 +33,11 @@
             panel1 = new AntdUI.Panel();
             flowLayoutPanel1 = new AntdUI.In.FlowLayoutPanel();
             select1 = new AntdUI.Select();
+            selectHuggingFace = new AntdUI.Select();
             button1 = new AntdUI.Button();
+            buttonHfPull = new AntdUI.Button();
             button2 = new AntdUI.Button();
+            buttonHfFilter = new AntdUI.Button();
             dropdown1 = new AntdUI.Dropdown();
             progress1 = new AntdUI.Progress();
             panel1.SuspendLayout();
@@ -68,8 +71,11 @@
             flowLayoutPanel1.AutoSize = true;
             flowLayoutPanel1.BackColor = Color.Transparent;
             flowLayoutPanel1.Controls.Add(select1);
+            flowLayoutPanel1.Controls.Add(selectHuggingFace);
             flowLayoutPanel1.Controls.Add(button1);
+            flowLayoutPanel1.Controls.Add(buttonHfPull);
             flowLayoutPanel1.Controls.Add(button2);
+            flowLayoutPanel1.Controls.Add(buttonHfFilter);
             flowLayoutPanel1.Controls.Add(dropdown1);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(5, 5);
@@ -81,25 +87,49 @@
             // select1
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            select1.Items.AddRange(new object[] { "qwen3:4b", "qwen3:8b", "qwen3:14b", "qwen3:30b", "qwen3:32b", "qwen2.5-coder:3b", "qwen2.5-coder:7b", "qwen2.5-coder:14b", "qwen2.5-coder:32b", "qwq:32b", "gemma3:4b", "gemma3:12b", "gemma3:27b", "minicpm-v:8b", "llama3.2:3b", "llama3.2-vision:11b", "phi4:14b", "phi4-mini:3.8b", "aya-expanse:8b", "aya-expanse:32b", "command-r:35b" });
+            select1.Items.AddRange(new object[] { "deepseek-r1:8b", "qwen3:4b", "qwen3:8b", "qwen2.5:3b", "qwen2.5:7b", "llama3.2:3b", "gemma3:4b", "mistral:7b" });
             select1.Location = new Point(3, 3);
             select1.Name = "select1";
-            select1.SelectedValue = "qwen2.5:3b";
-            select1.Size = new Size(516, 30);
+            select1.SelectedValue = "qwen3:4b";
+            select1.Size = new Size(250, 30);
             select1.TabIndex = 0;
             select1.Text = "qwen3:4b";
+            select1.MaxCount = 15;
+            // 
+            // selectHuggingFace
+            // 
+            selectHuggingFace.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            selectHuggingFace.Location = new Point(259, 3);
+            selectHuggingFace.Name = "selectHuggingFace";
+            selectHuggingFace.PlaceholderText = "🤗 HuggingFace Models (GGUF)";
+            selectHuggingFace.Size = new Size(250, 30);
+            selectHuggingFace.TabIndex = 5;
+            selectHuggingFace.MaxCount = 15;
+            selectHuggingFace.SelectedValueChanged += selectHuggingFace_SelectedValueChanged;
             // 
             // button1
             // 
             button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             button1.BorderWidth = 1F;
             button1.Ghost = true;
-            button1.Location = new Point(525, 3);
+            button1.Location = new Point(515, 3);
             button1.Name = "button1";
-            button1.Size = new Size(65, 30);
+            button1.Size = new Size(50, 30);
             button1.TabIndex = 1;
-            button1.Text = "下载";
+            button1.Text = "Pull";
             button1.Click += button1_Click;
+            // 
+            // buttonHfPull
+            // 
+            buttonHfPull.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonHfPull.BorderWidth = 1F;
+            buttonHfPull.Ghost = true;
+            buttonHfPull.Location = new Point(571, 3);
+            buttonHfPull.Name = "buttonHfPull";
+            buttonHfPull.Size = new Size(50, 30);
+            buttonHfPull.TabIndex = 6;
+            buttonHfPull.Text = "🤗⬇";
+            buttonHfPull.Click += buttonHfPull_Click;
             // 
             // button2
             // 
@@ -107,11 +137,24 @@
             button2.BorderWidth = 1F;
             button2.Ghost = true;
             button2.IconSvg = Properties.Resources.svgInfoOutline;
-            button2.Location = new Point(596, 3);
+            button2.Location = new Point(627, 3);
             button2.Name = "button2";
             button2.Size = new Size(30, 30);
             button2.TabIndex = 3;
             button2.Click += button2_Click;
+            // 
+            // buttonHfFilter
+            // 
+            buttonHfFilter.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonHfFilter.BorderWidth = 1F;
+            buttonHfFilter.Ghost = true;
+            buttonHfFilter.Location = new Point(663, 3);
+            buttonHfFilter.Name = "buttonHfFilter";
+            buttonHfFilter.Size = new Size(30, 30);
+            buttonHfFilter.TabIndex = 4;
+            buttonHfFilter.Text = "🤗";
+            buttonHfFilter.Click += buttonHfFilter_Click;
+            buttonHfPull.Click += buttonHfPull_Click;
             // 
             // dropdown1
             // 
@@ -120,7 +163,7 @@
             dropdown1.Ghost = true;
             dropdown1.IconSvg = resources.GetString("dropdown1.IconSvg");
             dropdown1.Items.AddRange(new object[] { "导入模型", "Ollama 设置", "刷新模型列表" });
-            dropdown1.Location = new Point(632, 3);
+            dropdown1.Location = new Point(699, 3);
             dropdown1.Name = "dropdown1";
             dropdown1.Placement = AntdUI.TAlignFrom.TR;
             dropdown1.Size = new Size(30, 30);
@@ -163,10 +206,13 @@
         private AntdUI.Table table1;
         private AntdUI.Panel panel1;
         private AntdUI.Select select1;
+        private AntdUI.Select selectHuggingFace;
         private AntdUI.Button button1;
+        private AntdUI.Button buttonHfPull;
         private AntdUI.Progress progress1;
         private AntdUI.Dropdown dropdown1;
         private AntdUI.In.FlowLayoutPanel flowLayoutPanel1;
         private AntdUI.Button button2;
+        private AntdUI.Button buttonHfFilter;
     }
 }

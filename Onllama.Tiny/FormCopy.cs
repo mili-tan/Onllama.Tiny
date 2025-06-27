@@ -9,7 +9,7 @@ namespace Onllama.Tiny
         {
             InitializeComponent();
             sourceName = model;
-            Text = "复制 " + model;
+            Text = LocalizationManager.GetTranslation("copy") + " " + model;
             input1.Text = model + @"-copy";
         }
 
@@ -30,7 +30,7 @@ namespace Onllama.Tiny
 
         private void FormCopy_Load(object sender, EventArgs e)
         {
-
+            LocalizationManager.ApplyTranslations(this);
         }
     }
 }

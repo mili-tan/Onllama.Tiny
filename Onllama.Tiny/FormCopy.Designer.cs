@@ -55,7 +55,7 @@ namespace Onllama.Tiny
             input1.Margin = new Padding(5);
             input1.Margin = new Padding(6);
             input1.Name = "input1";
-            input1.PlaceholderText = "新模型名称";
+            input1.PlaceholderText = "new_model_name";
             input1.Size = new Size(300, 35);
             input1.TabIndex = 0;
             // 
@@ -71,7 +71,7 @@ namespace Onllama.Tiny
             button1.Name = "button1";
             button1.Size = new Size(49, 35);
             button1.TabIndex = 1;
-            button1.Text = "确定";
+            button1.Text = "ok";
             button1.Click += button1_Click;
             // 
             // FormCopy
@@ -88,7 +88,7 @@ namespace Onllama.Tiny
             ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "复制模型";
+            Text = "copy_model";
             Load += FormCopy_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

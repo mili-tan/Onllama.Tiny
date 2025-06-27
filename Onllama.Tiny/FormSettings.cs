@@ -13,6 +13,17 @@ namespace Onllama.Tiny
 
         private void FormSettings_Load(object sender, EventArgs e)
         {
+            // Загружаем языковые настройки
+            LocalizationManager.LoadLanguagePreference();
+            
+            // UI элементы для выбора языка
+            label1.Text = LocalizationManager.GetTranslation("settings_language");
+            comboBoxLanguage.Items.Clear();
+            comboBoxLanguage.Items.Add(LocalizationManager.GetTranslation("language_english"));
+            comboBoxLanguage.Items.Add(LocalizationManager.GetTranslation("language_russian"));
+            comboBoxLanguage.Items.Add(LocalizationManager.GetTranslation("language_chinese"));
+            comboBoxLanguage.SelectedIndex = (int)LocalizationManager.CurrentLanguage;
+
             input1.PlaceholderText =
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.ollama\\models";
             input1.Text = Environment.GetEnvironmentVariable("OLLAMA_MODELS", EnvironmentVariableTarget.User) ?? "";
@@ -23,6 +34,33 @@ namespace Onllama.Tiny
             checkboxModels.Checked = (Environment.GetEnvironmentVariable("OLLAMA_MAX_LOADED_MODELS", EnvironmentVariableTarget.User) ?? "1") != "1";
             checkboxNoGpu.Checked = (Environment.GetEnvironmentVariable("CUDA_VISIBLE_DEVICES", EnvironmentVariableTarget.User) ?? "").Equals("-1") ||
                                     (Environment.GetEnvironmentVariable("HIP_VISIBLE_DEVICES", EnvironmentVariableTarget.User) ?? "").Equals("-1");
+            
+            // Применяем переводы к элементам управления
+            UpdateUITexts();
+        }
+
+        private void UpdateUITexts()
+        {
+            // Обновляем тексты на форме в соответствии с выбранным языком
+            this.Text = LocalizationManager.GetTranslation("settings");
+            buttonSave.Text = LocalizationManager.GetTranslation("save");
+            buttonOpen.Text = LocalizationManager.GetTranslation("open");
+            
+            // Другие элементы управления...
+            checkboxAny.Text = LocalizationManager.GetTranslation("allow_remote_connections");
+            checkboxNoHistory.Text = LocalizationManager.GetTranslation("disable_history");
+            checkboxFlashAttention.Text = LocalizationManager.GetTranslation("enable_flash_attention");
+            checkboxPara.Text = LocalizationManager.GetTranslation("enable_parallel_processing");
+            checkboxModels.Text = LocalizationManager.GetTranslation("increase_loaded_models_limit");
+            checkboxNoGpu.Text = LocalizationManager.GetTranslation("disable_gpu");
+            label2.Text = LocalizationManager.GetTranslation("models_directory");
+        }
+
+        private void comboBoxLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Обновляем выбранный язык и применяем переводы
+            LocalizationManager.CurrentLanguage = (LocalizationManager.Language)comboBoxLanguage.SelectedIndex;
+            UpdateUITexts();
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
@@ -33,13 +71,17 @@ namespace Onllama.Tiny
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            new Modal.Config(this, "您确定要保存配置吗？","这需要一些时间，请稍等…",
-                TType.Info)
+            new Modal.Config(this, LocalizationManager.GetTranslation("save_settings"), 
+                    LocalizationManager.GetTranslation("please_wait"),
+                    TType.Info)
             {
                 OnOk = _ =>
                 {
                     try
                     {
+                        // Сохраняем языковые настройки
+                        LocalizationManager.SaveLanguagePreference();
+                        
                         Parallel.Invoke(() => Environment.SetEnvironmentVariable("OLLAMA_MODELS",
                                 !string.IsNullOrWhiteSpace(input1.Text) ? input1.Text : null,
                                 EnvironmentVariableTarget.User),
@@ -68,7 +110,8 @@ namespace Onllama.Tiny
                     return true;
                 }
             }.open();
-            new Modal.Config(this, "设置已更改", "Ollama 核心已退出，请手动重启 Ollama 核心以使配置生效。", TType.Success)
+            new Modal.Config(this, LocalizationManager.GetTranslation("settings_changed"), 
+                LocalizationManager.GetTranslation("restart_core"), TType.Success)
             {
                 OnOk = _ =>
                 {
