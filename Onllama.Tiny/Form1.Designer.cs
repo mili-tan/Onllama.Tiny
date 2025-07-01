@@ -29,190 +29,289 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            table1 = new AntdUI.Table();
-            panel1 = new AntdUI.Panel();
-            flowLayoutPanel1 = new AntdUI.In.FlowLayoutPanel();
-            select1 = new AntdUI.Select();
-            selectHuggingFace = new AntdUI.Select();
-            button1 = new AntdUI.Button();
-            buttonHfPull = new AntdUI.Button();
-            button2 = new AntdUI.Button();
-            buttonHfFilter = new AntdUI.Button();
-            dropdown1 = new AntdUI.Dropdown();
-            progress1 = new AntdUI.Progress();
-            panel1.SuspendLayout();
-            flowLayoutPanel1.SuspendLayout();
-            SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.table1 = new AntdUI.Table();
+            this.progress1 = new AntdUI.Progress();
+            this.headerPanel = new AntdUI.Panel();
+            this.appTitleLabel = new AntdUI.Label();
+            this.statusLabel = new AntdUI.Label();
+            this.cpuUsageLabel = new AntdUI.Label();
+            this.ramUsageLabel = new AntdUI.Label();
+            this.gpuUsageLabel = new AntdUI.Label();
+            this.settingsButton = new AntdUI.Button();
+            this.mainPanel = new AntdUI.Panel();
+            this.footerPanel = new AntdUI.Panel();
+            this.logTextBox = new System.Windows.Forms.TextBox();
+            this.copyLogButton = new AntdUI.Button();
+            this.clearLogButton = new AntdUI.Button();
+            this.tabControlModels = new AntdUI.Tabs();
+            this.tabPageLocalModels = new System.Windows.Forms.TabPage();
+            this.tabPageOnlineModels = new System.Windows.Forms.TabPage();
+            this.selectOnlineModelSource = new AntdUI.Select();
+            this.selectOnlineModels = new AntdUI.Select();
+            this.buttonPullOnlineModel = new AntdUI.Button();
+            this.textBoxSearchOnlineModels = new AntdUI.Input();
+            this.headerPanel.SuspendLayout();
+            this.mainPanel.SuspendLayout();
+            this.footerPanel.SuspendLayout();
+            this.tabControlModels.SuspendLayout();
+            this.tabPageLocalModels.SuspendLayout();
+            this.tabPageOnlineModels.SuspendLayout();
+            this.SuspendLayout();
             // 
             // table1
             // 
-            table1.Bordered = true;
-            table1.Dock = DockStyle.Fill;
-            table1.Location = new Point(0, 0);
-            table1.Name = "table1";
-            table1.Size = new Size(804, 481);
-            table1.TabIndex = 0;
-            table1.Text = "table1";
-            table1.CellButtonClick += Table1OnCellButtonClick;
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(flowLayoutPanel1);
-            panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 436);
-            panel1.Name = "panel1";
-            panel1.Shadow = 5;
-            panel1.Size = new Size(804, 45);
-            panel1.TabIndex = 1;
-            panel1.Text = "panel1";
-            // 
-            // flowLayoutPanel1
-            // 
-            flowLayoutPanel1.AutoSize = true;
-            flowLayoutPanel1.BackColor = Color.Transparent;
-            flowLayoutPanel1.Controls.Add(select1);
-            flowLayoutPanel1.Controls.Add(selectHuggingFace);
-            flowLayoutPanel1.Controls.Add(button1);
-            flowLayoutPanel1.Controls.Add(buttonHfPull);
-            flowLayoutPanel1.Controls.Add(button2);
-            flowLayoutPanel1.Controls.Add(buttonHfFilter);
-            flowLayoutPanel1.Controls.Add(dropdown1);
-            flowLayoutPanel1.Dock = DockStyle.Fill;
-            flowLayoutPanel1.Location = new Point(5, 5);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(794, 35);
-            flowLayoutPanel1.TabIndex = 0;
-            flowLayoutPanel1.SizeChanged += flowLayoutPanel1_SizeChanged;
-            // 
-            // select1
-            // 
-            select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            select1.Items.AddRange(new object[] { "deepseek-r1:8b", "qwen3:4b", "qwen3:8b", "qwen2.5:3b", "qwen2.5:7b", "llama3.2:3b", "gemma3:4b", "mistral:7b" });
-            select1.Location = new Point(3, 3);
-            select1.Name = "select1";
-            select1.SelectedValue = "qwen3:4b";
-            select1.Size = new Size(250, 30);
-            select1.TabIndex = 0;
-            select1.Text = "qwen3:4b";
-            select1.MaxCount = 15;
-            // 
-            // selectHuggingFace
-            // 
-            selectHuggingFace.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            selectHuggingFace.Location = new Point(259, 3);
-            selectHuggingFace.Name = "selectHuggingFace";
-            selectHuggingFace.PlaceholderText = "🤗 HuggingFace Models (GGUF)";
-            selectHuggingFace.Size = new Size(250, 30);
-            selectHuggingFace.TabIndex = 5;
-            selectHuggingFace.MaxCount = 15;
-            selectHuggingFace.SelectedValueChanged += selectHuggingFace_SelectedValueChanged;
-            // 
-            // button1
-            // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.BorderWidth = 1F;
-            button1.Ghost = true;
-            button1.Location = new Point(515, 3);
-            button1.Name = "button1";
-            button1.Size = new Size(50, 30);
-            button1.TabIndex = 1;
-            button1.Text = "Pull";
-            button1.Click += button1_Click;
-            // 
-            // buttonHfPull
-            // 
-            buttonHfPull.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonHfPull.BorderWidth = 1F;
-            buttonHfPull.Ghost = true;
-            buttonHfPull.Location = new Point(571, 3);
-            buttonHfPull.Name = "buttonHfPull";
-            buttonHfPull.Size = new Size(50, 30);
-            buttonHfPull.TabIndex = 6;
-            buttonHfPull.Text = "🤗⬇";
-            buttonHfPull.Click += buttonHfPull_Click;
-            // 
-            // button2
-            // 
-            button2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            button2.BorderWidth = 1F;
-            button2.Ghost = true;
-            button2.IconSvg = Properties.Resources.svgInfoOutline;
-            button2.Location = new Point(627, 3);
-            button2.Name = "button2";
-            button2.Size = new Size(30, 30);
-            button2.TabIndex = 3;
-            button2.Click += button2_Click;
-            // 
-            // buttonHfFilter
-            // 
-            buttonHfFilter.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonHfFilter.BorderWidth = 1F;
-            buttonHfFilter.Ghost = true;
-            buttonHfFilter.Location = new Point(663, 3);
-            buttonHfFilter.Name = "buttonHfFilter";
-            buttonHfFilter.Size = new Size(30, 30);
-            buttonHfFilter.TabIndex = 4;
-            buttonHfFilter.Text = "🤗";
-            buttonHfFilter.Click += buttonHfFilter_Click;
-            buttonHfPull.Click += buttonHfPull_Click;
-            // 
-            // dropdown1
-            // 
-            dropdown1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            dropdown1.BorderWidth = 1F;
-            dropdown1.Ghost = true;
-            dropdown1.IconSvg = resources.GetString("dropdown1.IconSvg");
-            dropdown1.Items.AddRange(new object[] { "导入模型", "Ollama 设置", "刷新模型列表" });
-            dropdown1.Location = new Point(699, 3);
-            dropdown1.Name = "dropdown1";
-            dropdown1.Placement = AntdUI.TAlignFrom.TR;
-            dropdown1.Size = new Size(30, 30);
-            dropdown1.TabIndex = 2;
-            dropdown1.SelectedValueChanged += dropdown1_SelectedValueChanged;
+            this.table1.Bordered = true;
+            this.table1.Dock = DockStyle.Fill;
+            this.table1.Location = new Point(0, 0);
+            this.table1.Name = "table1";
+            this.table1.Size = new Size(796, 259);
+            this.table1.TabIndex = 0;
+            this.table1.Text = "table1";
+            this.table1.CellButtonClick += Table1OnCellButtonClick;
             // 
             // progress1
             // 
-            progress1.ContainerControl = this;
-            progress1.Dock = DockStyle.Top;
-            progress1.Location = new Point(0, 0);
-            progress1.Name = "progress1";
-            progress1.Size = new Size(804, 2);
-            progress1.TabIndex = 2;
-            progress1.Text = "";
+            this.progress1.Dock = DockStyle.Top;
+            this.progress1.Location = new Point(0, 30); // Adjusted to be under headerPanel
+            this.progress1.Name = "progress1";
+            this.progress1.Size = new Size(804, 4);
+            this.progress1.TabIndex = 2;
+            this.progress1.Text = "";
+            this.progress1.Visible = false; // Initially hidden
+            //
+            // headerPanel
+            //
+            this.headerPanel.Controls.Add(this.appTitleLabel);
+            this.headerPanel.Controls.Add(this.statusLabel);
+            this.headerPanel.Controls.Add(this.cpuUsageLabel);
+            this.headerPanel.Controls.Add(this.ramUsageLabel);
+            this.headerPanel.Controls.Add(this.gpuUsageLabel);
+            this.headerPanel.Controls.Add(this.settingsButton);
+            this.headerPanel.Dock = DockStyle.Top;
+            this.headerPanel.Location = new Point(0, 0);
+            this.headerPanel.Name = "headerPanel";
+            this.headerPanel.Size = new Size(804, 30);
+            this.headerPanel.TabIndex = 3;
+            //
+            // appTitleLabel
+            //
+            this.appTitleLabel.Dock = DockStyle.Left;
+            this.appTitleLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            this.appTitleLabel.Location = new Point(10, 0);
+            this.appTitleLabel.Name = "appTitleLabel";
+            this.appTitleLabel.Size = new Size(100, 30);
+            this.appTitleLabel.TabIndex = 0;
+            this.appTitleLabel.Text = "Onllama";
+            this.appTitleLabel.TextAlign = ContentAlignment.MiddleLeft;
+            //
+            // statusLabel
+            //
+            this.statusLabel.Dock = DockStyle.Fill;
+            this.statusLabel.Location = new Point(110, 0);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new Size(400, 30); // Adjust size as needed
+            this.statusLabel.TabIndex = 1;
+            this.statusLabel.Text = "Готов";
+            this.statusLabel.TextAlign = ContentAlignment.MiddleCenter;
+            //
+            // cpuUsageLabel
+            //
+            this.cpuUsageLabel.Dock = DockStyle.Right;
+            this.cpuUsageLabel.Location = new Point(510, 0); // Adjust position
+            this.cpuUsageLabel.Name = "cpuUsageLabel";
+            this.cpuUsageLabel.Size = new Size(70, 30);
+            this.cpuUsageLabel.TabIndex = 2;
+            this.cpuUsageLabel.Text = "CPU: --%";
+            this.cpuUsageLabel.TextAlign = ContentAlignment.MiddleRight;
+            //
+            // ramUsageLabel
+            //
+            this.ramUsageLabel.Dock = DockStyle.Right;
+            this.ramUsageLabel.Location = new Point(580, 0); // Adjust position
+            this.ramUsageLabel.Name = "ramUsageLabel";
+            this.ramUsageLabel.Size = new Size(120, 30);
+            this.ramUsageLabel.TabIndex = 3;
+            this.ramUsageLabel.Text = "RAM: --/-- GB";
+            this.ramUsageLabel.TextAlign = ContentAlignment.MiddleRight;
+            //
+            // gpuUsageLabel
+            //
+            this.gpuUsageLabel.Dock = DockStyle.Right;
+            this.gpuUsageLabel.Location = new Point(700, 0); // Adjust position
+            this.gpuUsageLabel.Name = "gpuUsageLabel";
+            this.gpuUsageLabel.Size = new Size(70, 30);
+            this.gpuUsageLabel.TabIndex = 4;
+            this.gpuUsageLabel.Text = "GPU: --%";
+            this.gpuUsageLabel.TextAlign = ContentAlignment.MiddleRight;
+            this.gpuUsageLabel.Visible = false; // Initially hidden
+            //
+            // settingsButton
+            //
+            this.settingsButton.Dock = DockStyle.Right;
+            this.settingsButton.IconSvg = "<svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"setting\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M924.8 625.7l-65.5-56c3.1-19 4.7-38.4 4.7-57.8s-1.6-38.8-4.7-57.8l65.5-56a32.03 32.03 0 009.4-34.4l-32-72.4a32.03 32.03 0 00-34.4-9.4L767.2 310c-22.2-17.6-46.3-32.1-71.8-42.5L679 168.1a32.03 32.03 0 00-32.2-29.8h-72.4a32.03 32.03 0 00-32.2 29.8l-16.4 99.3c-25.5 10.4-49.6 24.9-71.8 42.5l-100.9-28.1a32.03 32.03 0 00-34.4 9.4l-32 72.4a32.03 32.03 0 009.4 34.4l65.5 56c-3.1 19-4.7 38.4-4.7 57.8s1.6 38.8 4.7 57.8l-65.5 56a32.03 32.03 0 00-9.4 34.4l32 72.4a32.03 32.03 0 0034.4 9.4l100.9-28.1c22.2 17.6 46.3 32.1 71.8 42.5l16.4 99.3a32.03 32.03 0 0032.2 29.8h72.4a32.03 32.03 0 0032.2-29.8l16.4-99.3c25.5-10.4 49.6-24.9 71.8-42.5l100.9 28.1a32.03 32.03 0 0034.4-9.4l32-72.4a32.03 32.03 0 00-9.4-34.4zM512 656c-80 0-144-64-144-144s64-144 144-144 144 64 144 144-64 144-144 144zm0-224c-44.2 0-80 35.8-80 80s35.8 80 80 80 80-35.8 80-80-35.8-80-80-80z\"></path></svg>";
+            this.settingsButton.Location = new Point(770, 0);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new Size(30, 30);
+            this.settingsButton.TabIndex = 5;
+            this.settingsButton.Type = AntdUI.TTypeMini.Primary;
+            this.settingsButton.Shape = AntdUI.TShape.Circle;
+            //
+            // mainPanel
+            //
+            this.mainPanel.Controls.Add(this.tabControlModels);
+            this.mainPanel.Dock = DockStyle.Fill;
+            this.mainPanel.Location = new Point(0, 34); // Below headerPanel and progress1
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new Size(804, 347); // Adjusted size
+            this.mainPanel.TabIndex = 4;
+            //
+            // tabControlModels
+            //
+            this.tabControlModels.Controls.Add(this.tabPageLocalModels);
+            this.tabControlModels.Controls.Add(this.tabPageOnlineModels);
+            this.tabControlModels.Dock = DockStyle.Fill;
+            this.tabControlModels.Location = new Point(2,2);
+            this.tabControlModels.Name = "tabControlModels";
+            this.tabControlModels.SelectedIndex = 0;
+            this.tabControlModels.Size = new Size(800, 343); // Fill mainPanel
+            this.tabControlModels.TabIndex = 1; // Changed from 0
+            //
+            // tabPageLocalModels
+            //
+            this.tabPageLocalModels.Controls.Add(this.table1);
+            this.tabPageLocalModels.Location = new Point(4, 28);
+            this.tabPageLocalModels.Name = "tabPageLocalModels";
+            this.tabPageLocalModels.Padding = new Padding(3);
+            this.tabPageLocalModels.Size = new Size(792, 311);
+            this.tabPageLocalModels.TabIndex = 0;
+            this.tabPageLocalModels.Text = "Установленные"; // To be localized
+            this.tabPageLocalModels.UseVisualStyleBackColor = true;
+            //
+            // tabPageOnlineModels
+            //
+            this.tabPageOnlineModels.Padding = new Padding(10);
+            this.tabPageOnlineModels.Location = new Point(4, 28);
+            this.tabPageOnlineModels.Name = "tabPageOnlineModels";
+            this.tabPageOnlineModels.Size = new Size(792, 311);
+            this.tabPageOnlineModels.TabIndex = 1;
+            this.tabPageOnlineModels.Text = "Онлайн"; // To be localized
+            this.tabPageOnlineModels.UseVisualStyleBackColor = true;
+            // Add controls for online models here
+            var onlineModelsFlowPanel = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                WrapContents = false,
+                Padding = new Padding(0,0,0,10)
+            };
+            this.textBoxSearchOnlineModels = new AntdUI.Input { PlaceholderText = "Поиск онлайн моделей...", Width = 200, Margin = new Padding(0,0,5,0) };
+            this.selectOnlineModelSource = new AntdUI.Select { Width = 120, Margin = new Padding(0,0,5,0) };
+            this.selectOnlineModelSource.Items.AddRange(new object[] { "Ollama", "HuggingFace" });
+            this.selectOnlineModelSource.SelectedIndex = 0;
+            this.buttonPullOnlineModel = new AntdUI.Button { Text = "Загрузить", Type = AntdUI.TTypeMini.Primary, Margin = new Padding(0,0,5,0) };
+
+            onlineModelsFlowPanel.Controls.Add(this.textBoxSearchOnlineModels);
+            onlineModelsFlowPanel.Controls.Add(this.selectOnlineModelSource);
+            onlineModelsFlowPanel.Controls.Add(this.buttonPullOnlineModel);
+
+            this.selectOnlineModels = new AntdUI.Select { Dock = DockStyle.Top, PlaceholderText = "Выберите модель для загрузки" };
+
+            this.tabPageOnlineModels.Controls.Add(this.selectOnlineModels);
+            this.tabPageOnlineModels.Controls.Add(onlineModelsFlowPanel);
+            //
+            // footerPanel
+            //
+            this.footerPanel.Controls.Add(this.logTextBox);
+            this.footerPanel.Controls.Add(this.copyLogButton);
+            this.footerPanel.Controls.Add(this.clearLogButton);
+            this.footerPanel.Dock = DockStyle.Bottom;
+            this.footerPanel.Location = new Point(0, 381); // Adjusted position
+            this.footerPanel.Name = "footerPanel";
+            this.footerPanel.Size = new Size(804, 100); // Fixed height for log
+            this.footerPanel.TabIndex = 5;
+            //
+            // logTextBox
+            //
+            this.logTextBox.Dock = DockStyle.Fill;
+            this.logTextBox.Multiline = true;
+            this.logTextBox.ReadOnly = true;
+            this.logTextBox.ScrollBars = ScrollBars.Vertical;
+            this.logTextBox.Location = new Point(0, 0);
+            this.logTextBox.Name = "logTextBox";
+            this.logTextBox.Size = new Size(724, 100); // Adjusted width to make space for buttons
+            this.logTextBox.TabIndex = 0;
+            //
+            // copyLogButton
+            //
+            this.copyLogButton.Dock = DockStyle.Right;
+            this.copyLogButton.Location = new Point(724, 0);
+            this.copyLogButton.Name = "copyLogButton";
+            this.copyLogButton.Size = new Size(40, 100);
+            this.copyLogButton.Text = "Копировать"; // To be localized
+            this.copyLogButton.IconSvg = "<svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"copy\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M832 64H296c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h496v688c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V96c0-17.7-14.3-32-32-32zM704 192H192c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h512c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32zm-32 592H224V256h448v528z\"></path></svg>"; // Placeholder
+            this.copyLogButton.Type = AntdUI.TTypeMini.Default;
+            this.copyLogButton.Tooltip = "Копировать весь лог";
+            //
+            // clearLogButton
+            //
+            this.clearLogButton.Dock = DockStyle.Right;
+            this.clearLogButton.Location = new Point(764, 0);
+            this.clearLogButton.Name = "clearLogButton";
+            this.clearLogButton.Size = new Size(40, 100);
+            this.clearLogButton.Text = "Очистить"; // To be localized
+            this.clearLogButton.IconSvg = "<svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"delete\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z\"></path></svg>"; // Placeholder
+            this.clearLogButton.Type = AntdUI.TTypeMini.Default;
+            this.clearLogButton.Tooltip = "Очистить лог";
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            ClientSize = new Size(804, 481);
-            Controls.Add(progress1);
-            Controls.Add(panel1);
-            Controls.Add(table1);
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(2, 3, 2, 3);
-            Name = "Form1";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Onllama - Models";
-            Load += Form1_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            flowLayoutPanel1.ResumeLayout(false);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new SizeF(7F, 17F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.BackColor = Color.White;
+            this.ClientSize = new Size(804, 481);
+            this.Controls.Add(this.mainPanel);
+            this.Controls.Add(this.progress1);
+            this.Controls.Add(this.headerPanel);
+            this.Controls.Add(this.footerPanel);
+            this.Icon = (Icon)resources.GetObject("$this.Icon");
+            this.Margin = new Padding(2, 3, 2, 3);
+            this.Name = "Form1";
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Onllama"; // Simplified title, will be updated by LocalizationManager
+            this.Load += Form1_Load;
+            this.headerPanel.ResumeLayout(false);
+            this.mainPanel.ResumeLayout(false);
+            this.footerPanel.ResumeLayout(false);
+            this.footerPanel.PerformLayout();
+            this.tabControlModels.ResumeLayout(false);
+            this.tabPageLocalModels.ResumeLayout(false);
+            this.tabPageOnlineModels.ResumeLayout(false);
+            this.ResumeLayout(false);
         }
 
         #endregion
 
         private AntdUI.Table table1;
-        private AntdUI.Panel panel1;
-        private AntdUI.Select select1;
-        private AntdUI.Select selectHuggingFace;
-        private AntdUI.Button button1;
-        private AntdUI.Button buttonHfPull;
         private AntdUI.Progress progress1;
-        private AntdUI.Dropdown dropdown1;
-        private AntdUI.In.FlowLayoutPanel flowLayoutPanel1;
-        private AntdUI.Button button2;
-        private AntdUI.Button buttonHfFilter;
+        private AntdUI.Panel headerPanel;
+        private AntdUI.Label appTitleLabel;
+        private AntdUI.Label statusLabel;
+        private AntdUI.Label cpuUsageLabel;
+        private AntdUI.Label ramUsageLabel;
+        private AntdUI.Label gpuUsageLabel;
+        private AntdUI.Button settingsButton;
+        private AntdUI.Panel mainPanel;
+        private AntdUI.Panel footerPanel;
+        private System.Windows.Forms.TextBox logTextBox;
+        private AntdUI.Button copyLogButton;
+        private AntdUI.Button clearLogButton;
+        private AntdUI.Tabs tabControlModels;
+        private System.Windows.Forms.TabPage tabPageLocalModels;
+        private System.Windows.Forms.TabPage tabPageOnlineModels;
+        private AntdUI.Select selectOnlineModelSource;
+        private AntdUI.Select selectOnlineModels;
+        private AntdUI.Button buttonPullOnlineModel;
+        private AntdUI.Input textBoxSearchOnlineModels;
     }
 }
