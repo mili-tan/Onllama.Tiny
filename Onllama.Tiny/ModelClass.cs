@@ -984,7 +984,209 @@ namespace Onllama.Tiny
                 {Language.English, "Connection error"}, 
                 {Language.Russian, "Ошибка соединения"}, 
                 {Language.Chinese, "连接错误"} 
-            }}
+            }},
+
+            // Новые строки для обновленного интерфейса
+            {"app_started_log_message", new Dictionary<Language, string> {
+                {Language.English, "Application started."},
+                {Language.Russian, "Приложение запущено."},
+                {Language.Chinese, "应用程序已启动。"}
+            }},
+            {"status_ready", new Dictionary<Language, string> {
+                {Language.English, "Ready"},
+                {Language.Russian, "Готов"},
+                {Language.Chinese, "准备就绪"}
+            }},
+            {"settings_tooltip", new Dictionary<Language, string> {
+                {Language.English, "Settings"},
+                {Language.Russian, "Настройки"},
+                {Language.Chinese, "设置"}
+            }},
+            {"tab_local_models", new Dictionary<Language, string> {
+                {Language.English, "Installed"},
+                {Language.Russian, "Установленные"},
+                {Language.Chinese, "已安装"}
+            }},
+            {"tab_online_models", new Dictionary<Language, string> {
+                {Language.English, "Online"},
+                {Language.Russian, "Онлайн"},
+                {Language.Chinese, "在线模型"}
+            }},
+            {"search_online_models_placeholder", new Dictionary<Language, string> {
+                {Language.English, "Search online models..."},
+                {Language.Russian, "Поиск онлайн моделей..."},
+                {Language.Chinese, "搜索在线模型..."}
+            }},
+            {"button_pull_model", new Dictionary<Language, string> {
+                {Language.English, "Download"},
+                {Language.Russian, "Загрузить"},
+                {Language.Chinese, "下载"}
+            }},
+            {"button_copy_log", new Dictionary<Language, string> {
+                {Language.English, "Copy"},
+                {Language.Russian, "Копировать"},
+                {Language.Chinese, "复制"}
+            }},
+            {"tooltip_copy_log", new Dictionary<Language, string> {
+                {Language.English, "Copy entire log"},
+                {Language.Russian, "Копировать весь лог"},
+                {Language.Chinese, "复制全部日志"}
+            }},
+            {"button_clear_log", new Dictionary<Language, string> {
+                {Language.English, "Clear"},
+                {Language.Russian, "Очистить"},
+                {Language.Chinese, "清除"}
+            }},
+            {"tooltip_clear_log", new Dictionary<Language, string> {
+                {Language.English, "Clear log"},
+                {Language.Russian, "Очистить лог"},
+                {Language.Chinese, "清除日志"}
+            }},
+            {"app_title_suffix", new Dictionary<Language, string> {
+                {Language.English, "Model Manager"},
+                {Language.Russian, "Менеджер моделей"},
+                {Language.Chinese, "模型管理器"}
+            }},
+             {"core_not_installed_log", new Dictionary<Language, string> {
+                {Language.English, "Ollama core not found or not in PATH."},
+                {Language.Russian, "Ядро Ollama не найдено или отсутствует в PATH."},
+                {Language.Chinese, "未找到Ollama核心或不在PATH中。"}
+            }},
+            {"starting_service_log", new Dictionary<Language, string> {
+                {Language.English, "Ollama core not running. Attempting to start service..."},
+                {Language.Russian, "Ядро Ollama не запущено. Попытка запуска службы..."},
+                {Language.Chinese, "Ollama核心未运行。正在尝试启动服务..."}
+            }},
+            {"ollama_service_running_log", new Dictionary<Language, string> {
+                {Language.English, "Ollama service is running."},
+                {Language.Russian, "Служба Ollama запущена."},
+                {Language.Chinese, "Ollama服务正在运行。"}
+            }},
+            {"remote_mode_active_log", new Dictionary<Language, string> {
+                {Language.English, "Running in remote mode. Ollama service status on remote host is not checked locally."},
+                {Language.Russian, "Работа в удаленном режиме. Статус службы Ollama на удаленном хосте локально не проверяется."},
+                {Language.Chinese, "以远程模式运行。远程主机上的Ollama服务状态未在本地检查。"}
+            }},
+            {"log_copied_message", new Dictionary<Language, string> {
+                {Language.English, "Log copied to clipboard."},
+                {Language.Russian, "Лог скопирован в буфер обмена."},
+                {Language.Chinese, "日志已复制到剪افظ板。"}
+            }},
+            {"log_cleared_message", new Dictionary<Language, string> {
+                {Language.English, "Log cleared."},
+                {Language.Russian, "Лог очищен."},
+                {Language.Chinese, "日志已清除。"}
+            }},
+            {"source_ollama", new Dictionary<Language, string> {
+                {Language.English, "Ollama"},
+                {Language.Russian, "Ollama"},
+                {Language.Chinese, "Ollama"}
+            }},
+            {"source_huggingface", new Dictionary<Language, string> {
+                {Language.English, "HuggingFace"},
+                {Language.Russian, "HuggingFace"},
+                {Language.Chinese, "HuggingFace"}
+            }},
+            {"loading_models_placeholder", new Dictionary<Language, string> {
+                {Language.English, "Loading models..."},
+                {Language.Russian, "Загрузка моделей..."},
+                {Language.Chinese, "正在加载模型..."}
+            }},
+            {"select_ollama_model_placeholder", new Dictionary<Language, string> {
+                {Language.English, "Select Ollama model"},
+                {Language.Russian, "Выберите модель Ollama"},
+                {Language.Chinese, "选择Ollama模型"}
+            }},
+            {"select_hf_model_placeholder", new Dictionary<Language, string> {
+                {Language.English, "Select HuggingFace GGUF model"},
+                {Language.Russian, "Выберите модель HuggingFace GGUF"},
+                {Language.Chinese, "选择HuggingFace GGUF模型"}
+            }},
+            {"load_models_error_placeholder", new Dictionary<Language, string> {
+                {Language.English, "Error loading models"},
+                {Language.Russian, "Ошибка загрузки моделей"},
+                {Language.Chinese, "加载模型出错"}
+            }},
+            {"refresh_gguf_models", new Dictionary<Language, string> {
+                {Language.English, "Refresh GGUF models"},
+                {Language.Russian, "Обновить GGUF модели"},
+                {Language.Chinese, "刷新GGUF模型"}
+            }},
+            {"please_select_model_to_download", new Dictionary<Language, string> {
+                {Language.English, "Please select a model to download"},
+                {Language.Russian, "Пожалуйста, выберите модель для загрузки"},
+                {Language.Chinese, "请选择要下载的模型"}
+            }},
+            {"download_in_progress_warning", new Dictionary<Language, string> {
+                {Language.English, "Another model is already downloading."},
+                {Language.Russian, "Другая модель уже загружается."},
+                {Language.Chinese, "另一个模型已在下载中。"}
+            }},
+            {"status_downloading", new Dictionary<Language, string> {
+                {Language.English, "Downloading..."},
+                {Language.Russian, "Загрузка..."},
+                {Language.Chinese, "下载中..."}
+            }},
+            {"download_completed_check_list", new Dictionary<Language, string> {
+                {Language.English, "Download complete, check the list."},
+                {Language.Russian, "Загрузка завершена, проверьте список."},
+                {Language.Chinese, "下载完成，请检查列表。"}
+            }},
+            {"download_cancelled_message", new Dictionary<Language, string> {
+                {Language.English, "Download cancelled."},
+                {Language.Russian, "Загрузка отменена."},
+                {Language.Chinese, "下载已取消。"}
+            }},
+            {"download_error_title", new Dictionary<Language, string> {
+                {Language.English, "Download Error"},
+                {Language.Russian, "Ошибка загрузки"},
+                {Language.Chinese, "下载错误"}
+            }},
+            {"url_copied_message", new Dictionary<Language, string> {
+                {Language.English, "URL copied to clipboard!"},
+                {Language.Russian, "URL скопирован в буфер обмена!"},
+                {Language.Chinese, "URL已复制到剪افظ板！"}
+            }},
+            {"unknown_version", new Dictionary<Language, string> {
+                {Language.English, "Unknown"},
+                {Language.Russian, "Неизвестно"},
+                {Language.Chinese, "未知"}
+            }},
+            {"open_releases_page", new Dictionary<Language, string> {
+                {Language.English, "Open releases page"},
+                {Language.Russian, "Открыть страницу релизов"},
+                {Language.Chinese, "打开发布页面"}
+            }},
+            {"error_checking_updates", new Dictionary<Language, string> {
+                {Language.English, "Error checking for updates."},
+                {Language.Russian, "Ошибка проверки обновлений."},
+                {Language.Chinese, "检查更新时出错。"}
+            }},
+            {"lang_prompt_english", new Dictionary<Language, string> {
+                {Language.English, "English"},
+                {Language.Russian, "Английский"},
+                {Language.Chinese, "英语"}
+            }},
+            {"lang_prompt_russian", new Dictionary<Language, string> {
+                {Language.English, "Russian"},
+                {Language.Russian, "Русский"},
+                {Language.Chinese, "俄语"}
+            }},
+            {"lang_prompt_chinese", new Dictionary<Language, string> {
+                {Language.English, "Chinese"},
+                {Language.Russian, "Китайский"},
+                {Language.Chinese, "中文"}
+            }},
+            {"lang_prompt_current", new Dictionary<Language, string> {
+                {Language.English, "Current language"},
+                {Language.Russian, "Текущий язык"},
+                {Language.Chinese, "当前语言"}
+            }},
+            {"language_changed_message", new Dictionary<Language, string> {
+                {Language.English, "Language changed to"},
+                {Language.Russian, "Язык изменен на"},
+                {Language.Chinese, "语言已更改为"}
+            }},
         };
 
         public static string GetTranslation(string key)
