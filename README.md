@@ -151,5 +151,4 @@
 
 **Дата релиза**: 6 января 2025  
 **Версия**: 4.6.0  
-**Разработчик**: AI Assistant  
 **Тип релиза**: Critical Fixes & Interface Improvements 
