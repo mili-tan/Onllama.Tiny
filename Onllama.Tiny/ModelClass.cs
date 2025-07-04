@@ -1,250 +1,11 @@
 ﻿using AntdUI;
-using System.Text.Json;
-using System.Text.RegularExpressions;
+
+// Классы OfficialOllamaModel и OllamaModelsFetcher удалены, так как они больше не используются.
+// Логика загрузки моделей Ollama теперь основана на статической структуре в Form1.cs
+// и HuggingFaceServiceExtended для моделей HuggingFace.
 
 namespace Onllama.Tiny
 {
-    // Класс для официальных моделей Ollama
-    public class OfficialOllamaModel
-    {
-        public string Name { get; set; } = "";
-        public string Description { get; set; } = "";
-        public List<string> Tags { get; set; } = new List<string>();
-        public List<string> Capabilities { get; set; } = new List<string>();
-        public string PullCount { get; set; } = "";
-        public DateTime UpdatedAt { get; set; }
-        public List<string> Sizes { get; set; } = new List<string>();
-        
-        public string GetDisplayName()
-        {
-            if (Sizes.Count > 0)
-            {
-                return $"{Name}:{Sizes[0]}";
-            }
-            return Name;
-        }
-        
-        public string GetFullSizesList()
-        {
-            return Sizes.Count > 0 ? string.Join(", ", Sizes.Select(s => $"{Name}:{s}")) : Name;
-        }
-    }
-
-    // Статический класс для загрузки моделей Ollama
-    public static class OllamaModelsFetcher
-    {
-        private static readonly HttpClient httpClient = new HttpClient();
-        private static List<OfficialOllamaModel>? cachedModels = null;
-        private static DateTime lastFetchTime = DateTime.MinValue;
-        private static readonly TimeSpan cacheValidTime = TimeSpan.FromHours(1); // Кэш на 1 час
-
-        public static async Task<List<OfficialOllamaModel>> GetOfficialModelsAsync(bool forceRefresh = false)
-        {
-            // Проверяем кэш
-            if (!forceRefresh && cachedModels != null && DateTime.Now - lastFetchTime < cacheValidTime)
-            {
-                return cachedModels;
-            }
-
-            try
-            {
-                var response = await httpClient.GetStringAsync("https://ollama.com/models");
-                var models = ParseModelsFromHtml(response);
-                
-                cachedModels = models;
-                lastFetchTime = DateTime.Now;
-                
-                return models;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error fetching Ollama models: {ex.Message}");
-                
-                // Возвращаем кэш если есть, иначе fallback список
-                if (cachedModels != null)
-                {
-                    return cachedModels;
-                }
-                
-                return GetFallbackModels();
-            }
-        }
-
-        private static List<OfficialOllamaModel> ParseModelsFromHtml(string html)
-        {
-            var models = new List<OfficialOllamaModel>();
-            
-            try
-            {
-                // Извлекаем информацию о моделях из HTML
-                var modelPattern = @"<a[^>]*href=""/([\w\.-]+)""[^>]*>.*?<span[^>]*>(.*?)</span>.*?(?:<span[^>]*>(.*?)</span>)?.*?(?:(\d+[\w\s]*)\s*Pulls)?";
-                var matches = Regex.Matches(html, modelPattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
-                
-                foreach (Match match in matches)
-                {
-                    var name = match.Groups[1].Value.Trim();
-                    var description = match.Groups[2].Value.Trim();
-                    var pullCount = match.Groups[4].Success ? match.Groups[4].Value.Trim() : "";
-                    
-                    if (!string.IsNullOrEmpty(name) && !name.Contains("/") && name != "models")
-                    {
-                        // Извлекаем размеры модели из HTML
-                        var sizes = ExtractModelSizes(html, name);
-                        
-                        // Определяем возможности модели по ключевым словам
-                        var capabilities = new List<string>();
-                        var tags = new List<string>();
-                        
-                        if (description.ToLower().Contains("vision") || name.Contains("vision") || name.Contains("llava"))
-                        {
-                            capabilities.Add("vision");
-                            tags.Add("Vision");
-                        }
-                        if (description.ToLower().Contains("embedding") || name.Contains("embed"))
-                        {
-                            capabilities.Add("embedding");
-                            tags.Add("Embedding");
-                        }
-                        if (description.ToLower().Contains("tool") || description.ToLower().Contains("function"))
-                        {
-                            capabilities.Add("tools");
-                            tags.Add("Tools");
-                        }
-                        if (description.ToLower().Contains("reasoning") || name.Contains("r1") || name.Contains("qwq"))
-                        {
-                            capabilities.Add("thinking");
-                            tags.Add("Thinking");
-                        }
-                        if (description.ToLower().Contains("code") || name.Contains("code"))
-                        {
-                            tags.Add("Code");
-                        }
-                        
-                        models.Add(new OfficialOllamaModel
-                        {
-                            Name = name,
-                            Description = description,
-                            Tags = tags,
-                            Capabilities = capabilities,
-                            PullCount = pullCount,
-                            UpdatedAt = DateTime.Now,
-                            Sizes = sizes
-                        });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error parsing models: {ex.Message}");
-            }
-            
-            return models.OrderBy(m => m.Name).ToList();
-        }
-
-        private static List<string> ExtractModelSizes(string html, string modelName)
-        {
-            var sizes = new List<string>();
-            
-            // Ищем размеры в описании модели
-            var sizePattern = @$"{Regex.Escape(modelName)}.*?(\d+[bm]|\d+\.?\d*[bm])";
-            var matches = Regex.Matches(html, sizePattern, RegexOptions.IgnoreCase);
-            
-            foreach (Match match in matches)
-            {
-                var size = match.Groups[1].Value.ToLower();
-                if (!sizes.Contains(size) && (size.EndsWith("b") || size.EndsWith("m")))
-                {
-                    sizes.Add(size);
-                }
-            }
-            
-            // Если размеры не найдены, добавляем стандартные
-            if (sizes.Count == 0)
-            {
-                sizes.Add("latest");
-            }
-            
-            return sizes.OrderBy(s => s).ToList();
-        }
-
-        private static List<OfficialOllamaModel> GetFallbackModels()
-        {
-            // Fallback список основных моделей если не удалось загрузить с сайта
-            return new List<OfficialOllamaModel>
-            {
-                new() { Name = "deepseek-r1", Description = "DeepSeek-R1 reasoning model", Sizes = new List<string>{"1.5b", "7b", "8b", "14b", "32b", "70b", "671b"}, Capabilities = new List<string>{"tools", "thinking"} },
-                new() { Name = "gemma3", Description = "Google Gemma 3 efficient model", Sizes = new List<string>{"1b", "4b", "12b", "27b"}, Capabilities = new List<string>{"vision"} },
-                new() { Name = "qwen3", Description = "Qwen3 latest generation models", Sizes = new List<string>{"0.6b", "1.7b", "4b", "8b", "14b", "30b", "32b", "235b"}, Capabilities = new List<string>{"tools", "thinking"} },
-                new() { Name = "llama3.1", Description = "Meta Llama 3.1 state-of-the-art", Sizes = new List<string>{"8b", "70b", "405b"}, Capabilities = new List<string>{"tools"} },
-                new() { Name = "llama3.2", Description = "Meta Llama 3.2 small models", Sizes = new List<string>{"1b", "3b"}, Capabilities = new List<string>{"tools"} },
-                new() { Name = "qwen2.5", Description = "Qwen2.5 multilingual models", Sizes = new List<string>{"0.5b", "1.5b", "3b", "7b", "14b", "32b", "72b"}, Capabilities = new List<string>{"tools"} },
-                new() { Name = "qwen2.5-coder", Description = "Code-specific Qwen models", Sizes = new List<string>{"0.5b", "1.5b", "3b", "7b", "14b", "32b"}, Capabilities = new List<string>{"tools"} },
-                new() { Name = "mistral", Description = "Mistral 7B model", Sizes = new List<string>{"7b"}, Capabilities = new List<string>{"tools"} },
-                new() { Name = "gemma2", Description = "Google Gemma 2 efficient", Sizes = new List<string>{"2b", "9b", "27b"} },
-                new() { Name = "llava", Description = "Vision and language understanding", Sizes = new List<string>{"7b", "13b", "34b"}, Capabilities = new List<string>{"vision"} },
-                new() { Name = "nomic-embed-text", Description = "High-performing embedding model", Sizes = new List<string>{"latest"}, Capabilities = new List<string>{"embedding"} },
-                new() { Name = "mxbai-embed-large", Description = "Large embedding model", Sizes = new List<string>{"335m"}, Capabilities = new List<string>{"embedding"} }
-            };
-        }
-
-        public enum ModelSortType
-        {
-            Name,
-            Popularity,
-            Updated,
-            Size
-        }
-
-        public static List<OfficialOllamaModel> SortModels(List<OfficialOllamaModel> models, ModelSortType sortType, bool ascending = true)
-        {
-            IEnumerable<OfficialOllamaModel> sorted = sortType switch
-            {
-                ModelSortType.Name => models.OrderBy(m => m.Name),
-                ModelSortType.Popularity => models.OrderByDescending(m => ParsePullCount(m.PullCount)),
-                ModelSortType.Updated => models.OrderByDescending(m => m.UpdatedAt),
-                ModelSortType.Size => models.OrderBy(m => GetModelSizeOrder(m.Sizes.FirstOrDefault() ?? "")),
-                _ => models.OrderBy(m => m.Name)
-            };
-
-            if (!ascending && sortType != ModelSortType.Popularity && sortType != ModelSortType.Updated)
-            {
-                sorted = sorted.Reverse();
-            }
-
-            return sorted.ToList();
-        }
-
-        private static long ParsePullCount(string pullCount)
-        {
-            if (string.IsNullOrEmpty(pullCount)) return 0;
-            
-            var number = Regex.Match(pullCount, @"([\d.]+)").Value;
-            if (!double.TryParse(number, out var value)) return 0;
-            
-            if (pullCount.Contains("M"))
-                return (long)(value * 1_000_000);
-            if (pullCount.Contains("K"))
-                return (long)(value * 1_000);
-            
-            return (long)value;
-        }
-
-        private static int GetModelSizeOrder(string size)
-        {
-            if (string.IsNullOrEmpty(size)) return int.MaxValue;
-            
-            var number = Regex.Match(size, @"([\d.]+)").Value;
-            if (!double.TryParse(number, out var value)) return int.MaxValue;
-            
-            return size.ToLower() switch
-            {
-                var s when s.Contains("m") => (int)value, // мегабайты
-                var s when s.Contains("b") => (int)(value * 1000), // гигабайты в мегабайты
-                _ => int.MaxValue
-            };
-        }
-    }
-
     public class ModelsClass : NotifyProperty
     {
         string _name;
@@ -984,6 +745,41 @@ namespace Onllama.Tiny
                 {Language.English, "Connection error"}, 
                 {Language.Russian, "Ошибка соединения"}, 
                 {Language.Chinese, "连接错误"} 
+            }},
+            {"test_model_tooltip", new Dictionary<Language, string> {
+                {Language.English, "Test model"},
+                {Language.Russian, "Протестировать модель"},
+                {Language.Chinese, "测试模型"}
+            }},
+            {"testing_model_message", new Dictionary<Language, string> {
+                {Language.English, "Testing model..."},
+                {Language.Russian, "Тестирование модели..."},
+                {Language.Chinese, "正在测试模型..."}
+            }},
+            {"test_prompt", new Dictionary<Language, string> {
+                {Language.English, "Hello! How are you?"},
+                {Language.Russian, "Привет! Как дела?"},
+                {Language.Chinese, "你好！你好吗？"}
+            }},
+            {"test_successful_log", new Dictionary<Language, string> {
+                {Language.English, "Test successful. Response: "},
+                {Language.Russian, "Тест успешно пройден. Ответ: "},
+                {Language.Chinese, "测试成功。回应："}
+            }},
+            {"test_failed_log", new Dictionary<Language, string> {
+                {Language.English, "Test failed for model"},
+                {Language.Russian, "Тест не удался для модели"},
+                {Language.Chinese, "模型测试失败"}
+            }},
+            {"model_responded_successfully", new Dictionary<Language, string> {
+                {Language.English, "Model responded successfully"},
+                {Language.Russian, "Модель успешно ответила"},
+                {Language.Chinese, "模型成功响应"}
+            }},
+            {"model_test_failed_notification", new Dictionary<Language, string> {
+                {Language.English, "Model test failed"},
+                {Language.Russian, "Тест модели не удался"},
+                {Language.Chinese, "模型测试失败"}
             }},
 
             // Новые строки для обновленного интерфейса

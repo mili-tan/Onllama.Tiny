@@ -84,13 +84,12 @@
             //
             this.headerPanel.Controls.Add(this.appTitleLabel);
             this.headerPanel.Controls.Add(this.statusLabel);
-            this.headerPanel.Controls.Add(this.cpuUsageLabel);
-            this.headerPanel.Controls.Add(this.ramUsageLabel);
-            this.headerPanel.Controls.Add(this.gpuUsageLabel);
+            this.headerPanel.Controls.Add(this.combinedUsageLabel); // Combined usage label
             this.headerPanel.Controls.Add(this.settingsButton);
             this.headerPanel.Dock = DockStyle.Top;
             this.headerPanel.Location = new Point(0, 0);
             this.headerPanel.Name = "headerPanel";
+            this.headerPanel.Padding = new Padding(5, 0, 5, 0); // Add some padding
             this.headerPanel.Size = new Size(804, 30);
             this.headerPanel.TabIndex = 3;
             //
@@ -98,7 +97,7 @@
             //
             this.appTitleLabel.Dock = DockStyle.Left;
             this.appTitleLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.appTitleLabel.Location = new Point(10, 0);
+            this.appTitleLabel.Location = new Point(5, 0); // Adjusted for padding
             this.appTitleLabel.Name = "appTitleLabel";
             this.appTitleLabel.Size = new Size(100, 30);
             this.appTitleLabel.TabIndex = 0;
@@ -107,55 +106,35 @@
             //
             // statusLabel
             //
-            this.statusLabel.Dock = DockStyle.Fill;
-            this.statusLabel.Location = new Point(110, 0);
+            this.statusLabel.Dock = DockStyle.Fill; // Will fill space between title and usage/settings
+            this.statusLabel.Location = new Point(105, 0); // Adjusted for padding
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new Size(400, 30); // Adjust size as needed
+            this.statusLabel.Size = new Size(434, 30); // Adjusted size
             this.statusLabel.TabIndex = 1;
             this.statusLabel.Text = "Готов";
             this.statusLabel.TextAlign = ContentAlignment.MiddleCenter;
             //
-            // cpuUsageLabel
+            // combinedUsageLabel
             //
-            this.cpuUsageLabel.Dock = DockStyle.Right;
-            this.cpuUsageLabel.Location = new Point(510, 0); // Adjust position
-            this.cpuUsageLabel.Name = "cpuUsageLabel";
-            this.cpuUsageLabel.Size = new Size(70, 30);
-            this.cpuUsageLabel.TabIndex = 2;
-            this.cpuUsageLabel.Text = "CPU: --%";
-            this.cpuUsageLabel.TextAlign = ContentAlignment.MiddleRight;
-            //
-            // ramUsageLabel
-            //
-            this.ramUsageLabel.Dock = DockStyle.Right;
-            this.ramUsageLabel.Location = new Point(580, 0); // Adjust position
-            this.ramUsageLabel.Name = "ramUsageLabel";
-            this.ramUsageLabel.Size = new Size(120, 30);
-            this.ramUsageLabel.TabIndex = 3;
-            this.ramUsageLabel.Text = "RAM: --/-- GB";
-            this.ramUsageLabel.TextAlign = ContentAlignment.MiddleRight;
-            //
-            // gpuUsageLabel
-            //
-            this.gpuUsageLabel.Dock = DockStyle.Right;
-            this.gpuUsageLabel.Location = new Point(700, 0); // Adjust position
-            this.gpuUsageLabel.Name = "gpuUsageLabel";
-            this.gpuUsageLabel.Size = new Size(70, 30);
-            this.gpuUsageLabel.TabIndex = 4;
-            this.gpuUsageLabel.Text = "GPU: --%";
-            this.gpuUsageLabel.TextAlign = ContentAlignment.MiddleRight;
-            this.gpuUsageLabel.Visible = false; // Initially hidden
+            this.combinedUsageLabel.Dock = DockStyle.Right;
+            this.combinedUsageLabel.Location = new Point(539, 0); // Position before settings button
+            this.combinedUsageLabel.Name = "combinedUsageLabel";
+            this.combinedUsageLabel.Size = new Size(230, 30); // Adjust size to fit C: R: G:
+            this.combinedUsageLabel.TabIndex = 2;
+            this.combinedUsageLabel.Text = "C: --% R: --/-- GB G: --%";
+            this.combinedUsageLabel.TextAlign = ContentAlignment.MiddleRight;
             //
             // settingsButton
             //
             this.settingsButton.Dock = DockStyle.Right;
             this.settingsButton.IconSvg = "<svg viewBox=\"64 64 896 896\" focusable=\"false\" data-icon=\"setting\" width=\"1em\" height=\"1em\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M924.8 625.7l-65.5-56c3.1-19 4.7-38.4 4.7-57.8s-1.6-38.8-4.7-57.8l65.5-56a32.03 32.03 0 009.4-34.4l-32-72.4a32.03 32.03 0 00-34.4-9.4L767.2 310c-22.2-17.6-46.3-32.1-71.8-42.5L679 168.1a32.03 32.03 0 00-32.2-29.8h-72.4a32.03 32.03 0 00-32.2 29.8l-16.4 99.3c-25.5 10.4-49.6 24.9-71.8 42.5l-100.9-28.1a32.03 32.03 0 00-34.4 9.4l-32 72.4a32.03 32.03 0 009.4 34.4l65.5 56c-3.1 19-4.7 38.4-4.7 57.8s1.6 38.8 4.7 57.8l-65.5 56a32.03 32.03 0 00-9.4 34.4l32 72.4a32.03 32.03 0 0034.4 9.4l100.9-28.1c22.2 17.6 46.3 32.1 71.8 42.5l16.4 99.3a32.03 32.03 0 0032.2 29.8h72.4a32.03 32.03 0 0032.2-29.8l16.4-99.3c25.5-10.4 49.6-24.9 71.8-42.5l100.9 28.1a32.03 32.03 0 0034.4-9.4l32-72.4a32.03 32.03 0 00-9.4-34.4zM512 656c-80 0-144-64-144-144s64-144 144-144 144 64 144 144-64 144-144 144zm0-224c-44.2 0-80 35.8-80 80s35.8 80 80 80 80-35.8 80-80-35.8-80-80-80z\"></path></svg>";
-            this.settingsButton.Location = new Point(770, 0);
+            this.settingsButton.Location = new Point(769, 0); // Adjusted for padding
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new Size(30, 30);
-            this.settingsButton.TabIndex = 5;
+            this.settingsButton.TabIndex = 5; // Keep TabIndex, or adjust as needed
             this.settingsButton.Type = AntdUI.TTypeMini.Primary;
             this.settingsButton.Shape = AntdUI.TShape.Circle;
+            this.settingsButton.Margin = new Padding(3,3,0,3); // Add some margin to the button
             //
             // mainPanel
             //
@@ -190,7 +169,7 @@
             //
             // tabPageOnlineModels
             //
-            this.tabPageOnlineModels.Padding = new Padding(10);
+            this.tabPageOnlineModels.Padding = new Padding(5); // Reduced padding
             this.tabPageOnlineModels.Location = new Point(4, 28);
             this.tabPageOnlineModels.Name = "tabPageOnlineModels";
             this.tabPageOnlineModels.Size = new Size(792, 311);
@@ -203,7 +182,7 @@
                 Dock = DockStyle.Top,
                 AutoSize = true,
                 WrapContents = false,
-                Padding = new Padding(0,0,0,10)
+                Padding = new Padding(0,0,0,5) // Reduced bottom padding
             };
             this.textBoxSearchOnlineModels = new AntdUI.Input { PlaceholderText = "Поиск онлайн моделей...", Width = 200, Margin = new Padding(0,0,5,0) };
             this.selectOnlineModelSource = new AntdUI.Select { Width = 120, Margin = new Padding(0,0,5,0) };

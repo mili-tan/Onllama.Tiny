@@ -284,27 +284,7 @@ namespace Onllama.Tiny
             try
             {
                 // CPU Usage
-                float cpuUsage = cpuCounter?.NextValue() ?? 0;
-                if (this.IsHandleCreated && !this.IsDisposed)
-                {
-                     Invoke(() => cpuUsageLabel.Text = $"CPU: {cpuUsage:F0}%");
-                }
-
-
-                // RAM Usage
-                ulong totalRam = computerInfo.TotalPhysicalMemory;
-                ulong availableRam = computerInfo.AvailablePhysicalMemory;
-                ulong usedRam = totalRam - availableRam;
-                double totalRamGB = totalRam / (1024.0 * 1024.0 * 1024.0);
-                double usedRamGB = usedRam / (1024.0 * 1024.0 * 1024.0);
-                 if (this.IsHandleCreated && !this.IsDisposed)
-                 {
-                    Invoke(() => ramUsageLabel.Text = $"RAM: {usedRamGB:F1}/{totalRamGB:F1} GB");
-                 }
-
-
-                // GPU Usage (VRAM for active model)
-                UpdateGpuUsageLabel();
+                // This first SystemMonitorTimer_Tick and OnFormClosing are duplicates, will be removed by selecting the second version.
             }
             catch (Exception ex)
             {
@@ -313,28 +293,21 @@ namespace Onllama.Tiny
             }
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            systemMonitorTimer?.Stop();
-            systemMonitorTimer?.Stop();
-            systemMonitorTimer?.Dispose();
-            cpuCounter?.Dispose();
-            SaveWindowSettings(); // Existing logic
-            base.OnFormClosing(e);
-        }
 
         private bool systemMonitorInitialized = false;
+        // Keep this version of InitializeSystemMonitorTimer
         private void InitializeSystemMonitorTimer()
         {
             try
             {
                 cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-                // Test counter by reading a value
-                cpuCounter.NextValue();
+                cpuCounter.NextValue(); // Initial call to get a value
                 computerInfo = new ComputerInfo();
 
-                systemMonitorTimer = new System.Windows.Forms.Timer();
-                systemMonitorTimer.Interval = 2000;
+                systemMonitorTimer = new System.Windows.Forms.Timer
+                {
+                    Interval = 2000 // Update every 2 seconds
+                };
                 systemMonitorTimer.Tick += SystemMonitorTimer_Tick;
                 systemMonitorTimer.Start();
                 systemMonitorInitialized = true;
@@ -342,37 +315,33 @@ namespace Onllama.Tiny
             }
             catch (Exception ex)
             {
-                Log(LogLevel.ERROR, "Failed to initialize system monitor. CPU/RAM usage will not be shown.", ex);
+                Log(LogLevel.ERROR, "Failed to initialize system monitor. CPU/RAM/GPU usage will not be shown.", ex);
                 systemMonitorInitialized = false;
                 if (cpuCounter != null) cpuCounter.Dispose();
-                // Optionally hide or set labels to N/A here if needed immediately
                 if (this.IsHandleCreated && !this.IsDisposed)
                 {
                     Invoke(() => {
-                        cpuUsageLabel.Text = "CPU: N/A";
-                        ramUsageLabel.Text = "RAM: N/A";
-                        cpuUsageLabel.Visible = false; // Hide if problematic
-                        ramUsageLabel.Visible = false; // Hide if problematic
+                        combinedUsageLabel.Text = "C: N/A R: N/A G: N/A";
+                        combinedUsageLabel.Visible = true; // Or false if preferred when N/A
                     });
                 }
             }
         }
 
-        private void SystemMonitorTimer_Tick(object sender, EventArgs e)
+        // Keep this version of SystemMonitorTimer_Tick
+        private async void SystemMonitorTimer_Tick(object sender, EventArgs e)
         {
             if (!systemMonitorInitialized) return;
+
+            string cpuText = "C: N/A";
+            string ramText = "R: N/A";
+            string gpuText = ""; // Will be populated by UpdateGpuUsageStringAsync
 
             try
             {
                 // CPU Usage
                 float cpuUsage = cpuCounter?.NextValue() ?? 0;
-                if (this.IsHandleCreated && !this.IsDisposed)
-                {
-                     Invoke(() => {
-                         cpuUsageLabel.Text = $"CPU: {cpuUsage:F0}%";
-                         cpuUsageLabel.Visible = true;
-                     });
-                }
+                cpuText = $"C: {cpuUsage:F0}%";
 
                 // RAM Usage
                 ulong totalRam = computerInfo.TotalPhysicalMemory;
@@ -380,74 +349,62 @@ namespace Onllama.Tiny
                 ulong usedRam = totalRam - availableRam;
                 double totalRamGB = totalRam / (1024.0 * 1024.0 * 1024.0);
                 double usedRamGB = usedRam / (1024.0 * 1024.0 * 1024.0);
-                if (this.IsHandleCreated && !this.IsDisposed)
-                {
-                    Invoke(() => {
-                        ramUsageLabel.Text = $"RAM: {usedRamGB:F1}/{totalRamGB:F1} GB";
-                        ramUsageLabel.Visible = true;
-                    });
-                }
+                ramText = $"R: {usedRamGB:F1}/{totalRamGB:F1}GB";
+
+                // GPU Usage
+                gpuText = await UpdateGpuUsageStringAsync();
+
             }
             catch (Exception ex)
             {
-                Log(LogLevel.WARN, "Error updating system monitor data.", ex);
-                // Optionally disable timer or set labels to error state if persistent errors
-                // systemMonitorTimer.Stop();
-                // systemMonitorInitialized = false;
-                // Invoke(() => { cpuUsageLabel.Text = "CPU: Err"; ramUsageLabel.Text = "RAM: Err"; });
+                Log(LogLevel.WARN, "Error updating system monitor data (CPU/RAM).", ex);
+                // In case of error, N/A values will be used
+            }
+            finally // Ensure UI update happens
+            {
+                 if (this.IsHandleCreated && !this.IsDisposed)
+                 {
+                    Invoke(() => {
+                        combinedUsageLabel.Text = $"{cpuText} {ramText} {gpuText}".Trim();
+                        combinedUsageLabel.Visible = true;
+                    });
+                 }
             }
         }
 
+        // Keep this version of OnFormClosing
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             systemMonitorTimer?.Stop();
-            systemMonitorTimer?.Dispose();
-            systemMonitorTimer = null;
-            cpuCounter?.Dispose();
-            cpuCounter = null;
+            systemMonitorTimer?.Dispose(); // Dispose the timer
+            systemMonitorTimer = null; // Set to null
+            cpuCounter?.Dispose(); // Dispose the counter
+            cpuCounter = null; // Set to null
             SaveWindowSettings();
             base.OnFormClosing(e);
         }
 
-        private async void UpdateGpuUsageLabel()
+        private async Task<string> UpdateGpuUsageStringAsync()
         {
             try
             {
                 var runningModels = await OllamaApi.ListRunningModelsAsync();
                 var activeGpuModel = runningModels.FirstOrDefault(m => m.SizeVram > 0);
 
-                if (this.IsHandleCreated && !this.IsDisposed)
+                if (activeGpuModel != null)
                 {
-                    if (activeGpuModel != null)
-                    {
-                        double vramGB = activeGpuModel.SizeVram / (1024.0 * 1024.0 * 1024.0);
-                        string gpuText = $"GPU VRAM: {vramGB:F1} GB ({TrimModelNameForDisplay(activeGpuModel.Name)})";
-                        Invoke(() => {
-                            gpuUsageLabel.Text = gpuText;
-                            gpuUsageLabel.Visible = true;
-                        });
-                    }
-                    else
-                    {
-                        Invoke(() => {
-                            gpuUsageLabel.Visible = false;
-                        });
-                    }
+                    double vramGB = activeGpuModel.SizeVram / (1024.0 * 1024.0 * 1024.0);
+                    return $"G: {vramGB:F1}GB ({TrimModelNameForDisplay(activeGpuModel.Name, 10)})";
                 }
             }
             catch (Exception ex)
             {
                 Log(LogLevel.WARN, "Could not update GPU VRAM usage.", ex);
-                 if (this.IsHandleCreated && !this.IsDisposed)
-                 {
-                    Invoke(() => {
-                        gpuUsageLabel.Visible = false;
-                    });
-                 }
             }
+            return ""; // Return empty if no GPU model or error
         }
 
-        private string TrimModelNameForDisplay(string modelName, int maxLength = 20)
+        private string TrimModelNameForDisplay(string modelName, int maxLength = 15) // Adjusted default maxLength
         {
             if (string.IsNullOrEmpty(modelName)) return string.Empty;
 
@@ -676,20 +633,29 @@ namespace Onllama.Tiny
         private async void ButtonPullOnlineModel_Click(object sender, EventArgs e)
         {
             var selectedModelItem = this.selectOnlineModels.SelectedItem as SelectItem;
-            string modelToPull = selectedModelItem?.Tag?.ToString();
+            string modelTag = selectedModelItem?.Tag?.ToString();
 
-            if (string.IsNullOrEmpty(modelToPull)) // Removed REFRESH_ACTION check, as it's handled in Populate...
+            if (modelTag == "REFRESH_ACTION")
             {
-                // If REFRESH_ACTION was selected, Tag might be "REFRESH_ACTION"
-                if (modelToPull == "REFRESH_ACTION")
+                string currentSource = this.selectOnlineModelSource.Tag?.ToString() ?? "Ollama";
+                Log(LogLevel.INFO, $"User requested refresh for {currentSource} models.");
+                if (currentSource == "HuggingFace")
                 {
-                     PopulateOnlineModelsList(this.selectOnlineModelSource.Tag?.ToString() ?? "Ollama", textBoxSearchOnlineModels.Text);
-                     return;
+                    HuggingFaceServiceExtended.ClearCache(); // Force cache refresh for HF
+                    Log(LogLevel.INFO, "HuggingFace model cache cleared for refresh.");
                 }
+                PopulateOnlineModelsList(currentSource, textBoxSearchOnlineModels.Text);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(modelTag))
+            {
                 AntdUI.Message.warn(this, LocalizationManager.GetTranslation("please_select_model_to_download") ?? "Пожалуйста, выберите модель для загрузки");
                 return;
             }
             
+            string modelToPull = modelTag; // Use modelTag as modelToPull if not REFRESH_ACTION
+
             if (pullModelCts != null && !pullModelCts.IsCancellationRequested)
             {
                 AntdUI.Message.warn(this, LocalizationManager.GetTranslation("download_in_progress_warning") ?? "Другая модель уже загружается.");
@@ -1072,19 +1038,19 @@ public void ListModels()
                             new("copy-id", "[ID]", TTypeMini.Primary)
                             {
                                 Tooltip = LocalizationManager.GetTranslation("copy_model_id"),
-                                Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgCopy,
+                                Ghost = false, BorderWidth = 1, // IconSvg = Properties.Resources.svgCopy, // Removed IconSvg
                                 Back = Color.FromArgb(52, 152, 219), BackHover = Color.FromArgb(41, 128, 185)
                             },
                             new("copy", "Копия", TTypeMini.Success)
                             {
                                 Tooltip = LocalizationManager.GetTranslation("copy_model"),
-                                Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgCopy,
+                                Ghost = false, BorderWidth = 1, // IconSvg = Properties.Resources.svgCopy, // Removed IconSvg
                                 Back = Color.FromArgb(34, 197, 94), BackHover = Color.FromArgb(22, 163, 74)
                             },
                             new("info", "Инфо", TTypeMini.Info)
                             {
                                 Tooltip = LocalizationManager.GetTranslation("model_info"),
-                                Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgInfo,
+                                Ghost = false, BorderWidth = 1, // IconSvg = Properties.Resources.svgInfo, // Removed IconSvg
                                 Back = Color.FromArgb(24, 188, 156), BackHover = Color.FromArgb(105, 211, 191)
                             },
                         };
@@ -1127,7 +1093,7 @@ public void ListModels()
                                 { 
                                     Ghost = false, 
                                     BorderWidth = 1, 
-                                    IconSvg = Properties.Resources.svgPin,
+                                    // IconSvg = Properties.Resources.svgPin, // Removed IconSvg
                                     Tooltip = "Закрепить модель в памяти",
                                     Back = Color.FromArgb(255, 193, 7), BackHover = Color.FromArgb(255, 179, 0)
                                 });
@@ -1146,7 +1112,7 @@ public void ListModels()
                                 { 
                                     Ghost = false, 
                                     BorderWidth = 1, 
-                                    IconSvg = Properties.Resources.svgDel,
+                                    // IconSvg = Properties.Resources.svgDel, // Removed IconSvg
                                     Tooltip = "Удалить модель с диска",
                                     Back = Color.FromArgb(239, 68, 68), BackHover = Color.FromArgb(220, 38, 38)
                                 });
@@ -1160,14 +1126,20 @@ public void ListModels()
                                     ? new CellButton("sleep", "Сон", TTypeMini.Primary)
                                     {
                                         Tooltip = LocalizationManager.GetTranslation("sleep_model"),
-                                        Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgSnow,
+                                        Ghost = false, BorderWidth = 1, // IconSvg = Properties.Resources.svgSnow, // Removed IconSvg
                                         Back = Color.FromArgb(30, 136, 229), BackHover = Color.FromArgb(12, 129, 224)
                                     }
                                     : new CellButton("run", "Запуск", TTypeMini.Success)
                                     {
                                         Tooltip = LocalizationManager.GetTranslation("warmup_model"),
-                                        Ghost = false, BorderWidth = 1, IconSvg = Properties.Resources.svgWarm,
+                                        Ghost = false, BorderWidth = 1, // IconSvg = Properties.Resources.svgWarm, // Removed IconSvg
                                         Back = Color.FromArgb(34, 197, 94), BackHover = Color.FromArgb(22, 163, 74)
+                                    },
+                                new CellButton("test_model", "Тест", TTypeMini.Info) // Кнопка Тест
+                                    {
+                                        Tooltip = LocalizationManager.GetTranslation("test_model_tooltip") ?? "Протестировать модель",
+                                        Ghost = false, BorderWidth = 1, // IconSvg = Properties.Resources.svgPlay, // Removed IconSvg
+                                        Back = Color.FromArgb(23, 162, 184), BackHover = Color.FromArgb(19, 132, 150)
                                     },
                                 new CellButton("web-chat", "Web", TTypeMini.Default)
                                     {
@@ -1228,576 +1200,18 @@ public void ListModels()
                 return true;
             }
         }
-        private void dropdown1_SelectedValueChanged(object sender, ObjectNEventArgs e)
-        {
-            string selectedValue = e.Value.ToString();
-            
-            // Импорт модели
-            if (selectedValue == LocalizationManager.GetTranslation("import_model_menu"))
-            {
-                if (IsRemote)
-                {
-                    AntdUI.Message.warn(this, LocalizationManager.GetTranslation("remote_not_supported"));
-                    return;
-                }
-                new FormImport().ShowDialog();
-                ListModels();
-            }
-            // Настройки Ollama
-            else if (selectedValue == LocalizationManager.GetTranslation("ollama_settings"))
-            {
-                if (IsRemote)
-                {
-                    AntdUI.Message.warn(this, LocalizationManager.GetTranslation("remote_not_supported"));
-                    return;
-                }
-                new FormSettings().ShowDialog();
-            }
-            // Обновить список моделей
-            else if (selectedValue == LocalizationManager.GetTranslation("model_list_refresh"))
-            {
-                ListModels();
-            }
-            // Обновить список моделей для загрузки
-            else if (selectedValue == LocalizationManager.GetTranslation("refresh_models"))
-            {
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        // Принудительно обновляем кэш моделей
-                        await OllamaModelsFetcher.GetOfficialModelsAsync(forceRefresh: true);
-                        
-                        // Перезагружаем select на UI потоке
-                        Invoke(() => InitializeModelSelect());
-                        
-                        Invoke(() => AntdUI.Message.success(this, LocalizationManager.GetTranslation("download_completed")));
-                    }
-                    catch (Exception ex)
-                    {
-                        Invoke(() => AntdUI.Message.error(this, $"Error: {ex.Message}"));
-                                         }
-                 });
-            }
-            // NextChat
-            else if (selectedValue == "NextChat")
-            {
-                Process.Start(
-                    new ProcessStartInfo(
-                            $"https://app.nextchat.dev/#/?settings={{%22url%22:%22http://{OllamaUri}%22}}")
-                    { UseShellExecute = true });
-            }
-            // Онлайн модели
-            else if (selectedValue == LocalizationManager.GetTranslation("find_models_online"))
-            {
-                Process.Start(new ProcessStartInfo($"https://ollama.com/library") { UseShellExecute = true });
-            }
-            // Ollama.com - прямая ссылка на сайт
-            else if (selectedValue == "Ollama.com")
-            {
-                Process.Start(new ProcessStartInfo($"https://ollama.com/library") { UseShellExecute = true });
-            }
-            // HuggingFace - прямая ссылка на сайт
-            else if (selectedValue == "HuggingFace")
-            {
-                Process.Start(new ProcessStartInfo($"https://huggingface.co/models?pipeline_tag=text-generation&sort=trending&search=gguf") { UseShellExecute = true });
-            }
-            // Расположение моделей
-            else if (selectedValue == LocalizationManager.GetTranslation("view_models_location"))
-            {
-                if (IsRemote)
-                {
-                    AntdUI.Message.warn(this, LocalizationManager.GetTranslation("remote_not_supported"));
-                    return;
-                }
-                Process.Start(new ProcessStartInfo($"explorer.exe",
-                    Environment.GetEnvironmentVariable("OLLAMA_MODELS", EnvironmentVariableTarget.User) ??
-                    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.ollama\\models"
-                ));
-            }
-            // Просмотр логов
-            else if (selectedValue == LocalizationManager.GetTranslation("view_logs"))
-            {
-                if (IsRemote)
-                {
-                    AntdUI.Message.warn(this, LocalizationManager.GetTranslation("remote_not_supported"));
-                    return;
-                }
-                Process.Start(new ProcessStartInfo($"explorer.exe",
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Ollama\\"));
-            }
-            // Проверка обновлений
-            else if (selectedValue == LocalizationManager.GetTranslation("check_updates"))
-            {
-                new Modal.Config(this, LocalizationManager.GetTranslation("ollama_core_version"), 
-                    Task.Run(() => OllamaApi.GetVersionAsync()).Result, TType.Info)
-                {
-                    OnOk = _ =>
-                    {
-                        Process.Start(new ProcessStartInfo($"https://github.com/ollama/ollama/releases/latest")
-                        { UseShellExecute = true });
-                        return true;
-                    }
-                }.open();
-            }
-            // OpenAI API
-            else if (selectedValue == LocalizationManager.GetTranslation("openai_api"))
-            {
-                new Modal.Config(this, LocalizationManager.GetTranslation("openai_api"),
-                    new[]
-                    {
-                        new Modal.TextLine("API: " + OllamaUri + "v1", Style.Db.Primary),
-                        new Modal.TextLine("Chat: " + OllamaUri + "v1/chat/completions"),
-                        new Modal.TextLine("Completions: " + OllamaUri + "v1/completions"),
-                        new Modal.TextLine("Embeddings: " + OllamaUri + "v1/embeddings")
-                    }, TType.Info)
-                {
-                    OkText = LocalizationManager.GetTranslation("copy_url"),
-                    OnOk = _ =>
-                    {
-                        Thread.Sleep(1);
-                        try
-                        {
-                            Invoke(() => Clipboard.SetText(OllamaUri + "v1"));
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex);
-                        }
-                        return true;
-                    }
-                }.open();
-            }
-            // Настройки языка
-            else if (selectedValue == LocalizationManager.GetTranslation("language_settings"))
-            {
-                var langOptions = new List<object>
-                {
-                    new SelectItem("English", LocalizationManager.Language.English),
-                    new SelectItem("Русский", LocalizationManager.Language.Russian),
-                    new SelectItem("中文", LocalizationManager.Language.Chinese)
-                };
-                
-                // Используем простой выбор языка
-                new Modal.Config(this, LocalizationManager.GetTranslation("language_settings"),
-                    new[]
-                    {
-                        new Modal.TextLine(LocalizationManager.GetTranslation("select_language")),
-                        new Modal.TextLine("Выберите / Select / 选择:", Style.Db.TextSecondary),
-                        new Modal.TextLine("1. English", Style.Db.Primary),
-                        new Modal.TextLine("2. Русский", Style.Db.Primary),
-                        new Modal.TextLine("3. 中文", Style.Db.Primary)
-                    }, TType.Info)
-                {
-                    OkText = "English",
-                    OnOk = _ =>
-                    {
-                        // Показываем окно выбора языка
-                        var langChoice = MessageBox.Show(
-                            "Choose Language / Выберите язык / 选择语言:\n\n" +
-                            "1. English\n" +
-                            "2. Русский\n" +
-                            "3. 中文\n\n" +
-                            "Click Yes for English, No for Russian, Cancel for Chinese",
-                            "Language / Язык / 语言",
-                            MessageBoxButtons.YesNoCancel,
-                            MessageBoxIcon.Question);
-                        
-                        switch (langChoice)
-                        {
-                            case DialogResult.Yes:
-                                LocalizationManager.CurrentLanguage = LocalizationManager.Language.English;
-                                break;
-                            case DialogResult.No:
-                                LocalizationManager.CurrentLanguage = LocalizationManager.Language.Russian;
-                                break;
-                            case DialogResult.Cancel:
-                                LocalizationManager.CurrentLanguage = LocalizationManager.Language.Chinese;
-                                break;
-                        }
-                        
-                        LocalizationManager.SaveLanguagePreference();
-                        RefreshUI();
-                        return true;
-                    }
-                }.open();
-            }
-            // Игнорируем разделители
-            else if (selectedValue.Contains("━"))
-            {
-                // Ничего не делаем для разделителей
-            }
-        }
+        // Removed dropdown1_SelectedValueChanged
+        // Removed flowLayoutPanel1_SizeChanged
+        // Removed button2_Click
+        // Removed buttonHfFilter_Click
+        // Removed selectHuggingFace_SelectedValueChanged
+        // Removed buttonHfPull_Click
+        // Removed ShowHuggingFaceFilterDialog
+        // Removed RefreshHuggingFaceModels
+        // Removed UpdateHuggingFaceDropdown
+        // Removed UpdateHuggingFaceSection
+        // Removed InitializeModelSelect (as its functionality is now covered by InitializeOnlineModelSelectors and PopulateOnlineModelsList)
 
-        private void flowLayoutPanel1_SizeChanged(object sender, EventArgs e)
-        {
-            // Динамически адаптируем ширину выпадающих списков под размер формы
-            var availableWidth = flowLayoutPanel1.Width - button1.Width - buttonHfPull.Width - button2.Width - buttonHfFilter.Width - dropdown1.Width - 80;
-            var listWidth = Math.Max(180, availableWidth / 2);
-            
-            select1.Width = listWidth;
-            selectHuggingFace.Width = listWidth;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (select1.Text.Contains(" ")) select1.Text = select1.Text.Split(' ').Last();
-            new FormRegistryInfo(select1.Text).ShowDialog();
-        }
-
-        private void buttonHfFilter_Click(object sender, EventArgs e)
-        {
-            // Показываем диалог фильтрации HuggingFace моделей
-            ShowHuggingFaceFilterDialog();
-        }
-
-        private void selectHuggingFace_SelectedValueChanged(object sender, ObjectNEventArgs e)
-        {
-            if (selectHuggingFace.Text == "🔄 Обновить GGUF модели")
-            {
-                // Обновляем HuggingFace модели
-                Task.Run(() => RefreshHuggingFaceModels());
-                selectHuggingFace.SelectedIndex = -1; // Сбрасываем выбор
-            }
-        }
-
-        private void buttonHfPull_Click(object sender, EventArgs e)
-        {
-            // Получаем выбранную HuggingFace модель
-            var selectedModel = selectHuggingFace.Text;
-            
-            // Проверяем, что выбрана не служебная строка
-            if (string.IsNullOrEmpty(selectedModel) || 
-                selectedModel.StartsWith("🔄") ||
-                selectedModel == "🤗 HuggingFace GGUF")
-            {
-                AntdUI.Message.warn(this, "Пожалуйста, выберите GGUF модель для загрузки");
-                return;
-            }
-
-            // Извлекаем имя модели из тега (если есть)
-            var modelName = selectedModel;
-            var selectedIndex = selectHuggingFace.SelectedIndex;
-            if (selectedIndex >= 0 && selectedIndex < selectHuggingFace.Items.Count)
-            {
-                bool foundModel = false;
-                foreach (var item in selectHuggingFace.Items)
-                {
-                    if (item is SelectItem selectItem && selectItem.Sub != null)
-                    {
-                        foreach (var subItem in selectItem.Sub)
-                        {
-                            if (subItem is SelectItem modelItem && modelItem.Tag != null)
-                            {
-                                if (modelItem.Text.Contains(selectedModel.Replace("● ", "")) || 
-                                    selectedModel.Contains(modelItem.Tag.ToString()))
-                                {
-                                    modelName = modelItem.Tag.ToString();
-                                    foundModel = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (foundModel) break;
-                    }
-                }
-            }
-            
-            new Modal.Config(this, "Загрузить GGUF модель", 
-                new[] { new Modal.TextLine($"🤗 {modelName}", Style.Db.Primary) }, TType.Success)
-            {
-                OkType = TTypeMini.Success,
-                OkText = "Загрузить",
-                OnOk = _ =>
-                {
-                    Invoke(progress1.Show);
-
-                    Task.Run(async () =>
-                    {
-                        try
-                        {
-                            // Для HuggingFace моделей используем ollama pull с префиксом hf.co/
-                            var fullModelName = modelName.StartsWith("hf.co/") ? modelName : $"hf.co/{modelName}";
-                            
-                            var lastBytes = 0L;
-                            var lastTime = DateTime.Now;
-                            var speedSamples = new Queue<double>();
-                            
-                            await foreach (var x in OllamaApi.PullModelAsync(fullModelName))
-                            {
-                                Invoke(() =>
-                                {
-                                    progress1.Value = (float)x.Completed / x.Total;
-                                    
-                                    // Вычисляем скорость загрузки
-                                    var now = DateTime.Now;
-                                    var elapsedSeconds = (now - lastTime).TotalSeconds;
-                                    
-                                    if (elapsedSeconds >= 1.0 && x.Completed > lastBytes)
-                                    {
-                                        var bytesDownloaded = x.Completed - lastBytes;
-                                        var instantSpeed = (bytesDownloaded / elapsedSeconds) / (1024 * 1024);
-                                        
-                                        speedSamples.Enqueue(instantSpeed);
-                                        if (speedSamples.Count > 5) speedSamples.Dequeue();
-                                        
-                                        var avgSpeed = speedSamples.Average();
-                                        var remainingBytes = x.Total - x.Completed;
-                                        var estimatedTimeSeconds = avgSpeed > 0 ? remainingBytes / (avgSpeed * 1024 * 1024) : 0;
-                                        
-                                        var sizeInfo = $"{x.Completed / (1024 * 1024):F1}MB / {x.Total / (1024 * 1024):F1}MB";
-                                        var speedInfo = $"{avgSpeed:F1} MB/s";
-                                        var timeInfo = estimatedTimeSeconds > 0 ? $"ETA: {TimeSpan.FromSeconds(estimatedTimeSeconds):mm\\:ss}" : "";
-                                        
-                                        progress1.Text = $"🤗 {x.Status} | {sizeInfo} | {speedInfo} | {timeInfo}";
-                                        
-                                        lastBytes = x.Completed;
-                                        lastTime = now;
-                                    }
-                                    else
-                                    {
-                                        progress1.Text = $"🤗 {x.Status}";
-                                    }
-                                });
-                            }
-
-                            Invoke(() =>
-                            {
-                                progress1.Hide();
-                                AntdUI.Message.success(this, $"🤗 Модель {modelName} успешно загружена!");
-                                
-                                // Обновляем списки моделей
-                                Task.Run(() => {
-                                    Thread.Sleep(1000);
-                                    Invoke(() => InitializeModelSelect());
-                                });
-                            });
-                        }
-                        catch (Exception ex)
-                        {
-                            Invoke(() =>
-                            {
-                                progress1.Hide();
-                                AntdUI.Message.error(this, $"Ошибка загрузки: {ex.Message}");
-                            });
-                        }
-                    });
-                    return true;
-                }
-            }.open();
-        }
-
-        private void ShowHuggingFaceFilterDialog()
-        {
-            var availableTags = new[]
-            {
-                "🤖 Conversational", "📝 Text Generation", "🔍 Question Answering",
-                "🌍 Translation", "💻 Code Generation", "🔤 Text2Text", "🧮 Mathematics"
-            };
-
-            var modal = new Modal.Config(this, 
-                "🤗 HuggingFace Модели - Фильтр по тегам",
-                new[]
-                {
-                    new Modal.TextLine("Выберите категорию для фильтрации:", Style.Db.Primary),
-                    new Modal.TextLine("🤖 Conversational - Чат-боты и ассистенты"),
-                    new Modal.TextLine("📝 Text Generation - Генерация текста"),
-                    new Modal.TextLine("🔍 Question Answering - Ответы на вопросы"), 
-                    new Modal.TextLine("🌍 Translation - Переводчики"),
-                    new Modal.TextLine("💻 Code Generation - Генерация кода"),
-                    new Modal.TextLine("🔤 Text2Text - Преобразование текста"),
-                    new Modal.TextLine("🧮 Mathematics - Математические модели")
-                }, TType.Info)
-            {
-                OkText = "Обновить список",
-                OnOk = _ =>
-                {
-                    // Перезагружаем список с фильтрацией
-                    Task.Run(() => RefreshHuggingFaceModels());
-                    return true;
-                }
-            };
-
-            modal.open();
-        }
-
-        private async Task RefreshHuggingFaceModels()
-        {
-            try
-            {
-                Invoke(() => 
-                {
-                    progress1.Show();
-                    progress1.Value = 0;
-                    progress1.Text = "🤗 Обновляем HuggingFace GGUF модели...";
-                    selectHuggingFace.Enabled = false;
-                });
-
-                // Принудительно сбрасываем кэш и загружаем GGUF модели
-                HuggingFaceServiceExtended.ClearCache();
-                var models = await HuggingFaceServiceExtended.GetGGUFModelsAsync(60);
-                
-                var loadedModels = new HashSet<string>();
-                try
-                {
-                    var localModels = await OllamaApi.ListLocalModelsAsync();
-                    foreach (var model in localModels)
-                    {
-                        loadedModels.Add(model.Name);
-                    }
-                }
-                catch
-                {
-                    // Игнорируем ошибки загрузки локальных моделей
-                }
-                
-                Invoke(() => 
-                {
-                    // Обновляем HuggingFace dropdown
-                    UpdateHuggingFaceDropdown(models, loadedModels);
-                    
-                    progress1.Value = 100;
-                    progress1.Text = $"✅ Загружено {models.Count} GGUF моделей HuggingFace";
-                    selectHuggingFace.Enabled = true;
-                    
-                    // Скрываем прогресс через 2 секунды
-                    Task.Delay(2000).ContinueWith(_ => Invoke(progress1.Hide));
-                    
-                    AntdUI.Message.success(this, $"Загружено {models.Count} HuggingFace GGUF моделей");
-                });
-            }
-            catch (Exception ex)
-            {
-                Invoke(() => 
-                {
-                    progress1.Text = "❌ Ошибка обновления HuggingFace";
-                    selectHuggingFace.Enabled = true;
-                    Task.Delay(2000).ContinueWith(_ => Invoke(progress1.Hide));
-                    AntdUI.Message.error(this, $"Ошибка обновления: {ex.Message}");
-                });
-            }
-        }
-
-        private void UpdateHuggingFaceDropdown(List<HuggingFaceModelExtended> models, HashSet<string> loadedModels)
-        {
-            // Очищаем и заполняем HuggingFace выпадающий список
-            selectHuggingFace.Items.Clear();
-            
-            // Добавляем кнопку обновления в начало
-            selectHuggingFace.Items.Add(new SelectItem("🔄 Обновить GGUF модели"));
-
-            // Группируем модели по тегам
-            var groupedHfModels = HuggingFaceServiceExtended.GroupModelsByTags(models);
-
-            foreach (var (categoryName, categoryModels) in groupedHfModels)
-            {
-                var categoryItem = new SelectItem(categoryName);
-                var categorySubItems = new List<object>();
-
-                foreach (var model in categoryModels)
-                {
-                    var ollamaModelName = HuggingFaceServiceExtended.FormatModelForOllama(model);
-                    var isLoaded = loadedModels.Contains(ollamaModelName);
-                    var displayName = HuggingFaceServiceExtended.GetModelDisplayName(model);
-                    var prefix = isLoaded ? "● " : "";
-                    
-                    // Добавляем информацию об авторе и скачиваниях
-                    var downloads = model.Downloads > 1000000 
-                        ? $"{model.Downloads / 1000000:F1}M"
-                        : model.Downloads > 1000 
-                            ? $"{model.Downloads / 1000:F0}K" 
-                            : model.Downloads.ToString();
-                    
-                    var fullDisplayName = $"{prefix}{displayName} ({model.Author}) [{downloads}⬇]";
-                    
-                    categorySubItems.Add(new SelectItem(fullDisplayName) { Tag = ollamaModelName });
-                }
-
-                if (categorySubItems.Any())
-                {
-                    categoryItem.Sub = categorySubItems.ToArray();
-                    selectHuggingFace.Items.Add(categoryItem);
-                }
-            }
-
-            selectHuggingFace.PlaceholderText = $"🤗 HuggingFace GGUF ({models.Count} моделей)";
-        }
-
-        private void UpdateHuggingFaceSection(List<HuggingFaceModelExtended> models)
-        {
-            // Находим и удаляем старую HuggingFace секцию
-            var hfItemIndex = -1;
-            for (int i = 0; i < select1.Items.Count; i++)
-            {
-                if (select1.Items[i] is SelectItem item && item.Text.StartsWith("🤗 HuggingFace"))
-                {
-                    hfItemIndex = i;
-                    break;
-                }
-            }
-
-            if (hfItemIndex >= 0)
-            {
-                select1.Items.RemoveAt(hfItemIndex);
-            }
-
-            // Добавляем обновленную секцию
-            if (models.Any())
-            {
-                var loadedModels = new HashSet<string>();
-                try
-                {
-                    var localModels = Task.Run(async () => await OllamaApi.ListLocalModelsAsync()).Result;
-                    foreach (var model in localModels)
-                    {
-                        loadedModels.Add(model.Name);
-                    }
-                }
-                catch
-                {
-                    // Игнорируем ошибки загрузки локальных моделей
-                }
-
-                var groupedHfModels = HuggingFaceServiceExtended.GroupModelsByTags(models);
-                var hfMainItem = new SelectItem($"🤗 HuggingFace ({models.Count})");
-                var hfSubItems = new List<object>();
-
-                foreach (var (categoryName, categoryModels) in groupedHfModels)
-                {
-                    var categoryItem = new SelectItem(categoryName);
-                    var categorySubItems = new List<object>();
-
-                    foreach (var model in categoryModels)
-                    {
-                        var ollamaModelName = HuggingFaceServiceExtended.FormatModelForOllama(model);
-                        var isLoaded = loadedModels.Contains(ollamaModelName);
-                        var displayName = HuggingFaceServiceExtended.GetModelDisplayName(model);
-                        var prefix = isLoaded ? "● " : "";
-                        
-                        var downloads = model.Downloads > 1000000 
-                            ? $"{model.Downloads / 1000000:F1}M"
-                            : model.Downloads > 1000 
-                                ? $"{model.Downloads / 1000:F0}K" 
-                                : model.Downloads.ToString();
-                        
-                        var fullDisplayName = $"{prefix}{displayName} ({model.Author}) [{downloads}⬇]";
-                        categorySubItems.Add(new SelectItem(fullDisplayName) { Tag = ollamaModelName });
-                    }
-
-                    if (categorySubItems.Any())
-                    {
-                        categoryItem.Sub = categorySubItems.ToArray();
-                        hfSubItems.Add(categoryItem);
-                    }
-                }
-
-                if (hfSubItems.Any())
-                {
-                    hfMainItem.Sub = hfSubItems.ToArray();
-                    select1.Items.Add(hfMainItem);
-                }
-            }
-        }
 
         private void Table1OnCellButtonClick(object sender, TableButtonEventArgs e)
         {
@@ -1893,8 +1307,96 @@ public void ListModels()
                 case "info":
                     new FormInfo(data.name).ShowDialog();
                     break;
+                case "test_model":
+                    TestModel(data.name);
+                    break;
             }
         }
+
+        private CancellationTokenSource testModelCts;
+        private async void TestModel(string modelName)
+        {
+            if (testModelCts != null && !testModelCts.IsCancellationRequested)
+            {
+                AntdUI.Message.warn(this, LocalizationManager.GetTranslation("test_in_progress_warning") ?? "Другой тест уже выполняется.");
+                return;
+            }
+            testModelCts = new CancellationTokenSource();
+            var token = testModelCts.Token;
+
+            statusLabel.Text = $"{LocalizationManager.GetTranslation("testing_model_message") ?? "Тестирование модели..."} {modelName}";
+            Log(LogLevel.INFO, $"Starting test for model: {modelName}");
+            progress1.Visible = true;
+            progress1.Value = 0; // Reset progress
+
+            try
+            {
+                string prompt = LocalizationManager.GetTranslation("test_prompt") ?? "Say Hi";
+                var request = new GenerateRequest
+                {
+                    Model = modelName,
+                    Prompt = prompt,
+                    Stream = false, // We want a single response for this test
+                    KeepAlive = "1m" // Keep alive for a short period
+                };
+
+                GenerateContext[] context = null; // To store context if needed for future, not used now
+
+                // Simulate progress for the test duration
+                for (int i = 0; i <= 100; i+=20)
+                {
+                    if (token.IsCancellationRequested) break;
+                    progress1.Value = (float)i / 100;
+                    await Task.Delay(150, token);
+                }
+
+                if (token.IsCancellationRequested)
+                {
+                    Log(LogLevel.INFO, $"Test for model {modelName} was cancelled.");
+                    AntdUI.Message.info(this, LocalizationManager.GetTranslation("test_cancelled_message") ?? "Тест отменен.");
+                    return;
+                }
+
+                var response = await OllamaApi.GenerateAsync(request, token);
+
+                if (token.IsCancellationRequested) // Check again after await
+                {
+                    Log(LogLevel.INFO, $"Test for model {modelName} was cancelled after API call.");
+                    AntdUI.Message.info(this, LocalizationManager.GetTranslation("test_cancelled_message") ?? "Тест отменен.");
+                    return;
+                }
+
+                if (!string.IsNullOrEmpty(response?.Response))
+                {
+                    Log(LogLevel.INFO, $"{LocalizationManager.GetTranslation("test_successful_log") ?? "Тест успешно пройден. Ответ: "} {response.Response.Trim()}");
+                    Notification.success(this, LocalizationManager.GetTranslation("model_responded_successfully") ?? "Модель успешно ответила", response.Response.Trim());
+                }
+                else
+                {
+                    Log(LogLevel.WARN, $"{LocalizationManager.GetTranslation("test_failed_log") ?? "Тест не удался для модели"} {modelName}. Empty response.");
+                    Notification.warn(this, LocalizationManager.GetTranslation("model_test_failed_notification") ?? "Тест модели не удался", "Empty response from model.");
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Log(LogLevel.INFO, $"Test for model {modelName} was cancelled (OperationCanceledException).");
+                AntdUI.Message.info(this, LocalizationManager.GetTranslation("test_cancelled_message") ?? "Тест отменен.");
+            }
+            catch (Exception ex)
+            {
+                Log(LogLevel.ERROR, $"{LocalizationManager.GetTranslation("test_failed_log") ?? "Тест не удался для модели"} {modelName}.", ex);
+                Notification.error(this, LocalizationManager.GetTranslation("model_test_failed_notification") ?? "Тест модели не удался", ex.Message);
+            }
+            finally
+            {
+                statusLabel.Text = LocalizationManager.GetTranslation("status_ready") ?? "Готов";
+                progress1.Visible = false;
+                testModelCts?.Dispose();
+                testModelCts = null;
+                // No need to call ListModels() here unless the test changes model state that needs UI refresh.
+            }
+        }
+
 
         #region Сохранение размеров окна
 
