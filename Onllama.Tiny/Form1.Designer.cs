@@ -81,7 +81,14 @@
             // select1
             // 
             select1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            select1.Items.AddRange(new object[] { "qwen3:4b", "qwen3:8b", "qwen3:14b", "qwen3:30b", "qwen3:32b", "qwen2.5-coder:3b", "qwen2.5-coder:7b", "qwen2.5-coder:14b", "qwen2.5-coder:32b", "qwq:32b", "gemma3:4b", "gemma3:12b", "gemma3:27b", "minicpm-v:8b", "llama3.2:3b", "llama3.2-vision:11b", "phi4:14b", "phi4-mini:3.8b", "aya-expanse:8b", "aya-expanse:32b", "command-r:35b" });
+            select1.Items.AddRange(new object[]
+            {
+                "qwen3:4b", "qwen3:8b", "qwen3:14b", "qwen3:30b", "qwen3:32b", "qwen2.5-coder:14b", "qwen2.5-coder:32b",
+                "qwen2.5vl:32b", "qwen2.5vl:7b", "gemma3n:e2b", "gemma3n:e4b", "gemma3:12b", "gemma3:27b",
+                "magistral:24b", "mistral-small3.2:24b",
+                "minicpm-v:8b", "phi4:14b", "phi4-mini:3.8b", "aya-expanse:8b",
+                "aya-expanse:32b", "command-r:35b"
+            });
             select1.Location = new Point(3, 3);
             select1.Name = "select1";
             select1.SelectedValue = "qwen2.5:3b";
